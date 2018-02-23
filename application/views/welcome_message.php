@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Welcome to APP Stef Goor</title>       
+	<title>Welcome to APP/BIT Stef Goor</title>       
 
 	<style type="text/css">
 
