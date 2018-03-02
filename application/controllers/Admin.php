@@ -56,7 +56,6 @@ class Admin extends CI_Controller {
         $this->email->send();
     }
 
-=======
         public function mail(){           
             $config['useragent']    = 'CodeIgniter';
             $config['protocol']     = 'smtp';
