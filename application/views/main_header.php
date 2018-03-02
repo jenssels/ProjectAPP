@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <?php echo pasStylesheetAan("stijl.css"); ?>
-    </head>
-    <body>
-        <?php
-        
-        
-        ?>
-    </body>
-</html>
+    <!-- Header -->
+    <header class="masthead bg-primary text-white text-center">
+      <div class="container">
+        <h1 class="text-uppercase mb-0">Personeelsfeest</h1>
+      </div>
+    </header>
