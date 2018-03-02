@@ -1,4 +1,6 @@
-<div id="banner">
-    <p>Dit is een banner met achtergrondkleur.</p>
-    <p>Wij gebruiken alleen apple toestellen!!!</p>
-</div>
+    <!-- Header -->
+    <header class="masthead bg-primary text-white text-center">
+      <div class="container">
+        <h1 class="text-uppercase mb-0">Personeelsfeest</h1>
+      </div>
+    </header>
