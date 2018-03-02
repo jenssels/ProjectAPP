@@ -53,10 +53,21 @@ class Admin extends CI_Controller {
         }
         
         public function mailView(){
+            // Jens Sels - Tonen van pagina om mails te versturen
             $this->load->model('Persoon_model');
             $this->load->model('Dagindeling_model');
             $this->load->model('Taak_model');
             $this->load->model('Optie_model');
             $this->load->model('Shift_model');
+        }
+        
+        public function personeelsFeestOverzicht(){
+            $this->load->model('Personelsfeest_model');
+            $data['personeelsFeesten'] = $this->Personeelsfeest_model->getAll();
+            
+            $partials = array("header" => "main_header", 
+                "content" => "personeelsFeestOverzicht",
+                "footer" => "main_footer");
+            $this->tem
         }
 }

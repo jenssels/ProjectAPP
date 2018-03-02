@@ -15,5 +15,11 @@ class Type_model extends CI_Model {
     function __construct()
     {
         parent::__construct();
-    }                       
+    }    
+    
+    function getAll(){
+        // Jens Sels - ophalen van alle personeelsfeesten
+        $query = $this->db->get('personeelsfeest');
+        return $query->result();
+    }
 }
