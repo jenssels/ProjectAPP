@@ -51,4 +51,12 @@ class Admin extends CI_Controller {
 
             $this->email->send();
         }
+        
+        public function mailView(){
+            $this->load->model('Persoon_model');
+            $this->load->model('Dagindeling_model');
+            $this->load->model('Taak_model');
+            $this->load->model('Optie_model');
+            $this->load->model('Shift_model');
+        }
 }
