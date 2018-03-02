@@ -10,6 +10,7 @@ function toonAfbeelding($afbeelding, $attributen = '') {
 function haalJavascriptOp($js) {
     $CI = & get_instance();
     $CI->load->helper('url');
+    
 
     return "<script src=\"" . base_url("assets/js/" . $js) . "\"></script>";
 }
