@@ -65,6 +65,7 @@ class Admin extends CI_Controller {
             $this->load->model('Shift_model');
         }
 
+
         
         public function personeelsFeestOverzicht(){
             $this->load->model('Personelsfeest_model');
@@ -76,4 +77,5 @@ class Admin extends CI_Controller {
             $this->template->load('main_master', $partials, $data);
         }
 }
+
 
