@@ -10,9 +10,10 @@ and open the template in the editor.
         <?php echo pasStylesheetAan("stijl.css"); ?>
     </head>
     <body>
-        <?php
-        
-        
-        ?>
+        <div id="banner">
+            <p>Dit is een banner met achtergrondkleur.</p>
+            <p>Wij gebruiken alleen apple toestellen!!!</p>
+        </div>
     </body>
+    <div id="hoofding"><?php echo $hoofding; ?></div>
 </html>
