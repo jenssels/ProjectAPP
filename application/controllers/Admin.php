@@ -68,6 +68,6 @@ class Admin extends CI_Controller {
             $partials = array("header" => "main_header", 
                 "content" => "personeelsFeestOverzicht",
                 "footer" => "main_footer");
-            $this->tem
+            $this->template->load('main_master', $partials, $data);
         }
 }
