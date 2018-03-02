@@ -23,13 +23,32 @@ class Admin extends CI_Controller {
 		$this->load->view("welcome_message");
 	}
         
-        public function mail(){
-            $this->load->library('email'); // Note: no $config param needed
-            //$this->email->from('YOUREMAILHERE@gmail.com', 'YOUREMAILHERE@gmail.com');
-            $this->email->to('jenssels1998@gmail.com');
-            $this->email->subject('Test email from CI and Gmail');
-            $this->email->message('This is a test.');
+        public function mail(){           
+            $config['useragent']    = 'CodeIgniter';
+            $config['protocol']     = 'smtp';
+            $config['smtp_host']    = 'ssl://smtp.gmail.com';
+            $config['smtp_user']    = 'team17project@gmail.com'; // Your gmail id
+            $config['smtp_pass']    = 'project3'; // Your gmail Password
+            $config['smtp_port']    = 465;
+            $config['wordwrap']     = TRUE;    
+            $config['wrapchars']    = 76;
+            $config['mailtype']     = 'html';
+            $config['charset']      = 'iso-8859-1';
+            $config['validate']     = FALSE;
+            $config['priority']     = 3;
+            $config['newline']      = "\r\n";
+            $config['crlf']         = "\r\n";
+
+            $this->load->library('email');
+            $this->email->initialize($config);
+
+            $this->email->from('team17project@gmail.com', 'TSS DEV');
+            $this->email->to('jenssels1998@gmail.com'); 
+            $this->email->cc('bla'); 
+
+            $this->email->subject('Email Test');
+            $this->email->message('Testing the email class.');    
+
             $this->email->send();
-            $this->load->view("welcome_message");
         }
 }
