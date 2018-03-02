@@ -56,4 +56,42 @@ class Admin extends CI_Controller {
         $this->email->send();
     }
 
+=======
+        public function mail(){           
+            $config['useragent']    = 'CodeIgniter';
+            $config['protocol']     = 'smtp';
+            $config['smtp_host']    = 'ssl://smtp.gmail.com';
+            $config['smtp_user']    = 'team17project@gmail.com'; // Your gmail id
+            $config['smtp_pass']    = 'project3'; // Your gmail Password
+            $config['smtp_port']    = 465;
+            $config['wordwrap']     = TRUE;    
+            $config['wrapchars']    = 76;
+            $config['mailtype']     = 'html';
+            $config['charset']      = 'iso-8859-1';
+            $config['validate']     = FALSE;
+            $config['priority']     = 3;
+            $config['newline']      = "\r\n";
+            $config['crlf']         = "\r\n";
+
+            $this->load->library('email');
+            $this->email->initialize($config);
+
+            $this->email->from('team17project@gmail.com', 'TSS DEV');
+            $this->email->to('jenssels1998@gmail.com'); 
+            $this->email->cc('bla'); 
+
+            $this->email->subject('Email Test');
+            $this->email->message('Testing the email class.');    
+
+            $this->email->send();
+        }
+        
+        public function mailView(){
+            $this->load->model('Persoon_model');
+            $this->load->model('Dagindeling_model');
+            $this->load->model('Taak_model');
+            $this->load->model('Optie_model');
+            $this->load->model('Shift_model');
+        }
+>>>>>>> 46ff8a4fd1c505c5fdff59ca11a77bb103a8f9a0
 }
