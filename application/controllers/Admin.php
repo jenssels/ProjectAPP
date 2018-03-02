@@ -26,6 +26,7 @@ class Admin extends CI_Controller {
         $partials = array('main_header' => 'main_header');
         $this->template->load('main_header', $partials, $data);
     }
+
         public function mail(){           
             $config['useragent']    = 'CodeIgniter';
             $config['protocol']     = 'smtp';
@@ -63,6 +64,7 @@ class Admin extends CI_Controller {
             $this->load->model('Optie_model');
             $this->load->model('Shift_model');
         }
+
         
         public function personeelsFeestOverzicht(){
             $this->load->model('Personelsfeest_model');
@@ -74,3 +76,4 @@ class Admin extends CI_Controller {
             $this->template->load('main_master', $partials, $data);
         }
 }
+
