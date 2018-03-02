@@ -23,7 +23,9 @@ class Admin extends CI_Controller {
         $this->load->view("welcome_message");
 
         $data['titel'] = 'Apple toestellen';
-        $partials = array('main_header' => 'main_header');
+        $partials = array('main_header' => 'main_header',
+            'content' => 'personeelsFeestOverzicht',
+            'main_footer' => 'main_footer');
         $this->template->load('main_header', $partials, $data);
     }
 
