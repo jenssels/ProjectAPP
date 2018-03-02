@@ -20,11 +20,10 @@ class Admin extends CI_Controller {
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
     public function index() {
-        $this->load->view("welcome_message");
 
         $data['titel'] = 'Apple toestellen';
         $partials = array('main_header' => 'main_header');
-        $this->template->load('main_header', $partials, $data);
+        $this->template->load('main_master', $partials, $data);
     }
 
         public function mail(){           
