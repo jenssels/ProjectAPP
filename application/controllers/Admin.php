@@ -23,7 +23,7 @@ class Admin extends CI_Controller {
         $this->load->view("welcome_message");
         
         $data['titel'] = 'Apple toestellen';
-        $partials = array('hoofding' => 'main_header');
+        $partials = array('main_header' => 'main_header');
         $this->template->load('main_header', $partials, $data);
     }
 
@@ -56,7 +56,6 @@ class Admin extends CI_Controller {
         $this->email->send();
     }
 
-=======
         public function mail(){           
             $config['useragent']    = 'CodeIgniter';
             $config['protocol']     = 'smtp';
