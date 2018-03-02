@@ -22,4 +22,14 @@ class Admin extends CI_Controller {
 	{
 		$this->load->view("welcome_message");
 	}
+        
+        public function mail(){
+            $this->load->library('email'); // Note: no $config param needed
+            //$this->email->from('YOUREMAILHERE@gmail.com', 'YOUREMAILHERE@gmail.com');
+            $this->email->to('jenssels1998@gmail.com');
+            $this->email->subject('Test email from CI and Gmail');
+            $this->email->message('This is a test.');
+            $this->email->send();
+            $this->load->view("welcome_message");
+        }
 }
