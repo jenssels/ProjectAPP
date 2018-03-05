@@ -7,6 +7,6 @@ and open the template in the editor.
     Created on : 2-mrt-2018, 13:35:25
     Author     : Stef
 */
-#banner{
-    background-color: purple;
+h1 {
+    color : red;
 }
