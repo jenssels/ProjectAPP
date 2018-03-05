@@ -21,8 +21,9 @@ class Admin extends CI_Controller {
      */
     public function index() {
 
-        $data['titel'] = 'Apple toestellen';
-        $partials = array('main_header' => 'main_header');
+        $data['title'] = 'Apple toestellen';
+        $partials = array('main_header' => 'main_header',
+            'main_footer' => 'main_footer');
         $this->template->load('main_master', $partials, $data);
     }
 

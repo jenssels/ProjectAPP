@@ -12,7 +12,7 @@ function haalJavascriptOp($js) {
     $CI->load->helper('url');
     
 
-    return "<script src=\"" . base_url("assets/js/" . $js) . "\"></script>";
+    return "<script src=\"" . base_url("assets/js/" . $js) . "\"></script> \n";
 }
 
 function pasStylesheetAan($css) {
@@ -21,5 +21,5 @@ function pasStylesheetAan($css) {
 
     return "<link rel=\"stylesheet\" type=\"text/css\" href=\"" .
             base_url("assets/css/" . $css) .
-            "\" />";
+            "\" /> \n";
 }
