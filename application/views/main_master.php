@@ -14,7 +14,6 @@ and open the template in the editor.
         <?php echo pasStylesheetAan("buttons.css"); ?>
         
         <!-- Load own css -->
-        <?php echo pasStylesheetAan("stijl.css"); ?>
         <?php echo pasStylesheetAan("ownStylesheet.css"); ?>
         
         <!-- Load js -->
