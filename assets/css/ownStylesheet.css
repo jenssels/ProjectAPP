@@ -8,7 +8,21 @@ and open the template in the editor.
     Author     : Joren Synaeve
 */
 
-.copyright {
-    background-color: #1a252f;
+/* Sticky footer */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 80px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;  
+    line-height: 60px; /* Vertically center the text there */
+    background-color: red;
+    color: white;
 }
 

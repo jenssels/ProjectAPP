@@ -1,4 +1,4 @@
-<footer class="copyright py-4 text-center text-white">
+<footer class="footer text-center">
     <div class="container">
         <small>Copyright &copy; Your Website 2018</small>
     </div>
