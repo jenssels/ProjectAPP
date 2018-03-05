@@ -15,6 +15,7 @@ and open the template in the editor.
         
         <!-- Load own css -->
         <?php echo pasStylesheetAan("stijl.css"); ?>
+        <?php echo pasStylesheetAan("ownStylesheet.css"); ?>
         
         <!-- Load js -->
         <?php echo haalJavascriptOp("jquery-3.1.0.min.js"); ?>
