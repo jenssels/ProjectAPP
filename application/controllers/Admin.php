@@ -22,7 +22,8 @@ class Admin extends CI_Controller {
     public function index() {
 
         $data['title'] = 'Apple toestellen';
-        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+        $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
+        $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
         $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'welkom_view',
             'voetnoot' => 'voetnoot');
