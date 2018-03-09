@@ -69,6 +69,7 @@ class Admin extends CI_Controller {
     }
 
     public function personeelsFeestOverzicht() {
+        // Jens Sels - Tonen van overzicht personeelsfeesten
         $this->load->model('Personelsfeest_model');
         $data['personeelsFeesten'] = $this->Personeelsfeest_model->getAll();
 
