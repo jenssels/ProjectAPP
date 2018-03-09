@@ -71,7 +71,8 @@ class Admin extends CI_Controller {
         $this->load->model('Personeelsfeest_model');
         $data['personeelsFeesten'] = $this->Personeelsfeest_model->getAll();
         $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
-        $data['titel'] = 'Apple toestellen';
+        $data['title'] = 'Apple toestellen';
+        $data['paginaverantwoordelijke'] = 'Jens Sels';
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "personeelsFeestOverzicht",
             "voetnoot" => "voetnoot");
