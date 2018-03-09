@@ -84,8 +84,8 @@ class Admin extends CI_Controller {
     }
 
     public function login() {
-        $data['title'] = 'Apple toestellen';
-        $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
+        $data['title'] = 'Login';
+        $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
         $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "inloggen",
