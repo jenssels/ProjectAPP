@@ -68,15 +68,24 @@ class Admin extends CI_Controller {
 
     public function personeelsFeestOverzicht() {
         // Jens Sels - Tonen van overzicht personeelsfeesten
-        $this->load->model('Personeelsfeest_model');
-        $data['personeelsFeesten'] = $this->Personeelsfeest_model->getAll();
         $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
         $data['title'] = 'Apple toestellen';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
+        
+        $this->load->model('Personeelsfeest_model');
+        $data['personeelsFeesten'] = $this->Personeelsfeest_model->getAll();        
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "personeelsFeestOverzicht",
             "voetnoot" => "voetnoot");
         $this->template->load('main_master', $partials, $data);
+    }
+    
+    public function ajaxHaalDeelnemersOp($id){
+        $this->load->model('Persoon_model');
+        $data['personeelsLeden']->persoon_model->getAllPersoneelsLedenWherePersoneelsFeest($id);
+        $data['vrijwilligers']->persoon_model->getAllVrijwilligersWherePersoneelsFeest($id);
+        
+        $this->load->view('ajax_overzichtGebruikers');
     }
 
 }
