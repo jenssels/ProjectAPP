@@ -20,7 +20,6 @@ class Admin extends CI_Controller {
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
     public function index() {
-
         $data['title'] = 'Apple toestellen';
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
         $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
