@@ -1,6 +1,6 @@
 <?php
 
-class Type_model extends CI_Model {
+class Persoonslfeest_model extends CI_Model {
 
     // +----------------------------------------------------------
     // | Personeelsfeest - Type_model.php
