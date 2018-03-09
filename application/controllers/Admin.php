@@ -20,62 +20,61 @@ class Admin extends CI_Controller {
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
     public function index() {
-        $this->load->view("welcome_message");
-
-        $data['titel'] = 'Apple toestellen';
-        $partials = array('main_header' => 'main_header',
-            'content' => 'personeelsFeestOverzicht',
-            'main_footer' => 'main_footer');
-        $this->template->load('main_header', $partials, $data);
+        $data['title'] = 'Apple toestellen';
+        $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
+        $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'welkom_view',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
     }
 
-        public function mail(){           
-            $config['useragent']    = 'CodeIgniter';
-            $config['protocol']     = 'smtp';
-            $config['smtp_host']    = 'ssl://smtp.gmail.com';
-            $config['smtp_user']    = 'team17project@gmail.com'; // Your gmail id
-            $config['smtp_pass']    = 'project3'; // Your gmail Password
-            $config['smtp_port']    = 465;
-            $config['wordwrap']     = TRUE;    
-            $config['wrapchars']    = 76;
-            $config['mailtype']     = 'html';
-            $config['charset']      = 'iso-8859-1';
-            $config['validate']     = FALSE;
-            $config['priority']     = 3;
-            $config['newline']      = "\r\n";
-            $config['crlf']         = "\r\n";
+    public function mail() {
+        $config['useragent'] = 'CodeIgniter';
+        $config['protocol'] = 'smtp';
+        $config['smtp_host'] = 'ssl://smtp.gmail.com';
+        $config['smtp_user'] = 'team17project@gmail.com'; // Your gmail id
+        $config['smtp_pass'] = 'project3'; // Your gmail Password
+        $config['smtp_port'] = 465;
+        $config['wordwrap'] = TRUE;
+        $config['wrapchars'] = 76;
+        $config['mailtype'] = 'html';
+        $config['charset'] = 'iso-8859-1';
+        $config['validate'] = FALSE;
+        $config['priority'] = 3;
+        $config['newline'] = "\r\n";
+        $config['crlf'] = "\r\n";
 
-            $this->load->library('email');
-            $this->email->initialize($config);
+        $this->load->library('email');
+        $this->email->initialize($config);
 
-            $this->email->from('team17project@gmail.com', 'TSS DEV');
-            $this->email->to('jenssels1998@gmail.com'); 
-            $this->email->cc('bla'); 
+        $this->email->from('team17project@gmail.com', 'TSS DEV');
+        $this->email->to('jenssels1998@gmail.com');
+        $this->email->cc('bla');
 
-            $this->email->subject('Email Test');
-            $this->email->message('Testing the email class.');    
+        $this->email->subject('Email Test');
+        $this->email->message('Testing the email class.');
 
-            $this->email->send();
-        }
-        
-        public function mailView(){
-            // Jens Sels - Tonen van pagina om mails te versturen
-            $this->load->model('Persoon_model');
-            $this->load->model('Dagindeling_model');
-            $this->load->model('Taak_model');
-            $this->load->model('Optie_model');
-            $this->load->model('Shift_model');
-        }
+        $this->email->send();
+    }
 
+    public function mailView() {
+        // Jens Sels - Tonen van pagina om mails te versturen
+        $this->load->model('Persoon_model');
+        $this->load->model('Dagindeling_model');
+        $this->load->model('Taak_model');
+        $this->load->model('Optie_model');
+        $this->load->model('Shift_model');
+    }
 
-        
-        public function personeelsFeestOverzicht(){
-            $this->load->model('Personelsfeest_model');
-            $data['personeelsFeesten'] = $this->Personeelsfeest_model->getAll();
-            
-            $partials = array("header" => "main_header", 
-                "content" => "personeelsFeestOverzicht",
-                "footer" => "main_footer");
-            $this->template->load('main_master', $partials, $data);
-        }
+    public function personeelsFeestOverzicht() {
+        $this->load->model('Personelsfeest_model');
+        $data['personeelsFeesten'] = $this->Personeelsfeest_model->getAll();
+
+        $partials = array("header" => "main_header",
+            "content" => "personeelsFeestOverzicht",
+            "footer" => "main_footer");
+        $this->template->load('main_master', $partials, $data);
+    }
+
 }
