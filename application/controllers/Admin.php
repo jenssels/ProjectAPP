@@ -19,7 +19,7 @@ class Admin extends CI_Controller {
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
     public function index() {
-        $data['title'] = 'Apple toestellen';
+        $data['title'] = 'Home admin';
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
         $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
         $partials = array('hoofding' => 'hoofding',
@@ -70,12 +70,26 @@ class Admin extends CI_Controller {
         // Jens Sels - Tonen van overzicht personeelsfeesten
         $this->load->model('Personeelsfeest_model');
         $data['personeelsFeesten'] = $this->Personeelsfeest_model->getAll();
+
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "personeelsFeestOverzicht",
+            "voetnoet" => "voetnoet");
         $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
-        $data['titel'] = 'Apple toestellen';
+        $data['title'] = 'Apple toestellen';
+        $data['paginaverantwoordelijke'] = 'Jens Sels';
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "personeelsFeestOverzicht",
             "voetnoot" => "voetnoot");
         $this->template->load('main_master', $partials, $data);
     }
 
+    public function login() {
+        $data['title'] = 'Login';
+        $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
+        $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "inloggen",
+            "voetnoot" => "voetnoot");
+        $this->template->load('main_master', $partials, $data);
+    }
 }
