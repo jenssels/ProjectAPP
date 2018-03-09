@@ -1,6 +1,6 @@
 <?php
 
-class Dagindeling_model extends CI_Model {
+class Shift_model extends CI_Model {
 
     // +----------------------------------------------------------
     // | Personeelsfeest - Dagindeling_model.php

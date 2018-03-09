@@ -3,7 +3,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Controller {
-
     /**
      * Index Page for this controller.
      *
@@ -20,8 +19,7 @@ class Admin extends CI_Controller {
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
     public function index() {
-
-        $data['title'] = 'Apple toestellen';
+        $data['title'] = 'Home admin';
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
         $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
         $partials = array('hoofding' => 'hoofding',
@@ -69,12 +67,19 @@ class Admin extends CI_Controller {
     }
 
     public function personeelsFeestOverzicht() {
-        $this->load->model('Personelsfeest_model');
+        // Jens Sels - Tonen van overzicht personeelsfeesten
+        $this->load->model('Personeelsfeest_model');
         $data['personeelsFeesten'] = $this->Personeelsfeest_model->getAll();
 
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "personeelsFeestOverzicht",
             "voetnoet" => "voetnoet");
+        $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
+        $data['title'] = 'Apple toestellen';
+        $data['paginaverantwoordelijke'] = 'Jens Sels';
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "personeelsFeestOverzicht",
+            "voetnoot" => "voetnoot");
         $this->template->load('main_master', $partials, $data);
     }
 
