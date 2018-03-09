@@ -72,20 +72,24 @@ class Admin extends CI_Controller {
         $data['title'] = 'Apple toestellen';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
         
-        $this->load->model('Personeelsfeest_model');
-        $data['personeelsFeesten'] = $this->Personeelsfeest_model->getAll();        
+        $this->load->model('personeelsfeest_model');
+        $data['personeelsFeesten'] = $this->personeelsfeest_model->getAll();
+        
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "personeelsFeestOverzicht",
             "voetnoot" => "voetnoot");
         $this->template->load('main_master', $partials, $data);
     }
     
-    public function ajaxHaalDeelnemersOp($id){
-        $this->load->model('Persoon_model');
-        $data['personeelsLeden']->persoon_model->getAllPersoneelsLedenWherePersoneelsFeest($id);
-        $data['vrijwilligers']->persoon_model->getAllVrijwilligersWherePersoneelsFeest($id);
+    public function ajaxHaalDeelnemersOp(){
+        $id = $this->input->get('id');
+        // Jens Sels - Ophalen vrijwilligers en personeelsleden
+        $this->load->model('persoon_model');
         
-        $this->load->view('ajax_overzichtGebruikers');
+        $data['personeelsLeden'] = $this->persoon_model->getAllPersoneelsLedenWherePersoneelsFeest($id);
+        $data['vrijwilligers'] = $this->persoon_model->getAllVrijwilligersWherePersoneelsFeest($id);
+        
+        $this->load->view('ajax_overzichtGebruikers', $data);
     }
 
 }

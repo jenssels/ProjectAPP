@@ -11,14 +11,15 @@
                     alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
                 }
         });
-    }
+    };
     
     $(document).ready(function(){
     
-        $('overzicht').click(funtion(){
-            var id = this.data('id');
+        $('.overzicht').click(function(){
+            console.log('klik');
+            var id = $(this).data('id');
             haalDeelnemersOp(id);
-            $('#modalInschrijvingen').modal(show);
+            $('#modalInschrijvingen').modal('show');
         });
     });
 </script>
@@ -37,7 +38,7 @@
         <?php
             //Jens Sels - Overzicht van feesten in tabel tonen
             foreach($personeelsFeesten as $feest){
-                echo "<tr><td>" + $feest->naam + "</td><td>" + $feest->datum + "</td><td> <a href=#! class='overzicht' data-id='" + $feest->id + "'>Overzicht inschrijvingen</a></td><td>" + anchor('Admin/?', 'edit') + "</td><td>" + anchor('Admin/?', 'verwijder') + "</td></tr>"; 
+                echo "<tr><td>" . $feest->naam .  "</td><td>" .  $feest->datum . "</td><td> <a href=#! class='overzicht' data-id='" . $feest->id . "'>Overzicht inschrijvingen</a></td><td>" . anchor('Admin/?', 'edit') . "</td><td>" . anchor('Admin/?', 'verwijder') . "</td></tr>"; 
             }
         ?>
         </table>

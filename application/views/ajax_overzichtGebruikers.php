@@ -4,7 +4,7 @@
     <ul>
         <?php
             foreach ($vrijwilligers as $vrijwilliger){
-                echo '<li>' + $vrijwilliger->voornaam + ' ' + $vrijwilliger->naam + '</li>';
+                echo '<li>' . $vrijwilliger->voornaam . ' ' . $vrijwilliger->naam . '</li>';
             }
         ?>
     </ul>
@@ -15,7 +15,7 @@
     <ul>
         <?php
             foreach ($personeelsLeden as $personeelsLid){
-                echo '<li>' + $personeelsLid->voornaam + ' ' + $personeelsLid->naam + '</li>';
+                echo '<li>' . $personeelsLid->voornaam . ' ' . $personeelsLid->naam . '</li>';
             }
         ?>
     </ul>

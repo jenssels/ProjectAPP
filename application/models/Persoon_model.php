@@ -19,17 +19,19 @@ class Persoon_model extends CI_Model {
     
     function getAllPersoneelsLedenWherePersoneelsFeest($feestId){
         // Jens Sels - ophalen van alle gebruikers van geselecteerde personeelsfeest
-        $query = $this->db->get('personeelsfeest');
-        $query = $this->db->where('personeelsfeestId', $feestId);
-        $query = $this->db->where('typeId', '3');
+        $this->db->where('personeelsfeestId', $feestId);
+        $this->db->where('typeId', '3');
+        $query = $this->db->get('persoon');
+        
         return $query->result();
     }
     
     function getAllVrijwilligersWherePersoneelsFeest($feestId){
         // Jens Sels - ophalen van alle gebruikers van geselecteerde personeelsfeest
-        $query = $this->db->get('personeelsfeest');
-        $query = $this->db->where('personeelsfeestId', $feestId);
-        $query = $this->db->where('typeId', '2');
+        $this->db->where('personeelsfeestId', $feestId);
+        $this->db->where('typeId', '2');
+        $query = $this->db->get('persoon');
+        
         return $query->result();
     }
 }
