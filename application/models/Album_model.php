@@ -1,4 +1,11 @@
 <?php
+/**
+ * @class Album_model
+ * @brief Model-klasse voor albums
+ * 
+ * Model-klasse die alle methodes bevat om de database-tabel album te gebruiken
+ */
+
 
 class Album_model extends CI_Model {
 
