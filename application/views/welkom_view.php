@@ -1,3 +1,27 @@
+<?php
+/**
+ * @mainpage Commentaar bij Project17_1718
+ * 
+ * # Wat?
+ * Je vindt hier onze commentaar bij het PHP-project <b> Project17_1718</b>.
+ * - De commentaar bij onze model- en controller-klassen vind je onder het menu <em>Klassen</em>.
+ * - De commentaar bij onze view-bestanden vind je onder het menu <em>Bestanden</em>.
+ * - Ook de originele commentaar geschreven bij het Codeigniter-framework is opgenomen.
+ * 
+ * # Wie?
+ * Dit project is geschreven en becommentarieerd door team 17. 
+ * Dit team bestaat uit 5 leden.
+ * - Joren Synaeve 
+ * - Stef Goor
+ * - Jens Sels
+ * - Thomas Vansprengel
+ * - Jorne Lambrechts
+ * 
+ * @file welkom_view.php
+ * 
+ * View waarin wordt uitgelegd waarvoor de applicatie dient.
+ */
+?>
 <div class="page-header">
   <h1>Welkom</h1>
   <h5>Doel van de applicatie</h5>
