@@ -19,9 +19,9 @@ class Admin extends CI_Controller {
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
     public function index() {
-        $data['title'] = 'Apple toestellen';
-        $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
-        $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
+        $data['title'] = 'Home';
+        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+        $data['emailGebruiker'] = '';
         $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'welkom_view',
             'voetnoot' => 'voetnoot');
@@ -68,6 +68,12 @@ class Admin extends CI_Controller {
 
     public function personeelsFeestOverzicht() {
         // Jens Sels - Tonen van overzicht personeelsfeesten
+        $this->load->model('Personeelsfeest_model');
+        $data['personeelsFeesten'] = $this->Personeelsfeest_model->getAll();
+
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "personeelsFeestOverzicht",
+            "voetnoet" => "voetnoet");
         $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
         $data['title'] = 'Apple toestellen';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
@@ -92,4 +98,13 @@ class Admin extends CI_Controller {
         $this->load->view('ajax_overzichtGebruikers', $data);
     }
 
+    public function login() {
+        $data['title'] = 'Login';
+        $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
+        $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "inloggen",
+            "voetnoot" => "voetnoot");
+        $this->template->load('main_master', $partials, $data);
+    }
 }
