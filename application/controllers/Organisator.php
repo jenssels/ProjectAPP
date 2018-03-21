@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Admin extends CI_Controller {
+class Organisator extends CI_Controller {
     /**
      * Index Page for this controller.
      *
@@ -19,7 +19,7 @@ class Admin extends CI_Controller {
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
     public function index() {
-        $data['title'] = 'Home';
+        $data['titel'] = 'Home';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
         $data['emailGebruiker'] = '';
         $partials = array('hoofding' => 'hoofding',
@@ -75,7 +75,7 @@ class Admin extends CI_Controller {
             "inhoud" => "personeelsFeestOverzicht",
             "voetnoet" => "voetnoet");
         $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
-        $data['title'] = 'Apple toestellen';
+        $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
         
         $this->load->model('personeelsfeest_model');
@@ -99,12 +99,37 @@ class Admin extends CI_Controller {
     }
 
     public function login() {
-        $data['title'] = 'Login';
+        $data['titel'] = 'Login';
         $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
         $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "inloggen",
             "voetnoot" => "voetnoot");
         $this->template->load('main_master', $partials, $data);
+    }
+    
+    /**
+     * Toont een formulierpagina om een nieuwe organisator toe te voegen.
+     */
+    public function maakNieuweOrganisator() {
+        $data['titel'] = 'Nieuwe organisator toevoegen';
+        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+        $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'organisator/organisator_form',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    /**
+     * Registreert de nieuwe gebruiker indien er op 'Bevestigen' geklikt werd. Gaat terug naar de vorige pagina wanneer er op 'Annuleren' geklikt werd.
+     */
+    public function registreerNieuweOrganisator() {
+        $knop = $this->input->post('knop');
+        if ($knop == "Annuleren") {
+            echo "1";
+        } else {
+            echo "2";
+        }
     }
 }

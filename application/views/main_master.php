@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title><?php echo $title; ?></title>
+        <title><?php echo $titel; ?></title>
 
         <!-- Load bootstrap css -->
         <?php echo pasStylesheetAan("bootstrap.css"); ?>
