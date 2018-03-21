@@ -127,9 +127,17 @@ class Organisator extends CI_Controller {
     public function registreerNieuweOrganisator() {
         $knop = $this->input->post('knop');
         if ($knop == "Annuleren") {
-            echo "1";
+            redirect('');
         } else {
-            echo "2";
+            $organisator = new stdClass();
+            
+            $organisator->gebruikersnaam = $this->input->post('gebruikersnaam');
+            $organisator->voornaam = $this->input->post('gebruikersnaam');
+            $organisator->naam = $this->input->post('gebruikersnaam');
+            $organisator->email = $this->input->post('gebruikersnaam');
+            $organisator->wachtwoord = $this->input->post('gebruikersnaam');
+            $organisator->typeId = 2;
+            $organisator->gebruikersnaam = $this->input->post('gebruikersnaam');            
         }
     }
 }

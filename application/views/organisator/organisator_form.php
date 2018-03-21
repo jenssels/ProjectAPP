@@ -58,6 +58,8 @@ echo form_open('organisator/registreerNieuweOrganisator', $attributenFormulier)
     echo form_labelpro('Email', 'email');
     echo form_input(array('email' => 'email',
         'id' => 'email',  
+        'type' => 'email',
+        'data-error' => 'Gelieve een geldig emailadres te gebruiken',
         'class' => 'form-control', 
         'placeholder' => 'gebruiker@email.com', 
         'required' => 'required'));
@@ -82,6 +84,8 @@ echo form_open('organisator/registreerNieuweOrganisator', $attributenFormulier)
     echo form_input(array('name' => 'bevestigWachtwoord',
         'id' => 'bevestigWachtwoord',
         'type' => 'password',
+        'data-match' => '#wachtwoord',
+        'data-match-error' => 'Wachtwoorden komen niet overeen',
         'class' => 'form-control', 
         'placeholder' => 'Wachtwoord', 
         'required' => 'required'));
