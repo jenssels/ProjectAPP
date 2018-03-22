@@ -132,14 +132,14 @@ class Organisator extends CI_Controller {
             $organisator = new stdClass();
             
             $organisator->gebruikersnaam = $this->input->post('gebruikersnaam');
-            $organisator->voornaam = $this->input->post('gebruikersnaam');
-            $organisator->naam = $this->input->post('gebruikersnaam');
-            $organisator->email = $this->input->post('gebruikersnaam');
-            $organisator->wachtwoord = $this->input->post('gebruikersnaam');
+            $organisator->voornaam = $this->input->post('voornaam');
+            $organisator->naam = $this->input->post('naam');
+            $organisator->email = $this->input->post('email');
+            $organisator->wachtwoord = $this->input->post('wachtwoord');
             $organisator->typeId = 2;
             
             $this->load->model('persoon_model');
-            $this->persoon_model->insert($organisator);
+            $this->persoon_model->insertOrganisator($organisator);
         }
     }
 }
