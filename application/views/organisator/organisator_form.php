@@ -15,7 +15,6 @@
 
 <?php
 $attributenFormulier = array('id' => 'mijnFormulier',
-    'data-toggle' => 'validator',
     'role' => 'form');
 echo form_open('organisator/registreerNieuweOrganisator', $attributenFormulier)
 ?>

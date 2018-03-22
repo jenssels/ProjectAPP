@@ -34,4 +34,14 @@ class Persoon_model extends CI_Model {
         
         return $query->result();
     }
+    
+    /**
+     * Voegt de nieuwe organisator toe aan de database.
+     * @param $organisator Het organisator object
+     * @return Het id van het nieuwe record
+     */
+    function insertOrganisator($organisator) {
+        $this->db->insert('persoon', $organisator);
+        return $this->db->insert_id();
+    }
 }

@@ -137,7 +137,9 @@ class Organisator extends CI_Controller {
             $organisator->email = $this->input->post('gebruikersnaam');
             $organisator->wachtwoord = $this->input->post('gebruikersnaam');
             $organisator->typeId = 2;
-            $organisator->gebruikersnaam = $this->input->post('gebruikersnaam');            
+            
+            $this->load->model('persoon_model');
+            $this->persoon_model->insert($organisator);
         }
     }
 }
