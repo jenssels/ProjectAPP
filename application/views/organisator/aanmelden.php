@@ -1,6 +1,18 @@
+<?php 
+/**
+ * @file inloggen.php
+ * 
+ * View waarin een organisator kan inloggen 
+ *  - Gebruikt Bootstrap-formulier
+ */
+?>
+
+<div class="page-header">
+  <h1>Inloggen</h1>
+</div>
+
 <div>
-    <p>Welkom bij de applicatie.<br/>
-        Gelieve u aan te melden met uw gegevens</p>
+    <p>Gelieve u aan te melden met uw gegevens</p>
 </div>
 
 <div>

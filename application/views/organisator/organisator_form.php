@@ -2,8 +2,8 @@
 /**
  * @file organisator_form.php
  * 
- * View waarin je een nieuwe organisator kunt toevoegen * 
- *  - gebruikt Bootstrap-formulier
+ * View waarin je een nieuwe organisator kunt toevoegen 
+ *  - Gebruikt Bootstrap-formulier
  */
 ?>
 
@@ -55,10 +55,9 @@ echo form_open('organisator/registreerNieuweOrganisator', $attributenFormulier)
 <div class="form-group">
     <?php
     echo form_labelpro('Email', 'email');
-    echo form_input(array('email' => 'email',
+    echo form_input(array('name' => 'email',
         'id' => 'email',  
         'type' => 'email',
-        'data-error' => 'Gelieve een geldig emailadres te gebruiken',
         'class' => 'form-control', 
         'placeholder' => 'gebruiker@email.com', 
         'required' => 'required'));

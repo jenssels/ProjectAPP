@@ -21,7 +21,7 @@ class Organisator extends CI_Controller {
     public function index() {
         $data['titel'] = 'Home';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
-        $data['emailGebruiker'] = '';
+        $data['emailGebruiker'] = anchor('organisator/login', 'Organisator login');
         $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'welkom_view',
             'voetnoot' => 'voetnoot');
@@ -98,14 +98,26 @@ class Organisator extends CI_Controller {
         $this->load->view('ajax_overzichtGebruikers', $data);
     }
 
-    public function login() {
-        $data['titel'] = 'Login';
+    /**
+     * Toont de inlogpagina voor de organisator.
+     */
+    public function aanmelden() {
+        $data['titel'] = 'Aanmelden';
         $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
-        $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
+        $data['emailGebruiker'] = '';
         $partials = array("hoofding" => "hoofding",
-            "inhoud" => "inloggen",
+            "inhoud" => "organisator/aanmelden",
             "voetnoot" => "voetnoot");
         $this->template->load('main_master', $partials, $data);
+    }
+    
+    /**
+     * Controleert de gegevens die ingevuld zijn door de organisator om in te loggen.
+     * Indien ze juist zijn, gaat hij naar ... pagina.
+     * Indien ze fout zijn, wordt er een foutmelding getoond.
+     */
+    public function controleerAanmelden() {
+        $email = $this->input->post('');
     }
     
     /**
@@ -122,7 +134,8 @@ class Organisator extends CI_Controller {
     }
     
     /**
-     * Registreert de nieuwe gebruiker indien er op 'Bevestigen' geklikt werd. Gaat terug naar de vorige pagina wanneer er op 'Annuleren' geklikt werd.
+     * Registreert de nieuwe gebruiker indien er op 'Bevestigen' geklikt werd. 
+     * Gaat terug naar de vorige pagina wanneer er op 'Annuleren' geklikt werd.
      */
     public function registreerNieuweOrganisator() {
         $knop = $this->input->post('knop');
@@ -136,7 +149,8 @@ class Organisator extends CI_Controller {
             $organisator->naam = $this->input->post('naam');
             $organisator->email = $this->input->post('email');
             $organisator->wachtwoord = $this->input->post('wachtwoord');
-            $organisator->typeId = 2;
+            $organisator->hashcode = random_string('alnum', 16);
+            $organisator->typeId = 1;
             
             $this->load->model('persoon_model');
             $this->persoon_model->insertOrganisator($organisator);
