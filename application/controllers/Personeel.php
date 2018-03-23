@@ -12,6 +12,9 @@ class Personeel extends CI_Controller {
             $this->session->set_userdata('emailgebruiker', $personeelslid->email);
             $data['emailgebruiker'] = $this->session->userdata('emailgebruiker');
             
+            $data['albums'] = $this->Album_model->getAll();
+            $data['fotos'] = $this->Foto_model->getAll();
+            
             $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'persoon/dagindelingInvullen',
             'voetnoot' => 'voetnoot');
