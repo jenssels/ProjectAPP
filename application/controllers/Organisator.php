@@ -26,6 +26,7 @@ class Organisator extends CI_Controller {
         }
     
     public function index() {
+
         if (!$this->authex->isAangemeld()) {
             $data['titel'] = 'Home';
             $data['paginaverantwoordelijke'] = 'Joren Synaeve';
@@ -37,6 +38,7 @@ class Organisator extends CI_Controller {
         } else {
             redirect('organisator/personeelsFeestOverzicht');
         }
+
     }
 
     public function mail() {
@@ -163,7 +165,6 @@ class Organisator extends CI_Controller {
         } else {
             $organisator = new stdClass();
             
-            $organisator->gebruikersnaam = $this->input->post('gebruikersnaam');
             $organisator->voornaam = $this->input->post('voornaam');
             $organisator->naam = $this->input->post('naam');
             $organisator->email = $this->input->post('email');

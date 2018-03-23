@@ -53,5 +53,16 @@ class Persoon_model extends CI_Model {
         
         return $query->row();
     }
+    
+    /**
+     * 
+     * @param type $hashcode
+     */
+    function getPersoneelslid($hashcode) {
+        $this->db->where('hashcode', $hashcode);
+        $query = $this->db->get('persoon');
+        
+        return $query->row();
+    }
 
 }

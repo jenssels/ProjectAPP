@@ -17,8 +17,8 @@ class Personeelsfeest_model extends CI_Model {
         parent::__construct();
     }    
     
+    // Jens Sels - ophalen van alle personeelsfeesten
     function getAll(){
-        // Jens Sels - ophalen van alle personeelsfeesten
         $query = $this->db->get('personeelsfeest');
         return $query->result();
     }

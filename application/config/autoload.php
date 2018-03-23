@@ -60,6 +60,7 @@ $autoload['packages'] = array();
 */
 $autoload['libraries'] = array('email', 'template', 'database', 'session', 'authex');
 
+
 /*
 | -------------------------------------------------------------------
 |  Auto-load Drivers
