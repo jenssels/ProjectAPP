@@ -16,8 +16,13 @@ class Persoon_model extends CI_Model {
         parent::__construct();
     }
 
+    /**
+    *  Jens Sels - ophalen van alle gebruikers van geselecteerde personeelsfeest
+    * @param $feestId Id van personeelsfeest
+    * @return Alle personeelsleden van het personeelsfeest 
+    */
     function getAllPersoneelsLedenWherePersoneelsFeest($feestId) {
-        // Jens Sels - ophalen van alle gebruikers van geselecteerde personeelsfeest
+    
         $this->db->where('personeelsfeestId', $feestId);
         $this->db->where('typeId', '3');
         $query = $this->db->get('persoon');
@@ -25,8 +30,13 @@ class Persoon_model extends CI_Model {
         return $query->result();
     }
 
+    /**
+    *  Jens Sels - ophalen van alle gebruikers van geselecteerde personeelsfeest
+    * @param $feestId Id van personeelsfeest
+    * @return Alle vrijwilligers van het personeelsfeest 
+    */
     function getAllVrijwilligersWherePersoneelsFeest($feestId) {
-        // Jens Sels - ophalen van alle gebruikers van geselecteerde personeelsfeest
+        
         $this->db->where('personeelsfeestId', $feestId);
         $this->db->where('typeId', '2');
         $query = $this->db->get('persoon');
@@ -63,6 +73,26 @@ class Persoon_model extends CI_Model {
         $query = $this->db->get('persoon');
         
         return $query->row();
+    }
+
+    /**
+     * Zoekt in de tabel persoon naar een record dat match met de ingevoerde gegevens     
+     * @param type $email
+     * @param type $wachtwoord
+     * @param type $typeId
+     * @return Het record uit de databas dat voldoet aan de voorwaarden, false als er geen gevonden kan worden
+     */
+    function controleerAanmeldgegevens($email, $wachtwoord, $typeId) {
+        $this->db->where('email', $email);
+        $this->db->where('wachtwoord', $wachtwoord);
+        $this->db->where('typeId', $typeId);
+        $query = $this->db->get('persoon');
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return false;
+        }
     }
 
 }

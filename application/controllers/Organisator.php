@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -18,27 +19,14 @@ class Organisator extends CI_Controller {
      * map to /index.php/welcome/<method_name>
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
-    
-    public function __construct() {
-        parent::__construct();
-        
-        
-        }
-    
     public function index() {
-
-        if (!$this->authex->isAangemeld()) {
-            $data['titel'] = 'Home';
-            $data['paginaverantwoordelijke'] = 'Joren Synaeve';
-            $data['emailGebruiker'] = anchor('organisator/aanmelden', 'Organisator login');
-            $partials = array('hoofding' => 'hoofding',
-                'inhoud' => 'welkom_view',
-                'voetnoot' => 'voetnoot');
-            $this->template->load('main_master', $partials, $data);
-        } else {
-            redirect('organisator/personeelsFeestOverzicht');
-        }
-
+        $data['titel'] = 'Home';
+        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+        $data['emailGebruiker'] = anchor('organisator/login', 'Organisator login');
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'welkom_view',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
     }
 
     public function mail() {
@@ -79,30 +67,71 @@ class Organisator extends CI_Controller {
         $this->load->model('Shift_model');
     }
 
+    /** 
+    * Jens Sels - Tonen van overzicht personeelsfeesten
+    */
     public function personeelsFeestOverzicht() {
-        // Jens Sels - Tonen van overzicht personeelsfeesten
+        
         $this->load->model('Personeelsfeest_model');
         $data['personeelsFeesten'] = $this->Personeelsfeest_model->getAll();
 
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "personeelsFeestOverzicht",
-            "voetnoet" => "voetnoet");
-        $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
+            "voetnoot" => "voetnoot");
+        $data['emailGebruiker'] = 'jenssels1998@gmail.com';
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
         
-        $this->load->model('personeelsfeest_model');
-        $data['personeelsFeesten'] = $this->personeelsfeest_model->getAll();
-        
-        $partials = array("hoofding" => "hoofding",
-            "inhoud" => "personeelsFeestOverzicht",
-            "voetnoot" => "voetnoot");
         $this->template->load('main_master', $partials, $data);
     }
     
+    /** 
+    * Jens Sels - Openen van pagina om personeelsfeest aan te maken of wijzigen
+    * @param $feestId Id van personeelsfeest of waarde = 'nieuw' als je nieuw personeelsfeest wilt aanmaken
+    */
+    
+    public function personeelsFeestAanmakenForm($feestId){
+        if ($feestId == 'nieuw'){
+            $data['titel'] = 'Personeelsfeest aanmaken';
+            $feest = new stdClass();
+            $feest->id = 0;
+            $feest->naam = "";
+            $feest->beschrijving = "";
+            $feest->datum = "";
+            $feest->inschrijfdeadline = "";
+            $data['feest'] = $feest;          
+        }
+        else{
+            $this->load->model('Personeelsfeest_model');
+            $data['feest'] = $this->Personeelsfeest_model->get($feestId);
+            $data['titel'] = 'Personeelsfeest bewerken';
+        }
+        
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "personeelsFeestAanmaken",
+            "voetnoot" => "voetnoot");
+        $data['emailGebruiker'] = 'jenssels1998@gmail.com';
+        $data['paginaverantwoordelijke'] = 'Jens Sels';
+        
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    public function personeelsFeestAanmaken(){
+        $feest = new stdClass();
+        $feest->id = $this->get->post('id');
+        $feest->naam = $this->get->post('naam');
+        $feest->beschrijving = $this->get->post('beschrijving');
+        $feest->datum = $this->get->post('datum');
+        $feest->inschrijfdatum = $this->get->post('inschrijfdatum');
+        
+    }
+    
+    /**
+    *  Jens Sels - Ophalen vrijwilligers en personeelsleden en tonen in view met ajax
+    */
     public function ajaxHaalDeelnemersOp(){
+        
         $id = $this->input->get('id');
-        // Jens Sels - Ophalen vrijwilligers en personeelsleden
         $this->load->model('persoon_model');
         
         $data['personeelsLeden'] = $this->persoon_model->getAllPersoneelsLedenWherePersoneelsFeest($id);
@@ -135,19 +164,7 @@ class Organisator extends CI_Controller {
         $typeId = 1;
         
         $this->load->model('persoon_model');
-        if ($this->authex->meldAan($email, $wachtwoord, $typeId)) {
-                redirect('organisator/index');
-            } else {
-                $data['titel'] = 'Aanmelden_Fout';
-                $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
-                $data['emailGebruiker'] = '';
-                $data['foutmelding'] = "De opgegeven combinatie werd niet gevonden als een organisator!";
-                $partials = array("hoofding" => "hoofding",
-                    "inhoud" => "errors/error",
-                    "voetnoot" => "voetnoot");
-                $this->template->load('main_master', $partials, $data);
-            }
-        /*$data[''] = $this->organisator_model->controleerAanmeldgegevens($email, $wachtwoord, $typeId);*/
+        $data[''] = $this->organisator_model->controleerAanmeldgegevens($email, $wachtwoord, $typeId);
     }
     
     /**
@@ -174,6 +191,7 @@ class Organisator extends CI_Controller {
         } else {
             $organisator = new stdClass();
             
+            $organisator->gebruikersnaam = $this->input->post('gebruikersnaam');
             $organisator->voornaam = $this->input->post('voornaam');
             $organisator->naam = $this->input->post('naam');
             $organisator->email = $this->input->post('email');
@@ -186,3 +204,4 @@ class Organisator extends CI_Controller {
         }
     }
 }
+
