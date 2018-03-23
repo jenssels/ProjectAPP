@@ -16,11 +16,17 @@ class Album_model extends CI_Model {
     // +----------------------------------------------------------
     // | Album model
     // +----------------------------------------------------------
-    // | Auteur: [naam]
+    // | Auteur: Stef Goor
     // +----------------------------------------------------------
 
     function __construct()
     {
         parent::__construct();
-    }                       
+    }
+    
+    // Stef Goor - ophalen van alle albums
+    function getAll(){
+        $query = $this->db->get('album');
+        return $query->result();
+    }
 }
