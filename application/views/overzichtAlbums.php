@@ -17,8 +17,12 @@
 <div>
     <?php
     foreach ($albums as $album) {
-        echo $album->naam;
-        echo '<br>';
+        echo '<div class="card" style="width: 18rem;">';
+        echo '<div class="card-body">';
+        echo '<h5 class="card-title">' . $album->naam . '</h5>';
+        echo '<p class="card-text">Bekijk hier alle fotos van dit album!</p>';
+        echo '<a href="#" class="btn btn-primary">Bekijk de fotos!</a>';
+        echo '</div></div><br>';
     }
     ?>
 </div>

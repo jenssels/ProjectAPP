@@ -136,8 +136,17 @@ class Organisator extends CI_Controller {
         
         $this->load->model('persoon_model');
         if ($this->authex->meldAan($email, $wachtwoord, $typeId)) {
-                redirect('organisator/personeelsFeestOverzicht');
-            } 
+                redirect('organisator/index');
+            } else {
+                $data['titel'] = 'Aanmelden_Fout';
+                $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
+                $data['emailGebruiker'] = '';
+                $data['foutmelding'] = "De opgegeven combinatie werd niet gevonden als een organisator!";
+                $partials = array("hoofding" => "hoofding",
+                    "inhoud" => "errors/error",
+                    "voetnoot" => "voetnoot");
+                $this->template->load('main_master', $partials, $data);
+            }
         /*$data[''] = $this->organisator_model->controleerAanmeldgegevens($email, $wachtwoord, $typeId);*/
     }
     
