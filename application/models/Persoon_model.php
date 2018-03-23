@@ -72,7 +72,7 @@ class Persoon_model extends CI_Model {
         $this->db->where('hashcode', $hashcode);
         $query = $this->db->get('persoon');
         
-        return $query->result();
+        return $query->row();
     }
 
 }
