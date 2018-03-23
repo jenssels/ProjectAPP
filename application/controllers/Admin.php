@@ -73,17 +73,11 @@ class Admin extends CI_Controller {
 
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "personeelsFeestOverzicht",
-            "voetnoet" => "voetnoet");
+            "voetnoot" => "voetnoot");
         $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
         $data['title'] = 'Apple toestellen';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
         
-        $this->load->model('personeelsfeest_model');
-        $data['personeelsFeesten'] = $this->personeelsfeest_model->getAll();
-        
-        $partials = array("hoofding" => "hoofding",
-            "inhoud" => "personeelsFeestOverzicht",
-            "voetnoot" => "voetnoot");
         $this->template->load('main_master', $partials, $data);
     }
     
