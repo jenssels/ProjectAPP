@@ -10,13 +10,13 @@ class Personeel extends CI_Controller {
             $this->load->model('persoon_model');
             $personeelslid = $this->persoon_model->getPersoneelslid($hashcode);
             $this->session->set_userdata('emailgebruiker', $personeelslid->email);
-            $data['emailgebruiker'] = $this->session->userdata('emailgebruiker');
+            $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
             
             $data['albums'] = $this->Album_model->getAll();
             $data['fotos'] = $this->Foto_model->getAll();
             
             $partials = array('hoofding' => 'hoofding',
-            'inhoud' => 'persoon/dagindelingInvullen',
+            'inhoud' => 'personeel/dagindelingInvullen',
             'voetnoot' => 'voetnoot');
             $this->template->load('main_master', $partials, $data);
 	}
