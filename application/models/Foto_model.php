@@ -9,11 +9,24 @@ class Foto_model extends CI_Model {
     // +----------------------------------------------------------
     // | Foto model
     // +----------------------------------------------------------
-    // | Auteur: [naam]
+    // | Auteur: Stef Goor
     // +----------------------------------------------------------
 
     function __construct()
     {
         parent::__construct();
-    }                       
+    }
+    
+    // Stef Goor - ophalen van alle foto's
+    function getAll(){
+        $query = $this->db->get('foto');
+        return $query->result();
+    }
+    
+    // Stef Goor - ophalen van alle foto's van een bepaald album
+    function getAllByAlbum($albumId){
+        $this->db->where('albumId', $albumId);
+        $query = $this->db->get('foto');
+        return $query->result();
+    }
 }

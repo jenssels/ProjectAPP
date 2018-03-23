@@ -21,7 +21,7 @@
     <?php
     $attributenFormulier = array('id' => 'mijnFormulier',
         'role' => 'form');
-    echo form_open('organisator/registreerNieuweOrganisator', $attributenFormulier)
+    echo form_open('organisator/controleerAanmelden', $attributenFormulier)
     ?>
 
     <div class="form-group">

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -203,3 +204,4 @@ class Organisator extends CI_Controller {
         }
     }
 }
+

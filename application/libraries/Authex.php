@@ -21,6 +21,31 @@ class Authex {
     public function __construct() {
         $CI = & get_instance();
 
-        $CI->load->model('');
+        $CI->load->model('persoon_model');
+    }
+    
+    function meldAan($email, $wachtwoord, $typeId) {
+        // Jorne Lambrechts - Meldt de organisator aan a.d.h.v. zijn e-mail en wachtwoord
+        $CI = & get_instance();
+
+        $organisator = $CI->persoon_model->getOrganisator($email, $wachtwoord, $typeId);
+
+        if ($organisator == null) {
+            return false;
+        } else {
+            $CI->session->set_userdata('organisator_id', $organisator->id);
+            return true;
+        }
+    }
+    
+        function isAangemeld() {
+        // gebruiker is aangemeld als sessievariabele organisator_id bestaat
+        $CI = & get_instance();
+
+        if ($CI->session->has_userdata('organisator_id')) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
