@@ -52,13 +52,14 @@ class Organisator extends CI_Controller {
     
     public function personeelsFeestAanmakenForm($feestId){
         if ($feestId == 'nieuw'){
+            $nu = date("Y-m-d");
             $data['titel'] = 'Personeelsfeest aanmaken';
             $feest = new stdClass();
             $feest->id = 0;
             $feest->naam = "";
             $feest->beschrijving = "";
-            $feest->datum = "";
-            $feest->inschrijfdeadline = "";
+            $feest->datum = $nu;
+            $feest->inschrijfdeadline = $nu;
             $data['feest'] = $feest;          
         }
         else{
