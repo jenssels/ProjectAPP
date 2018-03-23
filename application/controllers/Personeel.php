@@ -12,9 +12,6 @@ class Personeel extends CI_Controller {
             $this->session->set_userdata('emailgebruiker', $personeelslid->email);
             $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
             
-            $data['albums'] = $this->Album_model->getAll();
-            $data['fotos'] = $this->Foto_model->getAll();
-            
             $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'personeel/dagindelingInvullen',
             'voetnoot' => 'voetnoot');
@@ -26,12 +23,12 @@ class Personeel extends CI_Controller {
             $data['paginaverantwoordelijke'] = 'Stef Goor';
             
             $this->load->model('persoon_model');
-            $personeelslid = $this->persoon_model->getPersoneelslid($hashcode);
-            $this->session->set_userdata('emailgebruiker', $personeelslid->email);
-            $data['emailgebruiker'] = $this->session->userdata('emailgebruiker');
+            $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
             
-            $data['albums'] = $this->Album_model->getAll();
-            $data['fotos'] = $this->Foto_model->getAll();
+            $this->load->model('album_model');
+            $data['albums'] = $this->album_model->getAll();
+            $this->load->model('foto_model');
+            $data['fotos'] = $this->foto_model->getAll();
             
             $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'overzichtAlbums',
