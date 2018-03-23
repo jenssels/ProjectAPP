@@ -1,7 +1,7 @@
 <?php
 /**
  * @file error.php
- * @param $foutmelding
+ * @param $foutmelding Een string die de foutmelding bevat.
  * 
  * View waarin een foutmelding getoond wordt.
  * 
