@@ -2,7 +2,7 @@
     function haalDeelnemersOp (id) {
         // Jens Sels - Ophalen personeelsleden en vrijwilligers en tonen in modal
         $.ajax({type : "GET",
-                url : site_url + "/Admin/ajaxHaalDeelnemersOp",
+                url : site_url + "/Organisator/ajaxHaalDeelnemersOp",
                 data : { id: id },
                 success : function(result){
                     $('#resultaat').html(result);

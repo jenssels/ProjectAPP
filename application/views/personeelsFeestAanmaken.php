@@ -1,11 +1,11 @@
 <script>
     $(document).ready(function(){
-//        console.log('ready');
-//        var datumNu =  new Date()
-//        console.log(datumNu);
-//        $(".form_datetime").datepicker({ dateFormat: "dd-mm-yy" });
-//        $("#datum").value(datumNu);
-    });
+        $( ".date" ).datepicker({
+            format: 'dd/mm/yyyy',
+            language: 'nl-BE'
+        });    
+        });
+
     
 </script>
 <?php
@@ -32,6 +32,9 @@
                     'placeholder' => 'Naam', 
                     'required' => 'required'));
             ?>
+            <div class='help-block with-errors'>
+                    
+            </div>
         </div>
         <div class="form-group">
             <?php
@@ -43,12 +46,15 @@
                     'placeholder' => 'Beschrijving', 
                     'required' => 'required'));
             ?>
+            <div class='help-block with-errors'>
+                    
+            </div>
         </div>
         <div class="form-group">
             <?php
             echo form_labelpro('Datum', 'datum');
             ?>
-            <div class="input-group-date" data-provide="datepicker" id="datum1" data-date-format="dd/mm/yyyy" data-date-language = "nl-BE">
+            <div class="input-group date" data-provide="datepicker">
             <?php
             echo form_input(array('name' => 'datum',
                 'id' => 'datum',
@@ -60,24 +66,31 @@
                 <div class="input-group-addon">
                     <span class="glyphicon glyphicon-calander"></span>
                 </div>
+
+            </div>
                 <div class='help-block with-errors'>
                     
                 </div>
-            </div>
         </div>
         <div class="form-group">
             <?php
-            echo form_labelpro('Deadline', 'deadline');
+            echo form_labelpro('Inschrijf deadline', 'inschrijfdeadline');
             ?>
-            <div class="input-group-date" data-provide="datepicker" id="datum1" data-date-format="dd/mm/yyyy" data-date-language = "nl-BE">
+            <div class="input-group date" data-provide="datepicker">
             <?php
-            echo form_input(array('name' => 'deadline',
-                'id' => 'datum',
+            echo form_input(array('name' => 'inschrijfdeadline',
+                'id' => 'inschrijfdeadline',
                 'value' => zetomnaarDDMMYYYY($feest->inschrijfdeadline),
                 'class' => 'form-control', 
                 'placeholder' => '00/00/0000', 
                 'required' => 'required'));
             ?>
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-calander"></span>
+                </div>
+            </div>
+            <div class='help-block with-errors'>
+                    
             </div>
         </div>
         <?php

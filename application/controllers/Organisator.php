@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -28,45 +27,6 @@ class Organisator extends CI_Controller {
             'voetnoot' => 'voetnoot');
         $this->template->load('main_master', $partials, $data);
     }
-
-    public function mail() {
-        $config['useragent'] = 'CodeIgniter';
-        $config['protocol'] = 'smtp';
-        $config['smtp_host'] = 'ssl://smtp.gmail.com';
-        $config['smtp_user'] = 'team17project@gmail.com'; // Your gmail id
-        $config['smtp_pass'] = 'project3'; // Your gmail Password
-        $config['smtp_port'] = 465;
-        $config['wordwrap'] = TRUE;
-        $config['wrapchars'] = 76;
-        $config['mailtype'] = 'html';
-        $config['charset'] = 'iso-8859-1';
-        $config['validate'] = FALSE;
-        $config['priority'] = 3;
-        $config['newline'] = "\r\n";
-        $config['crlf'] = "\r\n";
-
-        $this->load->library('email');
-        $this->email->initialize($config);
-
-        $this->email->from('team17project@gmail.com', 'TSS DEV');
-        $this->email->to('jenssels1998@gmail.com');
-        $this->email->cc('bla');
-
-        $this->email->subject('Email Test');
-        $this->email->message('Testing the email class.');
-
-        $this->email->send();
-    }
-
-    public function mailView() {
-        // Jens Sels - Tonen van pagina om mails te versturen
-        $this->load->model('Persoon_model');
-        $this->load->model('Dagindeling_model');
-        $this->load->model('Taak_model');
-        $this->load->model('Optie_model');
-        $this->load->model('Shift_model');
-    }
-
     /** 
     * Jens Sels - Tonen van overzicht personeelsfeesten
     */
@@ -118,19 +78,26 @@ class Organisator extends CI_Controller {
     
     public function personeelsFeestAanmaken(){
         $feest = new stdClass();
-        $feest->id = $this->get->post('id');
-        $feest->naam = $this->get->post('naam');
-        $feest->beschrijving = $this->get->post('beschrijving');
-        $feest->datum = $this->get->post('datum');
-        $feest->inschrijfdatum = $this->get->post('inschrijfdatum');
+        $feest->id = $this->input->post('id');
+        $feest->naam = $this->input->post('naam');
+        $feest->beschrijving = $this->input->post('beschrijving');
+        $feest->datum = zetOmNaarYYYYMMDD($this->input->post('datum'));
+        $feest->inschrijfdeadline = zetOmNaarYYYYMMDD($this->input->post('inschrijfdeadline'));
+        $this->load->model('Personeelsfeest_model');
+        if($feest->id == 0){
+            $feest->id = $this->Personeelsfeest_model->insert($feest);
+        }
+        else{
+            $this->Personeelsfeest_model->update($feest);
+        }
         
+        $this->personeelsFeestOverzicht();
     }
     
     /**
     *  Jens Sels - Ophalen vrijwilligers en personeelsleden en tonen in view met ajax
     */
-    public function ajaxHaalDeelnemersOp(){
-        
+    public function ajaxHaalDeelnemersOp(){      
         $id = $this->input->get('id');
         $this->load->model('persoon_model');
         

@@ -38,4 +38,22 @@ class Personeelsfeest_model extends CI_Model {
         $query = $this->db->get('personeelsfeest');
         return $query->row();
     }
+    /**
+    *  Jens Sels - nieuw personeelsfeest aanmaken
+    * @param $feest personeelsfeest object
+    * @return id van nieuw personeelsfeest
+    */
+    function insert($feest){
+        $this->db->insert('personeelsfeest', $feest);
+        return $this->db->insert_id();
+    }
+    /**
+    *  Jens Sels - nieuw personeelsfeest aanmaken
+    * @param $feest personeelsfeest object
+    */
+    function update($feest){
+        $this->db->where('id', $feest->id);
+        $this->db->replace('personeelsfeest', $feest);
+        
+    }
 }
