@@ -66,24 +66,71 @@ class Organisator extends CI_Controller {
         $this->load->model('Shift_model');
     }
 
+    /** 
+    * Jens Sels - Tonen van overzicht personeelsfeesten
+    */
     public function personeelsFeestOverzicht() {
-        // Jens Sels - Tonen van overzicht personeelsfeesten
+        
         $this->load->model('Personeelsfeest_model');
         $data['personeelsFeesten'] = $this->Personeelsfeest_model->getAll();
 
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "personeelsFeestOverzicht",
             "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
+        $data['emailGebruiker'] = 'jenssels1998@gmail.com';
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
         
         $this->template->load('main_master', $partials, $data);
     }
     
+    /** 
+    * Jens Sels - Openen van pagina om personeelsfeest aan te maken of wijzigen
+    * @param $feestId Id van personeelsfeest of waarde = 'nieuw' als je nieuw personeelsfeest wilt aanmaken
+    */
+    
+    public function personeelsFeestAanmakenForm($feestId){
+        if ($feestId == 'nieuw'){
+            $data['titel'] = 'Personeelsfeest aanmaken';
+            $feest = new stdClass();
+            $feest->id = 0;
+            $feest->naam = "";
+            $feest->beschrijving = "";
+            $feest->datum = "";
+            $feest->inschrijfdeadline = "";
+            $data['feest'] = $feest;          
+        }
+        else{
+            $this->load->model('Personeelsfeest_model');
+            $data['feest'] = $this->Personeelsfeest_model->get($feestId);
+            $data['titel'] = 'Personeelsfeest bewerken';
+        }
+        
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "personeelsFeestAanmaken",
+            "voetnoot" => "voetnoot");
+        $data['emailGebruiker'] = 'jenssels1998@gmail.com';
+        $data['paginaverantwoordelijke'] = 'Jens Sels';
+        
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    public function personeelsFeestAanmaken(){
+        $feest = new stdClass();
+        $feest->id = $this->get->post('id');
+        $feest->naam = $this->get->post('naam');
+        $feest->beschrijving = $this->get->post('beschrijving');
+        $feest->datum = $this->get->post('datum');
+        $feest->inschrijfdatum = $this->get->post('inschrijfdatum');
+        
+    }
+    
+    /**
+    *  Jens Sels - Ophalen vrijwilligers en personeelsleden en tonen in view met ajax
+    */
     public function ajaxHaalDeelnemersOp(){
+        
         $id = $this->input->get('id');
-        // Jens Sels - Ophalen vrijwilligers en personeelsleden
         $this->load->model('persoon_model');
         
         $data['personeelsLeden'] = $this->persoon_model->getAllPersoneelsLedenWherePersoneelsFeest($id);

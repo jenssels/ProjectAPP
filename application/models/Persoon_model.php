@@ -16,8 +16,13 @@ class Persoon_model extends CI_Model {
         parent::__construct();
     }
 
+    /**
+    *  Jens Sels - ophalen van alle gebruikers van geselecteerde personeelsfeest
+    * @param $feestId Id van personeelsfeest
+    * @return Alle personeelsleden van het personeelsfeest 
+    */
     function getAllPersoneelsLedenWherePersoneelsFeest($feestId) {
-        // Jens Sels - ophalen van alle gebruikers van geselecteerde personeelsfeest
+    
         $this->db->where('personeelsfeestId', $feestId);
         $this->db->where('typeId', '3');
         $query = $this->db->get('persoon');
@@ -25,8 +30,13 @@ class Persoon_model extends CI_Model {
         return $query->result();
     }
 
+    /**
+    *  Jens Sels - ophalen van alle gebruikers van geselecteerde personeelsfeest
+    * @param $feestId Id van personeelsfeest
+    * @return Alle vrijwilligers van het personeelsfeest 
+    */
     function getAllVrijwilligersWherePersoneelsFeest($feestId) {
-        // Jens Sels - ophalen van alle gebruikers van geselecteerde personeelsfeest
+        
         $this->db->where('personeelsfeestId', $feestId);
         $this->db->where('typeId', '2');
         $query = $this->db->get('persoon');
