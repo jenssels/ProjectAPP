@@ -18,14 +18,27 @@ class Organisator extends CI_Controller {
      * map to /index.php/welcome/<method_name>
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
+    
+    public function __construct() {
+        parent::__construct();
+        
+        
+        }
+    
     public function index() {
-        $data['titel'] = 'Home';
-        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
-        $data['emailGebruiker'] = anchor('organisator/aanmelden', 'Organisator login');
-        $partials = array('hoofding' => 'hoofding',
-            'inhoud' => 'welkom_view',
-            'voetnoot' => 'voetnoot');
-        $this->template->load('main_master', $partials, $data);
+
+        if (!$this->authex->isAangemeld()) {
+            $data['titel'] = 'Home';
+            $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+            $data['emailGebruiker'] = anchor('organisator/aanmelden', 'Organisator login');
+            $partials = array('hoofding' => 'hoofding',
+                'inhoud' => 'welkom_view',
+                'voetnoot' => 'voetnoot');
+            $this->template->load('main_master', $partials, $data);
+        } else {
+            redirect('organisator/personeelsFeestOverzicht');
+        }
+
     }
 
     public function mail() {
@@ -122,7 +135,10 @@ class Organisator extends CI_Controller {
         $typeId = 1;
         
         $this->load->model('persoon_model');
-        $data[''] = $this->organisator_model->controleerAanmeldgegevens($email, $wachtwoord, $typeId);
+        if ($this->authex->meldAan($email, $wachtwoord, $typeId)) {
+                redirect('organisator/personeelsFeestOverzicht');
+            } 
+        /*$data[''] = $this->organisator_model->controleerAanmeldgegevens($email, $wachtwoord, $typeId);*/
     }
     
     /**
