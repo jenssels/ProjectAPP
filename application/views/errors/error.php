@@ -8,7 +8,7 @@
  */
 ?>
 <div class="page-header">
-    Oeps! Er liep iets fout!
+    <h1>Oeps! Er liep iets fout!</h1>
 </div>
 <div>
     <?php echo $foutmelding ?>
