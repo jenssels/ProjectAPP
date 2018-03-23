@@ -1,6 +1,10 @@
-<nav class="navbar navbar-default navbar-fixed-top text-white bg-TMOrange">
-  <div class="container">
-      <h1>Personeelsfeest</h1>
-      <span class="navbar-text"><i class="fas fa-user"></i> <?php echo $emailGebruiker ?></span>
-  </div>
+<nav id="hoofding" class="navbar navbar-default navbar-fixed-top text-white bg-TMOrange">
+    <div class="container">
+        <h1><?php echo anchor('organisator/index', 'Personeelsfeest') ?></h1>
+        <?php
+        if ($emailGebruiker != '') {
+            echo "<span class='navbar-text'><i class='fas fa-user'></i> $emailGebruiker</span>";
+        }
+        ?>  
+    </div>
 </nav>

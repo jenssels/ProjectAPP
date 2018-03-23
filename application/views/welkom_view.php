@@ -24,6 +24,7 @@
 ?>
 <div class="page-header">
   <h1>Welkom</h1>
+</div>
   <h5>Doel van de applicatie</h5>
   <p>
       Deze applicatie werd gerealiseerd om het organiseren van personeelsfeesten vlotter te laten verlopen. <br>
@@ -45,4 +46,3 @@
       Ook een vrijwilliger zal enkel toegang krijgen tot de applicatie via mail. Hij/zij zal op de applicatie kunnen doorgeven wanneer hij/zij kan werken.
       Deze taken en shiften zijn vooraf opgesteld door de organisator.
   </p>
-</div>

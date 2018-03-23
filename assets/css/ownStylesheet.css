@@ -52,3 +52,12 @@ body {
     background-color: #009cab;    
 }
 
+/* Titel in hoofding */
+#hoofding a {
+    color: white;
+    text-decoration: none;
+}
+
+#hoofding a:hover {
+    text-decoration: underline;
+}

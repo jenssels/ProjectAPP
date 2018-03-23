@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Admin extends CI_Controller {
+class Organisator extends CI_Controller {
     /**
      * Index Page for this controller.
      *
@@ -19,9 +19,9 @@ class Admin extends CI_Controller {
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
     public function index() {
-        $data['title'] = 'Home';
+        $data['titel'] = 'Home';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
-        $data['emailGebruiker'] = '';
+        $data['emailGebruiker'] = anchor('organisator/login', 'Organisator login');
         $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'welkom_view',
             'voetnoot' => 'voetnoot');
@@ -75,7 +75,7 @@ class Admin extends CI_Controller {
             "inhoud" => "personeelsFeestOverzicht",
             "voetnoot" => "voetnoot");
         $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
-        $data['title'] = 'Apple toestellen';
+        $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
         
         $this->template->load('main_master', $partials, $data);
@@ -92,13 +92,67 @@ class Admin extends CI_Controller {
         $this->load->view('ajax_overzichtGebruikers', $data);
     }
 
-    public function login() {
-        $data['title'] = 'Login';
+    /**
+     * Toont de inlogpagina voor de organisator.
+     */
+    public function aanmelden() {
+        $data['titel'] = 'Aanmelden';
         $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
-        $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
+        $data['emailGebruiker'] = '';
         $partials = array("hoofding" => "hoofding",
-            "inhoud" => "inloggen",
+            "inhoud" => "organisator/aanmelden",
             "voetnoot" => "voetnoot");
         $this->template->load('main_master', $partials, $data);
+    }
+    
+    /**
+     * Controleert de gegevens die ingevuld zijn door de organisator om in te loggen.
+     * Indien ze juist zijn, gaat hij naar ... pagina.
+     * Indien ze fout zijn, wordt er een foutmelding getoond.
+     */
+    public function controleerAanmelden() {
+        $email = $this->input->post('email');
+        $wachtwoord = $this->input->post('wachtwoord');
+        $typeId = 1;
+        
+        $this->load->model('persoon_model');
+        $data[''] = $this->organisator_model->controleerAanmeldgegevens($email, $wachtwoord, $typeId);
+    }
+    
+    /**
+     * Toont een formulierpagina om een nieuwe organisator toe te voegen.
+     */
+    public function maakNieuweOrganisator() {
+        $data['titel'] = 'Nieuwe organisator toevoegen';
+        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+        $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'organisator/organisator_form',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    /**
+     * Registreert de nieuwe gebruiker indien er op 'Bevestigen' geklikt werd. 
+     * Gaat terug naar de vorige pagina wanneer er op 'Annuleren' geklikt werd.
+     */
+    public function registreerNieuweOrganisator() {
+        $knop = $this->input->post('knop');
+        if ($knop == "Annuleren") {
+            redirect('');
+        } else {
+            $organisator = new stdClass();
+            
+            $organisator->gebruikersnaam = $this->input->post('gebruikersnaam');
+            $organisator->voornaam = $this->input->post('voornaam');
+            $organisator->naam = $this->input->post('naam');
+            $organisator->email = $this->input->post('email');
+            $organisator->wachtwoord = $this->input->post('wachtwoord');
+            $organisator->hashcode = random_string('alnum', 16);
+            $organisator->typeId = 1;
+            
+            $this->load->model('persoon_model');
+            $this->persoon_model->insertOrganisator($organisator);
+        }
     }
 }
