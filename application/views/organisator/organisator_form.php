@@ -27,17 +27,6 @@ echo form_open('organisator/registreerNieuweOrganisator', $attributenFormulier)
 
 <div class="form-group">
     <?php
-    echo form_labelpro('Gebruikersnaam', 'gebruikersnaam');
-    echo form_input(array('name' => 'gebruikersnaam',
-        'id' => 'gebruikersnaam',  
-        'class' => 'form-control', 
-        'placeholder' => 'Gebruikersnaam', 
-        'required' => 'required'));
-    ?>
-</div>
-
-<div class="form-group">
-    <?php
     echo form_labelpro('Voornaam', 'voornaam');
     echo form_input(array('name' => 'voornaam',
         'id' => 'voornaam',  
