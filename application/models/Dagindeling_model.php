@@ -22,8 +22,8 @@ class Dagindeling_model extends CI_Model {
      * @return alle dagindelingen van een personeelsfeest
      */
     function getAllWherePersoneelsfeest($feestId){
-        $this->db->where('id', $feestId);
-        $query = $this->db->get('personeelsfeest');
+        $this->db->where('personeelsfeestid', $feestId);
+        $query = $this->db->get('dagindeling');
         return $query->result();
     }
     
@@ -34,12 +34,12 @@ class Dagindeling_model extends CI_Model {
     function delete($dagindelingId){
         $this->load->model('Optie_model');
         $this->load->model('Taak_model');      
-        $opties = $this->Optie_model->getAllWhereDagindeling($dagindeling->id);
+        $opties = $this->Optie_model->getAllWhereDagindeling($dagindelingId);
         // Door alle opties gaan en ze verwijderen
         foreach($opties as $optie){
             $this->Optie_model->delete($optie->id);
         }
-        $taken = $this->Taak_model->getAllWhereDagindeling($dagindeling->id);
+        $taken = $this->Taak_model->getAllWhereDagindeling($dagindelingId);
         // Door alle taken gaan en ze verwijderen
         foreach($taken as $taak){
             $this->Taak_model->delete($taak->id);

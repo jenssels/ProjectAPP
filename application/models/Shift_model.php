@@ -23,7 +23,7 @@ class Shift_model extends CI_Model {
      * @return Alle shifts van een taak
      */
     function getAllWhereTaak($taakId){
-        $this->db->where('id', $taakId);
+        $this->db->where('taakid', $taakId);
         $query = $this->db->get('shift');
         return $query->result();
     }

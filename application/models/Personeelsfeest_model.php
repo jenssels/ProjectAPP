@@ -23,7 +23,6 @@ class Personeelsfeest_model extends CI_Model {
     */
 
     function getAll(){
-
         $query = $this->db->get('personeelsfeest');
         return $query->result();
     }
@@ -63,21 +62,19 @@ class Personeelsfeest_model extends CI_Model {
                
         $dagindelingen = $this->Dagindeling_model->getAllWherePersoneelsfeest($feestId);  
         // Door alle dagindelingen gaan en ze verwijderen
-        if($dagindelingen != null){
             foreach($dagindelingen as $dagindeling){
                 $this->Dagindeling_model->delete($dagindeling->id);
             }
-        }
+        
         
         $personen = $this->Persoon_model->getAllWherePersoneelsfeest($feestId);
         // Door alle personen gaan en ze verwijderen
-        if($personen != null){
             foreach($personen as $persoon){
                 $this->Persoon_model->delete($persoon->id);
             }
-        }
         
-        $this->db->where('delete', $feestId);
+        
+        $this->db->where('id', $feestId);
         $this->db->delete('personeelsfeest');
     }
 }

@@ -22,7 +22,7 @@ class Taak_model extends CI_Model {
      * @return Alle taken van een dagindeling
      */
     function getAllWhereDagindeling($dagindelingId){
-        $this->db->where('id', $dagindelingId);
+        $this->db->where('dagindelingid', $dagindelingId);
         $query = $this->db->get('taak');
         return $query->result();
     }
