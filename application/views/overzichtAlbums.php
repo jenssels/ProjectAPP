@@ -16,8 +16,13 @@
 
 <div>
     <?php
+    //Stef Goor - Toon alle albums met hun foto
     foreach ($albums as $album) {
         echo '<div class="card" style="width: 18rem;">';
+        //Als er geen fotos in het album zitten wordt er geen foto getoond
+        if($album->eersteFoto != NULL){
+            echo toonAfbeelding($album->eersteFoto, 'class="card-img-top"');
+        }
         echo '<div class="card-body">';
         echo '<h5 class="card-title">' . $album->naam . '</h5>';
         echo '<p class="card-text">Bekijk hier alle fotos van dit album!</p>';

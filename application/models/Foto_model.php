@@ -29,4 +29,17 @@ class Foto_model extends CI_Model {
         $query = $this->db->get('foto');
         return $query->result();
     }
+    
+    // Stef Goor - ophalen van eerste foto van een bepaald album om te tonen op het overzicht van de albums
+    function getEersteFoto($albumId){
+        $this->db->where('albumId', $albumId);
+        $query = $this->db->get('foto');
+        if ($query->num_rows() > 0){
+            return $query->first_row()->naam;
+        }
+        else{
+            return false;
+        }
+        
+    }
 }
