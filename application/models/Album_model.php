@@ -31,13 +31,13 @@ class Album_model extends CI_Model {
     }
     
     // Stef Goor - ophalen van alle albums met de bijhorende fotos
-    function getAllWithFotos($albumId){
+    function getAllWithFotos(){
         $this->db->order_by('id', 'asc');
         $query = $this->db->get('album');
         $albums = $query->result();
         
+        //Koppeleing met tabel foto
         $this->load->model('foto_model');
-
         foreach ($albums as $album) {
             $album->fotos = $this->foto_model->getAllByAlbum($album->id);
         }
