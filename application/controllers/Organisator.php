@@ -117,7 +117,12 @@ class Organisator extends CI_Controller {
      * Indien ze fout zijn, wordt er een foutmelding getoond.
      */
     public function controleerAanmelden() {
-        $email = $this->input->post('');
+        $email = $this->input->post('email');
+        $wachtwoord = $this->input->post('wachtwoord');
+        $typeId = 1;
+        
+        $this->load->model('persoon_model');
+        $data[''] = $this->organisator_model->controleerAanmeldgegevens($email, $wachtwoord, $typeId);
     }
     
     /**

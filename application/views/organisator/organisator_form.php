@@ -7,6 +7,12 @@
  */
 ?>
 
+<script>
+    $(document).ready(function(){
+        
+    });
+</script>
+
 <div class="page-header">
   <h1>Organisator toevoegen</h1>
 </div>
