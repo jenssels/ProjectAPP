@@ -9,13 +9,12 @@ class Personeel extends CI_Controller {
             $data['paginaverantwoordelijke'] = 'Joren Synaeve';
             $this->load->model('persoon_model');
             $personeelslid = $this->persoon_model->getPersoneelslid($hashcode);
-            $data['emailgebruiker'] = $personeelslid->email;
+            $this->session->set_userdata('emailgebruiker', $personeelslid->email);
+            $data['emailgebruiker'] = $this->session->userdata('emailgebruiker');
             
             $partials = array('hoofding' => 'hoofding',
-            'inhoud' => 'organisator/organisator_form',
+            'inhoud' => 'persoon/dagindelingInvullen',
             'voetnoot' => 'voetnoot');
             $this->template->load('main_master', $partials, $data);
-	}
-        
-        public function 
+	}        
 }
