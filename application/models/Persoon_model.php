@@ -15,14 +15,49 @@ class Persoon_model extends CI_Model {
     function __construct() {
         parent::__construct();
     }
+    
+    /**
+     * Jens Sels - Ophalen van alle personen van een personeelsfeest
+     * @param $feestId Id van een personeelsfeest
+     * @return Alle personen van een personeelsfeest
+     */
+    function getAllWherePersoneelsFeest($feestId){
+        $this->db->where('personeelsfeestId', $feestId);
+        $query = $this->db->get('persoon');
+
+        return $query->result();
+    }
+    
+    /**
+     * Jens Sels - Verwijder een persoon en al zijn keuzes voor opties en taken
+     * @param $persoonId Id van een persoon
+     */
+    function delete($persoonId){
+        $this->load->model('OptieDeelname_model');
+        $this->load->model('TaakDeelname_model');
+        
+        $optieDeelnames = $this->OptieDeelname_model->getAllWherePersoon();
+        // Alle keuzes van opties doorlopen en ze verwijderen
+        foreach($optieDeelnames as $optieDeelname){
+            $this->OptieDeelname_model->delete($optieDeelname->id);
+        }
+        
+        $taakDeelnames = $this->TaakDeelname_model->getAllWherePersoon();
+        // Alle keuzes van taken doorlopen en ze verwijderen
+        foreach($taakDeelnames as $taakDeelname){
+            $this->TaakDeelname_model->delete($taakDeelname->id);
+        }
+        $this->db->where('id', $persoonId);
+        $this->db->delete('persoon');
+        
+    }
 
     /**
-    *  Jens Sels - ophalen van alle gebruikers van geselecteerde personeelsfeest
+    *  Jens Sels - Ophalen van alle gebruikers van geselecteerde personeelsfeest
     * @param $feestId Id van personeelsfeest
     * @return Alle personeelsleden van het personeelsfeest 
     */
     function getAllPersoneelsLedenWherePersoneelsFeest($feestId) {
-    
         $this->db->where('personeelsfeestId', $feestId);
         $this->db->where('typeId', '3');
         $query = $this->db->get('persoon');
@@ -31,7 +66,7 @@ class Persoon_model extends CI_Model {
     }
 
     /**
-    *  Jens Sels - ophalen van alle gebruikers van geselecteerde personeelsfeest
+    *  Jens Sels - Ophalen van alle gebruikers van geselecteerde personeelsfeest
     * @param $feestId Id van personeelsfeest
     * @return Alle vrijwilligers van het personeelsfeest 
     */

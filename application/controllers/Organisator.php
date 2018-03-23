@@ -76,6 +76,9 @@ class Organisator extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
     
+    /**
+     * Jens Sels - Aanmaken of bewerken van personeelsfeesten
+     */
     public function personeelsFeestAanmaken(){
         $feest = new stdClass();
         $feest->id = $this->input->post('id');
@@ -90,6 +93,18 @@ class Organisator extends CI_Controller {
         else{
             $this->Personeelsfeest_model->update($feest);
         }
+        
+        $this->personeelsFeestOverzicht();
+    }
+    
+    /**
+     * Jens Sels - Verwijderen van personeelsfeest en alles wat ermee te maken heeft
+     * @param $feestId Id van personeelsfeest
+     */
+    public function personeelsFeestVerwijderen($feestId){
+        $this->load->model('Personeelsfeest_model');
+        
+        $this->Personeelsfeest_model->delete($feestId);
         
         $this->personeelsFeestOverzicht();
     }

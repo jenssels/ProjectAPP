@@ -1,5 +1,8 @@
 <script>
     $(document).ready(function(){
+        /**
+         * Jens Sels - Formaat en taal toevoegen aan datepickers
+         */
         $( ".date" ).datepicker({
             format: 'dd/mm/yyyy',
             language: 'nl-BE'
@@ -9,14 +12,21 @@
     
 </script>
 <?php
+/**
+ * Jens Sels - Inladen van validator
+ */
     echo haalJavascriptOp("validator.js");
     $attributenFormulier = array('id' => 'myform',
         'data-toggle' => 'validator',
         'role' => 'form');
+    /**
+    * Jens Sels - Formulier voor personeelsfeesten te bewerken/aanmaken
+    */
     echo form_open('organisator/personeelsFeestAanmaken', $attributenFormulier);
 ?>
 <div class="row">
     <div class="col-md-12">
+        
         <div class="form-group">
             <?php 
             echo form_input(array('type' => 'hidden', 'name' => 'id', 'id' => 'id', 'value' => $feest->id));
@@ -96,6 +106,7 @@
         <?php
         echo form_submit('knop', 'Verzenden', "class='btn btn-primary'");
         echo form_close();
+        echo anchor('Organisator/pesoneelsFeestOverzicht', 'Annuleer');
         ?>
     </div>
 </div>
