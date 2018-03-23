@@ -22,4 +22,11 @@ class Foto_model extends CI_Model {
         $query = $this->db->get('foto');
         return $query->result();
     }
+    
+    // Stef Goor - ophalen van alle foto's van een bepaald album
+    function getAllByAlbum($albumId){
+        $this->db->where('albumId', $albumId);
+        $query = $this->db->get('foto');
+        return $query->result();
+    }
 }
