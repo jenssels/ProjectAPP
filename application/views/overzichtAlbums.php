@@ -15,5 +15,10 @@
 </div>
 
 <div>
-    
+    <?php
+    foreach ($albums as $album) {
+        echo $album->naam;
+        echo '<br>';
+    }
+    ?>
 </div>
