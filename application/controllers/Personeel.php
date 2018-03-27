@@ -3,14 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Personeel extends CI_Controller {
 
-	public function index($hashcode)
+	public function index($hashcode, $feestId)
 	{
             $data['titel'] = 'Dagindeling invullen';
             $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+            // User data zetten in sessie
             $this->load->model('persoon_model');
             $personeelslid = $this->persoon_model->getPersoneelslid($hashcode);
             $this->session->set_userdata('emailgebruiker', $personeelslid->email);
             $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
+            // Toon alle dagindeling met opties het voor het personeelslid
+            $this->load->model('dagindeling_model');
+            $data['dagindelingenMetOpties'] = $this->dagindeling_model->getAllDagindelingenWherePersoneelsfeestWithOpties($feestId);
             
             $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'personeel/dagindelingInvullen',
@@ -44,4 +48,6 @@ class Personeel extends CI_Controller {
         public function getEersteFoto($albumId){
             
         }
+        
+        
 }

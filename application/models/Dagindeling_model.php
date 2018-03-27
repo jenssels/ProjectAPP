@@ -47,4 +47,16 @@ class Dagindeling_model extends CI_Model {
         $this->db->where('id', $dagindelingId);
         $this->db->delete('dagindeling');
     }
+    
+    function getAllDagindelingenWherePersoneelsfeestWithOpties($feestId) {
+        $this->db->where('personeelsfeestid', $feestId);
+        $query = $this->db->get('dagindeling');
+        $dagindelingen = $query->result();
+        $this->load->model('optie_model');
+        foreach ($dagindelingen as $dagindeling) {
+            $dagindeling->opties = $this->optie_model->getAllWhereDagindeling($dagindeling->id);
+        }
+        
+        return $dagindelingen;
+    }
 }
