@@ -21,7 +21,11 @@ class Organisator extends CI_Controller {
     public function index() {
         $data['titel'] = 'Home';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+
         $data['emailGebruiker'] = '';
+
+        $data['emailGebruiker'] = anchor('organisator/aanmelden', 'Organisator login');
+
         $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'welkom_view',
             'voetnoot' => 'voetnoot');
@@ -146,8 +150,11 @@ class Organisator extends CI_Controller {
         $wachtwoord = $this->input->post('wachtwoord');
         $typeId = 1;
         
-        $this->load->model('persoon_model');
-        $data[''] = $this->organisator_model->controleerAanmeldgegevens($email, $wachtwoord, $typeId);
+        if ($this->authex->meldAan($email, $wachtwoord, $typeId)) {
+                redirect('organisator/personeelsFeestOverzicht');
+            } else {
+                redirect('organisator/foutAanmelden');
+            }
     }
     
     /**
@@ -184,6 +191,18 @@ class Organisator extends CI_Controller {
             $this->load->model('persoon_model');
             $this->persoon_model->insertOrganisator($organisator);
         }
+    }
+    
+    //Foutmelding als aanmelden fout loopt
+    public function foutAanmelden(){
+        $data['titel'] = 'Aanmeld fout!';
+        $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
+        $data['emailGebruiker'] = anchor('organisator/aanmelden', 'Organisator login');
+        $data['foutmelding'] = "Er bestaat geen organisator met de opgegeven inloggevens";
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'errors/error',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
     }
 }
 

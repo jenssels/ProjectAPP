@@ -26,7 +26,7 @@
         echo '<div class="card-body">';
         echo '<h5 class="card-title">' . $album->naam . '</h5>';
         echo '<p class="card-text">Bekijk hier alle fotos van dit album!</p>';
-        echo '<a href="#" class="btn btn-primary">Bekijk de fotos!</a>';
+        echo '<a href="'. base_url() . 'index.php/personeel/toonAlbum/' . $album->id .'" class="btn btn-primary">Bekijk de fotos!</a>';
         echo '</div></div><br>';
     }
     ?>

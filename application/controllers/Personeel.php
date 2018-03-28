@@ -20,6 +20,7 @@ class Personeel extends CI_Controller {
         $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'personeel/dagindelingInvullen',
             'voetnoot' => 'voetnoot');
+
         $this->template->load('main_master', $partials, $data);
     }
 
@@ -68,3 +69,51 @@ class Personeel extends CI_Controller {
     }
 
 }
+
+            $this->template->load('main_master', $partials, $data);
+	}
+        
+        // Stef Goor - Toon het overzicht van alle albums met daarbij de eerste foto van elk album
+        public function overzichtAlbums(){
+            $data['titel'] = 'Overzicht albums';
+            $data['paginaverantwoordelijke'] = 'Stef Goor';
+            
+            $this->load->model('persoon_model');
+            $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
+            
+            $this->load->model('album_model');
+            $data['albums'] = $this->album_model->getAll();
+            $albums = $data['albums'];
+            $this->load->model('foto_model');
+            $data['fotos'] = $this->foto_model->getAll();
+            
+            // Eerste foto van elk album ophalen
+            foreach ($albums as $album) {
+                $album->eersteFoto = $this->foto_model->getEersteFoto($album->id);
+            }
+            
+            $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'overzichtAlbums',
+            'voetnoot' => 'voetnoot');
+            $this->template->load('main_master', $partials, $data);
+        }   
+        
+        public function toonAlbum($albumId) {
+            $data['titel'] = 'Album bekijken';
+            $data['paginaverantwoordelijke'] = 'Stef Goor';
+            
+            $this->load->model('persoon_model');
+            $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
+            
+            $this->load->model('album_model');
+            $data['album'] = $this->album_model->getAlbum($albumId);
+            $this->load->model('foto_model');
+            $data['fotos'] = $this->foto_model->getAllByAlbum($albumId);
+            
+            $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'overzichtFotos',
+            'voetnoot' => 'voetnoot');
+            $this->template->load('main_master', $partials, $data);
+        }
+}
+
