@@ -22,7 +22,7 @@
     <?php
     //Stef Goor - Toon alle foto's van het huidige album
     foreach ($fotos as $foto) {
-        echo toonAfbeelding($foto->naam, 'class="card-img-top img-thumbnail"');
+        echo toonAfbeelding($foto->naam, 'class="card-img-top img-thumbnail rounded img-fluid"');
     }
     ?>
 </div>
