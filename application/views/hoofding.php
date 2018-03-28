@@ -4,6 +4,8 @@
         <?php
         if ($emailGebruiker != '') {
             echo "<span class='navbar-text'><i class='fas fa-user'></i> $emailGebruiker</span>";
+        } else {            
+            echo "<span class='navbar-text'><i class='fas fa-user'></i> " . anchor('organisator/aanmelden', 'Organisator login') . "</span>";
         }
         ?>  
     </div>
