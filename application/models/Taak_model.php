@@ -41,5 +41,34 @@ class Taak_model extends CI_Model {
         $this->db->where('id', $taakId);
         $this->db->delete('taak');
         
+    }       
+    
+    
+        function getAll(){
+        // Thomas Vansprengel
+        $query = $this->db->get('taak');
+        return $query->result();
+        }   
+    
+        function getByShift($id){
+        // Thomas Vansprengel
+        $this->db->where('id', $id);
+        $query = $this->db->get('taak');
+        return $query->row();
+        }
+    
+        function getAllWithDagindeling(){
+        // Thomas Vansprengel 
+        $query = $this->db->get('taak');
+        $taken = $query->result();
+        
+        $this->load->model('dagindeling_model');
+        $this->load->model('locatie_model');
+        foreach ($taken as $taak) {
+            $taak->dagindeling = $this->dagindeling_model->getByTaak($taak->dagindelingId);
+            $taak->locatie = $this->locatie_model->getByTaak($taak->dagindelingId);
+        }
+        
+        return $taken;
     }
 }

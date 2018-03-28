@@ -15,5 +15,12 @@ class Locatie_model extends CI_Model {
     function __construct()
     {
         parent::__construct();
-    }                       
+    }       
+    
+        function getByTaak($id){
+        // Thomas Vansprengel - ophalen van alle dagindelingen
+        $this->db->where('id', $id);
+        $query = $this->db->get('locatie');
+        return $query->row();
+    }
 }
