@@ -5,19 +5,53 @@
  * and open the template in the editor.
  */
 ?>
+<div class="page-header">
+    <h1><?php echo $titel ?></h1>
+</div>
 
 <div>
     <p>Welkom!</p>
     <p>De organisator heeft gekozen voor onderstaande dagindeling. Aan jou om de activiteiten te kiezen.</p>
 
     <?php
+    $attributenFormulier = array('id' => 'mijnFormulier',
+        'role' => 'form');
+    echo form_open('personeel/bevestigIngevuldeDagindeling', $attributenFormulier)
+    ?>
+
+    <?php
+    $teller = 0;
     foreach ($dagindelingenMetOpties as $dagindeling) {
-        echo "<h2>" . $dagindeling->naam . "</h2>";
+        $teller++;
+        echo "<h3>" . $dagindeling->naam . "</h3>";
         $options = array();
+        $options[] = "-- Kies een optie --";
         foreach ($dagindeling->opties as $optie) {
-            $options[] = $optie->naam;
+            $options[$optie->id] = $optie->naam;
         }
-        echo form_dropdown($dagindeling->id, $options);
+        $attributes = array('id' => '',
+            'class' => 'form-control');
+        echo "<div class='form-group'>";
+        echo form_dropdown($teller, $options, '', $attributes);
+        echo "</div>";
     }
     ?>
+    
+    <?php echo form_input(array('type'  => 'hidden',
+        'name'  => 'aantalSelects',
+        'id'    => 'aantalSelects',
+        'value' => $teller)); 
+    ?>
+    
+    <?php echo form_input(array('type'  => 'hidden',
+        'name'  => 'persoonId',
+        'id'    => 'persoonId',
+        'value' => $personeelslidId)); 
+    ?>
+    
+    <div class="form-group">
+    <?php echo form_submit('knop', 'Bevestigen', "class='btn btn-primary'") ?>
+</div>
+    
+    <?php echo form_close(); ?>
 </div>
