@@ -16,6 +16,12 @@ class Persoon_model extends CI_Model {
         parent::__construct();
     }
     
+    
+    function getByPersoonid($id) {
+        $this->db->where('id', $id);
+        $query = $this->db->get('persoon');       
+        return $query->row();
+    }
     /**
      * Jens Sels - Ophalen van alle personen van een personeelsfeest
      * @param $feestId Id van een personeelsfeest

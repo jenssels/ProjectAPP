@@ -24,12 +24,13 @@ class Vrijwilliger extends CI_Controller {
 
         $this->template->load('main_master', $partials, $data);
 	}
+
         
         public function overzicht($id)
 	{
         // Thomas Vansprengel - Taakindeling invullen
-        $this->load->model('shift_model');
-        $data['shiften'] = $this->shift_model->getAllWithTaak();
+        $this->load->model('TaakDeelname_model');
+        $data['deelnames'] = $this->TaakDeelname_model->getAllWhereId($id);
 
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "vrijwilligerOverzicht",
