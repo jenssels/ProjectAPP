@@ -19,9 +19,15 @@ class Organisator extends CI_Controller {
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
     public function index() {
+        /*$this->session->unset_userdata('organisatorMail');
+        $this->session->unset_userdata('organisator_id');*/
         $data['titel'] = 'Home';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
-        $data['emailGebruiker'] = anchor('organisator/aanmelden', 'Organisator login');
+        if(!$this->authex->isAangemeld()){
+            $data['emailGebruiker'] = anchor('organisator/aanmelden', 'Organisator login');
+        } else {
+            $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
+        }
         $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'welkom_view',
             'voetnoot' => 'voetnoot');
@@ -38,7 +44,7 @@ class Organisator extends CI_Controller {
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "personeelsFeestOverzicht",
             "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = 'jenssels1998@gmail.com';
+        $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
         
@@ -146,11 +152,16 @@ class Organisator extends CI_Controller {
         $wachtwoord = $this->input->post('wachtwoord');
         $typeId = 1;
         
-        if ($this->authex->meldAan($email, $wachtwoord, $typeId)) {
+        //controleren of men wil aanmelden of op annuleer klikte
+        if($this->input->post('aanmelden') != null){
+            if ($this->authex->meldAan($email, $wachtwoord, $typeId)) {
                 redirect('organisator/personeelsFeestOverzicht');
             } else {
                 redirect('organisator/foutAanmelden');
             }
+        } else {
+            redirect ('organisator/index');
+        }
     }
     
     /**

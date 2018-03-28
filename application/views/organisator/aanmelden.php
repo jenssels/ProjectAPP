@@ -49,8 +49,8 @@
     </div>
 
     <div class="form-group">
-        <?php echo form_submit('knop', 'Aanmelden', "class='btn btn-primary'") ?>
-        <?php echo form_submit('knop', 'Annuleren', "class='btn btn-primary'") ?>
+        <?php echo form_submit('aanmelden', 'Aanmelden', "class='btn btn-primary'") ?>
+        <?php echo form_submit('annuleren', 'Annuleren', "class='btn btn-primary'") ?>
     </div>
 
     <?php echo form_close(); ?>
