@@ -60,7 +60,7 @@ class Personeel extends CI_Controller {
             $data['fotos'] = $this->foto_model->getAllByAlbum($albumId);
             
             $partials = array('hoofding' => 'hoofding',
-            'inhoud' => 'overzichtAlbums',
+            'inhoud' => 'overzichtFotos',
             'voetnoot' => 'voetnoot');
             $this->template->load('main_master', $partials, $data);
         }

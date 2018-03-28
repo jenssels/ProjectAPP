@@ -32,7 +32,7 @@ class Album_model extends CI_Model {
     
     // Stef Goor - ophalen van info over een bepaald album
     function getAlbum($albumId){
-        $this->db->where('albumId', $albumId);
+        $this->db->where('id', $albumId);
         $query = $this->db->get('album');
         return $query->row();
     }
