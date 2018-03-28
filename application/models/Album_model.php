@@ -30,6 +30,13 @@ class Album_model extends CI_Model {
         return $query->result();
     }
     
+    // Stef Goor - ophalen van info over een bepaald album
+    function getAlbum($albumId){
+        $this->db->where('albumId', $albumId);
+        $query = $this->db->get('album');
+        return $query->row();
+    }
+    
     // Stef Goor - ophalen van alle albums met de bijhorende fotos
     function getAllWithFotos(){
         $this->db->order_by('id', 'asc');
