@@ -25,7 +25,10 @@ class Personeel extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
     
-    //Stef Goor - Toon het overzicht van alle albums met eventueel een thumbnail erbij
+    /**
+     * Stef Goor
+     * Toont het overzicht van alle albums met eventueel een thumbnail erbij
+     */
     public function overzichtAlbums() {
         $data['titel'] = 'Overzicht albums';
         $data['paginaverantwoordelijke'] = 'Stef Goor';
@@ -49,7 +52,10 @@ class Personeel extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
     
-    //Stef Goor - Toon alle fotos van een bepaald album
+    /**
+     * Stef Goor
+     * Toont alle fotos van een bepaald album
+     */
     public function toonAlbum($albumId) {
             $data['titel'] = 'Album bekijken';
             $data['paginaverantwoordelijke'] = 'Stef Goor';
@@ -66,7 +72,7 @@ class Personeel extends CI_Controller {
             'inhoud' => 'overzichtFotos',
             'voetnoot' => 'voetnoot');
             $this->template->load('main_master', $partials, $data);
-        }
+    }
 
     /**
      * Joren Synaeve 
