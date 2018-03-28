@@ -47,7 +47,7 @@ class Personeel extends CI_Controller {
         }
 
         $partials = array('hoofding' => 'hoofding',
-            'inhoud' => 'overzichtAlbums',
+            'inhoud' => 'personeel/overzichtAlbums',
             'voetnoot' => 'voetnoot');
         $this->template->load('main_master', $partials, $data);
     }
@@ -69,7 +69,7 @@ class Personeel extends CI_Controller {
             $data['fotos'] = $this->foto_model->getAllByAlbum($albumId);
             
             $partials = array('hoofding' => 'hoofding',
-            'inhoud' => 'overzichtFotos',
+            'inhoud' => 'personeel/overzichtFotos',
             'voetnoot' => 'voetnoot');
             $this->template->load('main_master', $partials, $data);
     }

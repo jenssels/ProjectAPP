@@ -61,7 +61,7 @@ class Vrijwilliger extends CI_Controller {
         }
 
         $partials = array('hoofding' => 'hoofding',
-            'inhoud' => 'overzichtAlbums',
+            'inhoud' => 'vrijwilliger/overzichtAlbums',
             'voetnoot' => 'voetnoot');
         $this->template->load('main_master', $partials, $data);
     }
@@ -83,7 +83,7 @@ class Vrijwilliger extends CI_Controller {
         $data['fotos'] = $this->foto_model->getAllByAlbum($albumId);
 
         $partials = array('hoofding' => 'hoofding',
-            'inhoud' => 'overzichtFotos',
+            'inhoud' => 'vrijwilliger/overzichtFotos',
             'voetnoot' => 'voetnoot');
         $this->template->load('main_master', $partials, $data);
     }
