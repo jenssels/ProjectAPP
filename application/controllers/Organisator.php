@@ -95,7 +95,24 @@ class Organisator extends CI_Controller {
             $this->Personeelsfeest_model->update($feest);
         }
         
-        $this->personeelsFeestOverzicht();
+        $this->personeelsFeestUploadForm($feest->id);
+    }
+    
+    /**
+     * Jens Sels - Upload pagina openen van personeelsfeest om personeelsleden toe te voegen
+     * @param $feestId Id van personeelsfeest
+     */
+    public function personeelsFeestUploadForm($feestId){
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "personeelsFeestUploadForm",
+            "voetnoot" => "voetnoot");
+        $data['feestId'] = $feestId;
+        $data['emailGebruiker'] = 'jenssels1998@gmail.com';
+        $data['titel'] = 'Personeelsfeest personeel uploaden';
+        $data['paginaverantwoordelijke'] = 'Jens Sels';
+        
+        $this->template->load('main_master', $partials, $data);
+        
     }
     
     /**
