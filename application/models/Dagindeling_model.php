@@ -32,6 +32,7 @@ class Dagindeling_model extends CI_Model {
      * @param $dagindelingId Id van dagindeling
      */
     function delete($dagindelingId){
+
         $this->load->model('Optie_model');
         $this->load->model('Taak_model');      
         $opties = $this->Optie_model->getAllWhereDagindeling($dagindelingId);
@@ -46,6 +47,14 @@ class Dagindeling_model extends CI_Model {
         }
         $this->db->where('id', $dagindelingId);
         $this->db->delete('dagindeling');
+
+    }           
+    
+    function getByTaak($id){
+        // Thomas Vansprengel - ophalen van alle dagindelingen
+        $this->db->where('id', $id);
+        $query = $this->db->get('dagindeling');
+        return $query->row();
     }
     
     function getAllDagindelingenWherePersoneelsfeestWithOpties($feestId) {
