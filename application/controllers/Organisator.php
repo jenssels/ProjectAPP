@@ -19,15 +19,15 @@ class Organisator extends CI_Controller {
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
     public function index() {
-        /*$this->session->unset_userdata('organisatorMail');
-        $this->session->unset_userdata('organisator_id');*/
         $data['titel'] = 'Home';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+        
         if(!$this->authex->isAangemeld()){
             $data['emailGebruiker'] = anchor('organisator/aanmelden', 'Organisator login');
         } else {
             $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
         }
+
         $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'welkom_view',
             'voetnoot' => 'voetnoot');

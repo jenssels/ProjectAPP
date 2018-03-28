@@ -16,7 +16,23 @@ class TaakDeelname_model extends CI_Model {
     {
         parent::__construct();
     }     
-    
+
+    //Thomas Vansprengel - Ophalen van overzicht deelnemers
+    function getAllWhereId($id)
+     {
+        $this->db->where('shiftid', $id);
+        $query = $this->db->get('taakdeelname');
+        $deelnames = $query->result();
+        
+        $this->load->model('Persoon_model');
+        foreach ($deelnames as $deelname){
+            $deelname->persoon = $this->persoon_model->getByPersoonid($deelname->persoonId);
+            
+            
+        }
+        
+        return $deelnames;
+    }
     /**
      * Jens Sels - Ophalen van alle keuzes van taken van een persoon
      * @param $persoonId Id van een persoon

@@ -15,8 +15,8 @@
         </div>
     </div>
     <div class="teammembers">
-        <div class="container">
-            Joren Synaeve, Stef Goor, Jens Sels, Thomas Vansprengel en Jorne Lambrechts            
+        <div class="container col-12">
+            Joren Synaeve, Stef Goor, Jens Sels, Thomas Vansprengel en Jorne Lambrechts       
         </div>
     </div>
 </footer>
