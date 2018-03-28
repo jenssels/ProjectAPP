@@ -21,7 +21,7 @@ class Organisator extends CI_Controller {
     public function index() {
         $data['titel'] = 'Home';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
-        $data['emailGebruiker'] = anchor('organisator/login', 'Organisator login');
+        $data['emailGebruiker'] = '';
         $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'welkom_view',
             'voetnoot' => 'voetnoot');
