@@ -24,5 +24,6 @@
     foreach ($fotos as $foto) {
         echo toonAfbeelding($foto->naam, 'class="card-img-top img-thumbnail rounded img-fluid"');
     }
+    echo anchor('vrijwilliger/overzichtAlbums', 'Terug naar overzicht albums')
     ?>
 </div>

@@ -13,6 +13,7 @@ class Personeel extends CI_Controller {
         $data['personeelslidId'] = $personeelslid->id;
         $this->session->set_userdata('emailgebruiker', $personeelslid->email);
         $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
+        
         // Toon alle dagindeling met opties het voor het personeelslid
         $this->load->model('dagindeling_model');
         $data['dagindelingenMetOpties'] = $this->dagindeling_model->getAllDagindelingenWherePersoneelsfeestWithOpties($feestId);
@@ -24,7 +25,10 @@ class Personeel extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
     
-    //Stef Goor - Toon het overzicht van alle albums met eventueel een thumbnail erbij
+    /**
+     * Stef Goor
+     * Toont het overzicht van alle albums met eventueel een thumbnail erbij
+     */
     public function overzichtAlbums() {
         $data['titel'] = 'Overzicht albums';
         $data['paginaverantwoordelijke'] = 'Stef Goor';
@@ -43,12 +47,15 @@ class Personeel extends CI_Controller {
         }
 
         $partials = array('hoofding' => 'hoofding',
-            'inhoud' => 'overzichtAlbums',
+            'inhoud' => 'personeel/overzichtAlbums',
             'voetnoot' => 'voetnoot');
         $this->template->load('main_master', $partials, $data);
     }
     
-    //Stef Goor - Toon alle fotos van een bepaald album
+    /**
+     * Stef Goor
+     * Toont alle fotos van een bepaald album
+     */
     public function toonAlbum($albumId) {
             $data['titel'] = 'Album bekijken';
             $data['paginaverantwoordelijke'] = 'Stef Goor';
@@ -62,10 +69,10 @@ class Personeel extends CI_Controller {
             $data['fotos'] = $this->foto_model->getAllByAlbum($albumId);
             
             $partials = array('hoofding' => 'hoofding',
-            'inhoud' => 'overzichtFotos',
+            'inhoud' => 'personeel/overzichtFotos',
             'voetnoot' => 'voetnoot');
             $this->template->load('main_master', $partials, $data);
-        }
+    }
 
     /**
      * Joren Synaeve 

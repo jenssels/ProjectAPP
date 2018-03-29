@@ -170,5 +170,83 @@ class Organisator extends CI_Controller {
             'voetnoot' => 'voetnoot');
         $this->template->load('main_master', $partials, $data);
     }
+    
+    /**
+     * Joren Synaeve
+     * Toont een pagina met daarop de dagindeling van een specifiek personeelsfeest.
+     * @param type $personeelsfeestId
+     */
+    public function beheerDagindeling($personeelsfeestId) {
+        // Controleren van aanmelden
+        if ($this->authex->isAangemeld()) {
+            
+        } else {
+                        
+        }
+        
+        // Standaardvariabelen
+        $data['titel'] = 'Dagindeling beheren';
+        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+        $data['emailGebruiker'] = '';
+        
+        // Eigenlijke pagina laden
+        $this->load->model('personeelsfeest_model');
+        $data['personeelsfeest'] = $this->personeelsfeest_model->get($personeelsfeestId);
+        
+        $this->load->model('dagindeling_model');
+        $data['dagindelingenBijFeest'] = $this->dagindeling_model->getAllWherePersoneelsfeest($personeelsfeestId);
+        
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'organisator/beheerDagindeling',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    /**
+     * Joren Synaeve
+     * Gaat naar een pagina met formulier om een nieuwe dagindeling toe te voegen.
+     */
+    public function toevoegenDagindeling($personeelsfeestId) {
+        // Controleren van aanmelden
+        
+        // Standaardvariabelen
+        $data['titel'] = 'Dagindeling toevoegen';
+        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+        $data['emailGebruiker'] = '';
+        
+        // Eigenlijke pagina laden
+        $this->load->model('personeelsfeest_model');
+        $data['personeelsfeest'] = $this->personeelsfeest_model->get($personeelsfeestId);
+        
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'organisator/toevoegenDagindeling',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    /**
+     * Voegt de ingevoerde gegevens toe wanneer er op 'Bevestigen' werd geklikt.
+     * Toont opnieuw het overzicht wanneer er op 'Annuleren' wordt geklikt.
+     */
+    public function voegDagindelingToe() {
+        $knop = $this->input->post('knop');
+        if ($knop == "Annuleren") {
+            redirect('');
+        } else {
+            $dagindeling = new stdClass();
+            
+            $dagindeling->naam = $this->input->post('naam');
+            $dagindeling->beginuur = $this->input->post('beginuur') . ':00';
+            $dagindeling->einduur = $this->input->post('einduur') . ':00';
+            $dagindeling->beschrijving = $this->input->post('beschrijving');
+            $dagindeling->voorVrijwilliger = $this->input->post('voorVrijwilliger');  
+            $dagindeling->personeelsfeestId = $this->input->post('personeelsfeestId');
+            
+            $this->load->model('dagindeling_model');
+            $this->dagindeling_model->insert($dagindeling);
+            
+            redirect('organisator/beheerDagindeling/' . $dagindeling->personeelsfeestId);
+        }
+    }
 }
 
