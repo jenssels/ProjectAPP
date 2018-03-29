@@ -18,20 +18,13 @@ class Organisator extends CI_Controller {
      * map to /index.php/welcome/<method_name>
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
-    public function index() {
-        $data['titel'] = 'Home';
-        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+    
+    public function __construct() {
+        parent::__construct();
         
-        if(!$this->authex->isAangemeld()){
-            $data['emailGebruiker'] = anchor('organisator/aanmelden', 'Organisator login');
-        } else {
-            $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
+         if(!$this->authex->isAangemeld()){
+            redirect('home/aanmelden');
         }
-
-        $partials = array('hoofding' => 'hoofding',
-            'inhoud' => 'welkom_view',
-            'voetnoot' => 'voetnoot');
-        $this->template->load('main_master', $partials, $data);
     }
     /** 
     * Jens Sels - Tonen van overzicht personeelsfeesten
@@ -129,40 +122,6 @@ class Organisator extends CI_Controller {
         $this->load->view('ajax_overzichtGebruikers', $data);
     }
 
-    /**
-     * Toont de inlogpagina voor de organisator.
-     */
-    public function aanmelden() {
-        $data['titel'] = 'Aanmelden';
-        $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
-        $data['emailGebruiker'] = '';
-        $partials = array("hoofding" => "hoofding",
-            "inhoud" => "organisator/aanmelden",
-            "voetnoot" => "voetnoot");
-        $this->template->load('main_master', $partials, $data);
-    }
-    
-    /**
-     * Controleert de gegevens die ingevuld zijn door de organisator om in te loggen.
-     * Indien ze juist zijn, gaat hij naar ... pagina.
-     * Indien ze fout zijn, wordt er een foutmelding getoond.
-     */
-    public function controleerAanmelden() {
-        $email = $this->input->post('email');
-        $wachtwoord = $this->input->post('wachtwoord');
-        $typeId = 1;
-        
-        //controleren of men wil aanmelden of op annuleer klikte
-        if($this->input->post('aanmelden') != null){
-            if ($this->authex->meldAan($email, $wachtwoord, $typeId)) {
-                redirect('organisator/personeelsFeestOverzicht');
-            } else {
-                redirect('organisator/foutAanmelden');
-            }
-        } else {
-            redirect ('organisator/index');
-        }
-    }
     
     /**
      * Toont een formulierpagina om een nieuwe organisator toe te voegen.
