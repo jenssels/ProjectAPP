@@ -48,7 +48,12 @@ class Dagindeling_model extends CI_Model {
         $this->db->where('id', $dagindelingId);
         $this->db->delete('dagindeling');
 
-    }           
+    }    
+    
+    function insert($dagindeling) {
+        $this->db->insert('dagindeling', $dagindeling);
+        return $this->db->insert_id();
+    }
     
     function getByTaak($id){
         // Thomas Vansprengel - ophalen van alle dagindelingen
