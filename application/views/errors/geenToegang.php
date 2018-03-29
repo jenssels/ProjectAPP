@@ -11,6 +11,6 @@
 </div>
 <div>
     <p>Gelieve je eerst aan te melden.</p>
-    <p><?php echo anchor('', 'Aanmelden'); ?></p>
+    <p><?php echo anchor('home/aanmelden', 'Aanmelden'); ?></p>
 </div>
 

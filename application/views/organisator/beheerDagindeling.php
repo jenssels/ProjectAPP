@@ -31,7 +31,7 @@
             }
             
             echo "<tr><td>" . $dagindeling->naam  . "</td><td>" . $dagindeling->beginuur . " - " .$dagindeling->einduur . 
-                    "</td><td>" . $voorVrijwilliger . "</td><td>" . anchor('?', 'Bewerken') . "</td><td>" . anchor('?', 'Verwijderen') . "</td></tr>";
+                    "</td><td>" . $voorVrijwilliger . "</td><td>" . anchor('?', 'Bewerken') . "</td><td>" . anchor('organisator/verwijderDagindeling/' .$personeelsfeest->id . '/' .$dagindeling->id, 'Verwijderen') . "</td></tr>";
         }
         ?>
         <tr>

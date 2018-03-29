@@ -85,5 +85,17 @@ class Home extends CI_Controller {
             'voetnoot' => 'voetnoot');
         $this->template->load('main_master', $partials, $data);
     }
+    
+    public function isNietAangemeld() {
+        // Standaardvariabelen
+        $data['titel'] = 'Geen toegang!';
+        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+        $data['emailGebruiker'] = '';
+        
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'errors/geenToegang',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
+    }
 }
 
