@@ -16,6 +16,7 @@ class Dagindeling_model extends CI_Model {
     {
         parent::__construct();
     }     
+<<<<<<< Updated upstream
     
     /**
      * Joren Synaeve
@@ -29,6 +30,13 @@ class Dagindeling_model extends CI_Model {
         return $query->row();
     }
     
+=======
+    function getAll(){
+        // Thomas Vansprengel -     //Alle dagindelingen halen
+        $query = $this->db->get('dagindeling');
+        return $query->result();
+    }
+>>>>>>> Stashed changes
     /**
      * Jens Sels - Ophalen van alle dagindelingen van een personeelsfeest
      * @param $feestId Id van personeelsfeest
