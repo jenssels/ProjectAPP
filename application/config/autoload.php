@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('email', 'template', 'database', 'session', 'authex');
+$autoload['libraries'] = array('email', 'template', 'database', 'session', 'authex', 'upload', 'Spreadsheet_Excel_Reader');
 
 
 /*
@@ -90,7 +90,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'form', 'html', 'string', 'notation');
+$autoload['helper'] = array('url', 'form', 'html', 'string', 'notation','file');
 
 /*
 | -------------------------------------------------------------------

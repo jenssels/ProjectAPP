@@ -38,7 +38,7 @@ class Organisator extends CI_Controller {
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "personeelsFeestOverzicht",
             "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = 'jenssels1998@gmail.com';
+        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
         
@@ -71,7 +71,7 @@ class Organisator extends CI_Controller {
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "personeelsFeestAanmaken",
             "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = 'jenssels1998@gmail.com';
+        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         $data['paginaverantwoordelijke'] = 'Jens Sels';
         
         $this->template->load('main_master', $partials, $data);
@@ -107,12 +107,48 @@ class Organisator extends CI_Controller {
             "inhoud" => "personeelsFeestUploadForm",
             "voetnoot" => "voetnoot");
         $data['feestId'] = $feestId;
-        $data['emailGebruiker'] = 'jenssels1998@gmail.com';
+        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         $data['titel'] = 'Personeelsfeest personeel uploaden';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
         
         $this->template->load('main_master', $partials, $data);
         
+    }
+    
+    public function ajaxUploadFile(){
+        $config['upload_path'] = './assets/files/';
+        $config['allowed_types'] = 'xls';
+        $config['encrypt_name'] = TRUE;
+        $this->upload->initialize($config);
+        if ( ! $this->upload->do_upload('excel'))
+                {
+                        $data['errors'] = array('error' => $this->upload->display_errors());
+
+                        $this->load->view('ajax_uploadStatus', $data);
+                }
+                else
+                {
+                        $data  = $this->upload->data();
+                        @chmod($data['full_path'], 0777);
+                        $this->spreadsheet_excel_reader->setOutputEncoding('CP1251');
+                        
+                        $data = $this->spreadsheet_excel_reader->read($data['full_path'],false);
+                        $sheets = $this->spreadsheet_excel_reader->sheets[0];
+                        
+                        error_reporting(0);
+                        
+                        $data_excel = array();
+                        for ($i = 2; $i <= $sheets['numRows']; $i++) {
+                            if ($sheets['cells'][$i][1] == '') break;
+                                $data_excel[$i - 1]['Voornaam'] = $sheets['cells'][$i][1];
+                                $data_excel[$i - 1]['Naam'] = $sheets['cells'][$i][2];
+                                $data_excel[$i - 1]['Email'] = $sheets['cells'][$i][3];
+                            
+}                       print_r($data_excel);
+                        die();
+                        
+                        $this->load->view('ajax_uploadStatus', $data);
+                }
     }
     
     /**

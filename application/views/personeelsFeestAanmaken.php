@@ -106,7 +106,7 @@
         <?php
         echo form_submit('knop', 'Verzenden', "class='btn btn-primary'");
         echo form_close();
-        echo anchor('Organisator/pesoneelsFeestOverzicht', 'Annuleer');
+        echo anchor('Organisator/personeelsFeestOverzicht', 'Annuleer',"class='btn btn-primary'");
         ?>
     </div>
 </div>
