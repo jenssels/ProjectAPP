@@ -34,6 +34,7 @@ class Authex {
             return false;
         } else {
             $CI->session->set_userdata('organisator_id', $organisator->id);
+            $CI->session->set_userdata('organisatorMail', $email);
             return true;
         }
     }

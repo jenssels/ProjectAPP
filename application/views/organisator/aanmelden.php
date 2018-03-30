@@ -21,7 +21,7 @@
     <?php
     $attributenFormulier = array('id' => 'mijnFormulier',
         'role' => 'form');
-    echo form_open('organisator/controleerAanmelden', $attributenFormulier)
+    echo form_open('home/controleerAanmelden', $attributenFormulier)
     ?>
 
     <div class="form-group">
@@ -49,8 +49,8 @@
     </div>
 
     <div class="form-group">
-        <?php echo form_submit('knop', 'Aanmelden', "class='btn btn-primary'") ?>
-        <?php echo form_submit('knop', 'Annuleren', "class='btn btn-primary'") ?>
+        <?php echo form_submit('aanmelden', 'Aanmelden', "class='btn btn-primary'") ?>
+        <?php echo form_submit('annuleren', 'Annuleren', "class='btn btn-primary'") ?>
     </div>
 
     <?php echo form_close(); ?>

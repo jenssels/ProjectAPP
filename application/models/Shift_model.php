@@ -62,5 +62,6 @@ class Shift_model extends CI_Model {
         }
         
             return $shiften;
-        }   
+        }       
+        
 }
