@@ -310,6 +310,31 @@ class Organisator extends CI_Controller {
         redirect('organisator/beheerDagindeling/' . $personeelsfeestId);
     }
     
+    /*
+     * Jorne Lambrechts
+     * naar overzicht van albums gaan voor de organisator
+     */
+    public function overzichtAlbums(){
+        $data['titel'] = 'Overzicht Albums';
+        $data['paginaverantwoordelijke'] = 'Jorene Lambrechts';
+        $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
+
+        $this->load->model('album_model');
+        $data['albums'] = $this->album_model->getAll();
+        $albums = $data['albums'];
+        $this->load->model('foto_model');
+        $data['fotos'] = $this->foto_model->getAll();
+
+        foreach ($albums as $album) {
+            $album->eersteFoto = $this->foto_model->getEersteFoto($album->id);
+        }
+        
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'organisator/overzichtAlbums',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
+    }
+    
     public function haalAjaxOp_OptiesBijDagindeling() {
         $dagindelingId = $this->input->get('dagindelingId');
         
