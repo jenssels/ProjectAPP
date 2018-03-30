@@ -29,8 +29,6 @@
         echo '<a href="'. base_url() . 'index.php/personeel/toonAlbum/' . $album->id .'" class="btn btn-primary">Bekijk de fotos!</a>';
         echo '</div></div><br>';
     }
-    //Jorne Lambrechts - Knop voor de organisator om een album aan te maken
-    echo anchor('organisator/aanmelden', 'Album aanmaken', 'class="btn btn-primary"');
     ?>
 </div>
 

@@ -21,9 +21,13 @@
 <div>
     <?php
     //Stef Goor - Toon alle foto's van het huidige album
+    echo '<div class="row">';
     foreach ($fotos as $foto) {
+        echo '<div class="afbeeldingVeld col-sm">';
         echo toonAfbeelding($foto->naam, 'class="card-img-top img-thumbnail rounded img-fluid"');
+        echo '</div>';
     }
+    echo '</div>';
     echo anchor('vrijwilliger/overzichtAlbums', 'Terug naar overzicht albums')
     ?>
 </div>
