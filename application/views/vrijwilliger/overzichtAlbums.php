@@ -2,7 +2,7 @@
 /**
  * @file overzichtAlbums.php
  * 
- * View waarin een personeelslid/vrijwilliger het overzicht van de albums kan bekijken
+ * View waarin een vrijwilliger het overzicht van de albums kan bekijken
  */
 ?>
 
