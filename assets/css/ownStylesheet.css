@@ -61,8 +61,3 @@ body {
 #hoofding a:hover {
     text-decoration: underline;
 }
-
-/* Tonen van overzicht albums */
-.card{
-    margin: 0px;
-}

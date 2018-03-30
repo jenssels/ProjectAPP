@@ -2,7 +2,7 @@
 /**
  * @file overzichtAlbums.php
  * 
- * View waarin een vrijwilliger het overzicht van de albums kan bekijken
+ * View waarin een personeelslid/vrijwilliger het overzicht van de albums kan bekijken
  */
 ?>
 
@@ -17,9 +17,7 @@
 <div>
     <?php
     //Stef Goor - Toon alle albums met hun foto
-    echo '<div class="row">';
     foreach ($albums as $album) {
-        echo '<div class="col-sm">';
         echo '<div class="card" style="width: 18rem;">';
         //Als er geen fotos in het album zitten wordt er geen foto getoond
         if($album->eersteFoto != NULL){
@@ -29,8 +27,10 @@
         echo '<h5 class="card-title">' . $album->naam . '</h5>';
         echo '<p class="card-text">Bekijk hier alle fotos van dit album!</p>';
         echo '<a href="'. base_url() . 'index.php/vrijwilliger/toonAlbum/' . $album->id .'" class="btn btn-primary">Bekijk de fotos!</a>';
-        echo '</div></div></div><br>';
+        echo '</div></div><br>';
     }
-    echo '</div>';
+    
+    //Jorne Lambrechts - knop om naar het aanmaken van albums te gaan
+    echo anchor ('home/aanmelden', 'Album aanmaken', 'class="btn btn-primary"')
     ?>
 </div>
