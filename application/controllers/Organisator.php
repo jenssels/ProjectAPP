@@ -309,5 +309,14 @@ class Organisator extends CI_Controller {
         
         redirect('organisator/beheerDagindeling/' . $personeelsfeestId);
     }
+    
+    public function haalAjaxOp_OptiesBijDagindeling() {
+        $dagindelingId = $this->input->get('dagindelingId');
+        
+        $this->load->model('optie_model');
+        $data['opties'] = $this->optie_model->getAllWhereDagindeling($dagindelingId);
+        
+        $this->load->view('organisator/ajax_optiesBijDagindeling', $data);
+    }
 
 }
