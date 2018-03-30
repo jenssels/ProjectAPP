@@ -206,7 +206,7 @@ class Organisator extends CI_Controller {
             $organisator->voornaam = $this->input->post('voornaam');
             $organisator->naam = $this->input->post('naam');
             $organisator->email = $this->input->post('email');
-            $organisator->wachtwoord = $this->input->post('wachtwoord');
+            $organisator->wachtwoord = password_hash($this->input->post('wachtwoord'), PASSWORD_DEFAULT);
             $organisator->hashcode = random_string('alnum', 16);
             $organisator->typeId = 1;
 

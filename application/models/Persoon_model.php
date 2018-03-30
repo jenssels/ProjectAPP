@@ -98,11 +98,16 @@ class Persoon_model extends CI_Model {
     function getOrganisator($email, $wachtwoord, $typeId){
         //ophalen van de organisator
         $this->db->where('email', $email);
-        $this->db->where('wachtwoord', $wachtwoord);
         $this->db->where('typeId', $typeId);
         $query = $this->db->get('persoon');
         
-        return $query->row();
+        $organisator = $query->row();
+        
+        if (password_verify($wachtwoord, $organisator->wachtwoord)) {
+            return $organisator;
+        } else {
+            return null;
+        }
     }
     
     /**
