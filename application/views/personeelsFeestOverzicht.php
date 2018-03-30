@@ -31,6 +31,7 @@
             echo anchor('Organisator/?', 'Fotoalbums beheren');
             echo anchor('Organisator/?', 'Locaties beheren');
             echo anchor('Organisator/?', 'Mail sturen');
+            echo anchor('organisator/taakbeheren', 'Taak beheren');
         ?>
     </div>
     <div class="col-md-12">

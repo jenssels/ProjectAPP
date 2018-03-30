@@ -33,7 +33,7 @@ class Taak_model extends CI_Model {
      */
     function delete($taakId){
         $this->load->model('Shift_model');
-        $shifts = $this->Shift_model->getAllWhereTaak($taak->id);
+        $shifts = $this->Shift_model->getAllWhereTaak($taakId);
         // Door alle shifts gaan en ze verwijderen
         foreach($shifts as $shift){
             $this->Shift_model->delete($shift->id);
@@ -42,7 +42,11 @@ class Taak_model extends CI_Model {
         $this->db->delete('taak');
         
     }       
-    
+        function update($taak)
+        {
+        $this->db->where('id', $taak->id);
+        $this->db->update('taak', $taak);
+        }
     
         function getAll(){
         // Thomas Vansprengel
@@ -70,5 +74,19 @@ class Taak_model extends CI_Model {
         }
         
         return $taken;
-    }
+        }
+        
+        function getWithDagindeling($id){
+        // Thomas Vansprengel 
+        $this->db->where('id', $id);
+        $query = $this->db->get('taak');
+        $taak = $query->row();
+        
+        $this->load->model('dagindeling_model');
+        $this->load->model('locatie_model');
+        $taak->dagindeling = $this->dagindeling_model->getByTaak($taak->dagindelingId);
+        $taak->locatie = $this->locatie_model->getByTaak($taak->dagindelingId);
+        
+        return $taak;
+        }
 }

@@ -110,10 +110,84 @@ class Organisator extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 
-    /**
-     * Jens Sels - Ajax die de excel file gaat uploaden
-     */
-    public function ajaxUploadFile() {
+   
+    //Thomas vansprengel, taak verwijderen
+    public function verwijdertaak($id){
+        $this->load->model('taak_model');
+        $data['taken'] = $this->taak_model->delete($id);
+        $this->taakBeheren();
+    }
+    
+    public function pasTaakAan(){
+         $info = new stdClass();
+            
+            $info->id = $this->input->post('id');
+            $info->naam = $this->input->post('naam');
+            $info->beschrijving = $this->input->post('beschrijving');
+            $info->dagindelingid = $this->input->post('dagindeling');
+            $info->locatieid = $this->input->post('locatie');
+            
+            $this->load->model('Taak_model');
+            $this->Taak_model->update($info);
+
+
+            $this->taakBeheren();
+    }
+    //Thomas vansprengel, taak verwijderen
+    public function shifttaak($id){
+        $this->load->model('shift_model');
+        $data['shiften'] = $this->shift_model->getAllWithTaakWhereTaak($id);
+
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "taakShiften",
+            "voetnoot" => "voetnoot");
+        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
+        $data['titel'] = 'Personeelsfeest overzicht';
+        $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
+        
+        $this->template->load('main_master', $partials, $data);
+    }
+    //Thomas vansprengel, taak verwijderen
+    public function edittaak($id){
+        
+        $this->load->model('Locatie_model');
+        $data['locaties'] = $this->Locatie_model->getAll();
+        
+        $this->load->model('Dagindeling_model');
+        $data['dagindelingen'] = $this->Dagindeling_model->getAll();
+        
+        $this->load->model('taak_model');
+        $data['taak'] = $this->taak_model->getWithDagindeling($id);
+
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "taakBewerken",
+            "voetnoot" => "voetnoot");
+        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
+        $data['titel'] = 'Personeelsfeest overzicht';
+        $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
+        
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    //Thomas Vansprengel, overzicht taak beheren
+    public function taakBeheren() {
+        
+        $this->load->model('taak_model');
+        $data['taken'] = $this->taak_model->getAllWithDagindeling();
+
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "takenBeheren",
+            "voetnoot" => "voetnoot");
+        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
+        $data['titel'] = 'Personeelsfeest overzicht';
+        $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
+        
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    
+
+        public function ajaxUploadFile(){
         $config['upload_path'] = './assets/files/';
         $config['allowed_types'] = 'xls';
         $config['encrypt_name'] = TRUE;
@@ -130,6 +204,10 @@ class Organisator extends CI_Controller {
             $this->load->view('ajax_uploadStatus', $data);
         }
     }
+
+    /**
+     * Jens Sels - Ajax die de excel file gaat uploaden
+     */
 
     public function ajaxAddPersoon() {
         $feestId = $this->session->userdata('feestId');
@@ -243,7 +321,7 @@ class Organisator extends CI_Controller {
     public function maakNieuweOrganisator() {
         $data['titel'] = 'Nieuwe organisator toevoegen';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
-        $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
+        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');   
         $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'organisator/organisator_form',
             'voetnoot' => 'voetnoot');
@@ -264,7 +342,7 @@ class Organisator extends CI_Controller {
             $organisator->voornaam = $this->input->post('voornaam');
             $organisator->naam = $this->input->post('naam');
             $organisator->email = $this->input->post('email');
-            $organisator->wachtwoord = $this->input->post('wachtwoord');
+            $organisator->wachtwoord = password_hash($this->input->post('wachtwoord'), PASSWORD_DEFAULT);
             $organisator->hashcode = random_string('alnum', 16);
             $organisator->typeId = 1;
 
@@ -272,6 +350,7 @@ class Organisator extends CI_Controller {
             $this->persoon_model->insertOrganisator($organisator);
         }
     }
+
 
     //Foutmelding als aanmelden fout loopt
     public function foutAanmelden() {
@@ -366,6 +445,43 @@ class Organisator extends CI_Controller {
         $this->dagindeling_model->delete($dagindelingId);
 
         redirect('organisator/beheerDagindeling/' . $personeelsfeestId);
+    }
+    
+    /*
+     * Jorne Lambrechts
+     * naar overzicht van albums gaan voor de organisator
+     */
+    public function overzichtAlbums(){
+        $data['titel'] = 'Overzicht Albums';
+        $data['paginaverantwoordelijke'] = 'Jorene Lambrechts';
+        $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
+
+        $this->load->model('album_model');
+        $data['albums'] = $this->album_model->getAll();
+        $albums = $data['albums'];
+        $this->load->model('foto_model');
+        $data['fotos'] = $this->foto_model->getAll();
+
+        foreach ($albums as $album) {
+            $album->eersteFoto = $this->foto_model->getEersteFoto($album->id);
+        }
+        
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'organisator/overzichtAlbums',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    public function haalAjaxOp_OptiesBijDagindeling() {
+        $dagindelingId = $this->input->get('dagindelingId');
+        
+        $this->load->model('optie_model');
+        $data['opties'] = $this->optie_model->getAllWhereDagindeling($dagindelingId);
+        
+        $this->load->model('dagindeling_model');
+        $data['dagindeling'] = $this->dagindeling_model->get($dagindelingId);
+        
+        $this->load->view('organisator/ajax_optiesBijDagindeling', $data);
     }
 
 }

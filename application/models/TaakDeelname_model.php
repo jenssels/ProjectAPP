@@ -49,8 +49,8 @@ class TaakDeelname_model extends CI_Model {
      * @param $taakId Id van een taak
      * @return Alle keuzes van taken van een taak
      */
-    function getAllWhereTaak($taakId){
-        $this->db->where('taakid', $taakId);
+    function getAllWhereShift($shiftid){
+        $this->db->where('shiftid', $shiftid);
         $query = $this->db->get('taakdeelname');
         return $query->result();
     }
