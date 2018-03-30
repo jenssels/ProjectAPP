@@ -114,6 +114,80 @@ class Organisator extends CI_Controller {
         
     }
     
+    //Thomas vansprengel, taak verwijderen
+    public function verwijdertaak($id){
+        $this->load->model('taak_model');
+        $data['taken'] = $this->taak_model->delete($id);
+        $this->taakBeheren();
+    }
+    
+    public function pasTaakAan(){
+         $info = new stdClass();
+            
+            $info->id = $this->input->post('id');
+            $info->naam = $this->input->post('naam');
+            $info->beschrijving = $this->input->post('beschrijving');
+            $info->dagindelingid = $this->input->post('dagindeling');
+            $info->locatieid = $this->input->post('locatie');
+            
+            $this->load->model('Taak_model');
+            $this->Taak_model->update($info);
+
+
+            $this->taakBeheren();
+    }
+    //Thomas vansprengel, taak verwijderen
+    public function shifttaak($id){
+        $this->load->model('shift_model');
+        $data['shiften'] = $this->shift_model->getAllWithTaakWhereTaak($id);
+
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "taakShiften",
+            "voetnoot" => "voetnoot");
+        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
+        $data['titel'] = 'Personeelsfeest overzicht';
+        $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
+        
+        $this->template->load('main_master', $partials, $data);
+    }
+    //Thomas vansprengel, taak verwijderen
+    public function edittaak($id){
+        
+        $this->load->model('Locatie_model');
+        $data['locaties'] = $this->Locatie_model->getAll();
+        
+        $this->load->model('Dagindeling_model');
+        $data['dagindelingen'] = $this->Dagindeling_model->getAll();
+        
+        $this->load->model('taak_model');
+        $data['taak'] = $this->taak_model->getWithDagindeling($id);
+
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "taakBewerken",
+            "voetnoot" => "voetnoot");
+        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
+        $data['titel'] = 'Personeelsfeest overzicht';
+        $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
+        
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    //Thomas Vansprengel, overzicht taak beheren
+    public function taakBeheren() {
+        
+        $this->load->model('taak_model');
+        $data['taken'] = $this->taak_model->getAllWithDagindeling();
+
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "takenBeheren",
+            "voetnoot" => "voetnoot");
+        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
+        $data['titel'] = 'Personeelsfeest overzicht';
+        $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
+        
+        $this->template->load('main_master', $partials, $data);
+    }
+    
     public function ajaxUploadFile(){
         $config['upload_path'] = './assets/files/';
         $config['allowed_types'] = 'xls';
@@ -185,7 +259,7 @@ class Organisator extends CI_Controller {
     public function maakNieuweOrganisator() {
         $data['titel'] = 'Nieuwe organisator toevoegen';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
-        $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
+        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');   
         $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'organisator/organisator_form',
             'voetnoot' => 'voetnoot');
@@ -214,6 +288,7 @@ class Organisator extends CI_Controller {
             $this->persoon_model->insertOrganisator($organisator);
         }
     }
+
 
     //Foutmelding als aanmelden fout loopt
     public function foutAanmelden() {

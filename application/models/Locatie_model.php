@@ -23,4 +23,11 @@ class Locatie_model extends CI_Model {
         $query = $this->db->get('locatie');
         return $query->row();
     }
+    
+
+    function getAll(){
+        // Thomas Vansprengel -     //Alle locaties halen
+        $query = $this->db->get('locatie');
+        return $query->result();
+    }
 }

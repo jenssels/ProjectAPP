@@ -32,7 +32,8 @@ class Shift_model extends CI_Model {
      * Jens Sels - Verwijder shift en al zijn deelnames
      * @param $shiftId Id van een shift
      */
-    function delete($shiftId){       
+    function delete($shiftId){   
+        $this->load->model('TaakDeelname_model');
         $taakDeelnames = $this->TaakDeelname_model->getAllWhereShift($shiftId);
         // Alle keuzes van taken doorlopen en ze verwijderen
         foreach($taakDeelnames as $taakDeelname){
@@ -42,7 +43,20 @@ class Shift_model extends CI_Model {
         $this->db->delete('shift');
     }
     
+        function getAllWithTaakWhereTaak($id){
+        // Thomas Vansprengel
+        $this->db->where('id', $id);
+        $query = $this->db->get('shift');
+        $shiften = $query->result();
         
+        $this->load->model('taak_model');
+    
+        foreach ($shiften as $shift) {
+            $shift->taak = $this->taak_model->getByShift($shift->taakId);
+        }
+        
+            return $shiften;
+        }     
     
         function getAll(){
         // Thomas Vansprengel
