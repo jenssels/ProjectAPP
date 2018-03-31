@@ -27,6 +27,10 @@
         echo '<h5 class="card-title">' . $album->naam . '</h5>';
         echo '<p class="card-text">Bekijk hier alle fotos van dit album!</p>';
         echo '<a href="'. base_url() . 'index.php/vrijwilliger/toonAlbum/' . $album->id .'" class="btn btn-primary">Bekijk de fotos!</a>';
+        //Jorne Lambrechts - knoppen om album te bewerken of te verwijderen
+        echo "</div><div>";
+        echo anchor('home/aanmelden','<button type="button" class="btn"><i class="fas fa-edit"></i></button>');
+        echo anchor('home/aanmelden','<button type="button" class="btn"><i class="fas fa-times"></i></button>');
         echo '</div></div><br>';
     }
     
