@@ -1,23 +1,42 @@
 <script>
-   $(document).ready(function() {
-	$('#uploadFile').submit(function(e) {
-            console.log('submit');
-            var data = new FormData(this)
-		e.preventDefault();
-		$.ajax({
-			url:site_url + '/organisator/ajaxUploadFile', 
-			method:"POST",  
-                        data: data, 
-                        contentType: false,  
-                        cache: false,  
-                        processData:false, 
-			success : function(result){
-                            $('#uploadMessage').html(result);
-                        },
-		});
-		return false;
-	});
-}); 
+    $(document).ready(function () {
+        function addPersoon(voornaam,naam,email) {
+            $.ajax({type: "GET",
+                url: site_url + "/Organisator/ajaxAddPersoon",
+                data: {voornaam: voornaam, naam: naam, email: email},
+                success: function (result) {
+                    $('#uploadMessage').html(result);
+                },
+                error: function (xhr, status, error) {
+                    alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+                }
+            });
+        }
+        ;
+        $('#uploadPersoon').submit(function(e){
+            e.preventDefault();
+            var voornaam = $('#voornaam').val();
+            var naam = $('#naam').val();
+            var email = $('#email').val();
+            addPersoon(voornaam,naam,email);
+        });
+        $('#uploadFile').submit(function (e) {
+            var data = new FormData(this);
+            e.preventDefault();
+            $.ajax({
+                url: site_url + '/organisator/ajaxUploadFile',
+                method: "POST",
+                data: data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (result) {
+                    $('#uploadMessage').html(result);
+                },
+            });
+            return false;
+        });
+    });
 </script>
 
 
@@ -25,31 +44,90 @@
     <div class="col-md-6">
         <div class="row">
             <div class="col-md-12">
-            <p>Hier kan je een personeelslijst uit Excel importeren</p>
+                <p>Hier kan je een personeelslijst uit Excel importeren</p>
 
-            <?php
-             $attributenFormulier = array('id' => 'uploadFile',
-                                           'role' => 'form');
-            echo form_open('', $attributenFormulier);
-            echo form_labelpro('Upload excel (.xls):', 'excel');
-            echo form_input(array('name' => 'excel',
-                                    'id' => 'excel',
-                                    'type' => 'file',
-                                    'required' => 'required'));
-             ?>
+                <?php
+                $attributenFormulier = array('id' => 'uploadFile',
+                    'role' => 'form');
+                echo form_open('', $attributenFormulier);
+                echo form_labelpro('Upload excel (.xls):', 'excel');
+                echo form_input(array('name' => 'excel',
+                    'id' => 'excel',
+                    'type' => 'file',
+                    'required' => 'required'));
+                ?>
             </div>
             <div class="col-md-12">
-            <?php
-            echo form_submit('knop', 'Upload', "class='btn btn-primary'");
-            echo form_close();
-            ?>
+                <?php
+                echo form_submit('knop', 'Upload', "class='btn btn-primary'");
+                echo form_close();
+                ?>
+            </div>
+
+            <div class="col-md-12">
+                <?php
+                $attributenFormulier2 = array('id' => 'uploadPersoon',
+                    'role' => 'form');
+                echo form_open('', $attributenFormulier2);
+                ?>
+                <div class="form-group">
+                    <?php
+                    echo form_labelpro('Voornaam', 'voornaam');
+                    echo form_input(array('voornaam' => 'voornaam',
+                        'id' => 'voornaam',
+                        'class' => 'form-control',
+                        'placeholder' => 'Naam',
+                        'required' => 'required'));
+                    ?>
+                    <div class='help-block with-errors'>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <?php
+                    echo form_labelpro('Naam', 'naam');
+                    echo form_input(array('name' => 'naam',
+                        'id' => 'naam',
+                        'class' => 'form-control',
+                        'placeholder' => 'Naam',
+                        'required' => 'required'));
+                    ?>
+                    <div class='help-block with-errors'>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <?php
+                    echo form_labelpro('Email', 'email');
+                    echo form_input(array('email' => 'email',
+                        'id' => 'email',
+                        'type' => 'email',
+                        'class' => 'form-control',
+                        'placeholder' => 'Beschrijving',
+                        'required' => 'required'));
+                    ?>
+                    <div class='help-block with-errors'>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <?php
+                echo form_submit('knop', 'Voeg persoon toe', "class='btn btn-primary'");
+                echo form_close();
+                ?>
             </div>
         </div>
-        
+
     </div>
     <div class="col-md-6">
         <p>Zorg ervoor dat uw excel deze 3 kolommen heeft: Voornaam, Naam, Email</p>
-        <p>Download hier een voorbeeld excel: </p> <?php echo anchor('assets/files/VoorbeeldExcel.xls', 'Download',"class='btn btn-primary'") ?>
+        <p>Download hier een voorbeeld excel: </p> <?php echo anchor('assets/files/VoorbeeldExcel.xls', 'Download', "class='btn btn-primary'") ?>
         <p id="uploadMessage"></p>
+    </div>
+    <div class="col-md-6">
+        <?php
+            echo anchor('/organisator/personeelsFeestOverzicht', 'Terug naar overzicht');
+        ?>
     </div>
 </div>

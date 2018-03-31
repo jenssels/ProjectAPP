@@ -7,7 +7,7 @@
             
         }
         else{
-            echo $content;
+            echo $personeel;
         }
     ?>
 </div>

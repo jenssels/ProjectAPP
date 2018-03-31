@@ -1,8 +1,8 @@
 <?php
 /**
- * @file overzichtAlbums.php
+ * @file overzichtFotos.php
  * 
- * View waarin een personeelslid/vrijwilliger het overzicht van de albums kan bekijken
+ * View waarin een vrijwilliger het overzicht van de fotos kan bekijken
  */
 ?>
 
@@ -21,13 +21,20 @@
 <div>
     <?php
     //Stef Goor - Toon alle foto's van het huidige album
+    $teller = 0;
     echo '<div class="row">';
     foreach ($fotos as $foto) {
-        echo '<div class="afbeeldingVeld col-sm">';
+        if ($teller == 3){
+            echo '</div>';
+            echo '<div class="row">';
+            $teller = 0;
+        }
+        echo '<div class="afbeeldingVeld col-sm-4">';
         echo toonAfbeelding($foto->naam, 'class="card-img-top img-thumbnail rounded img-fluid"');
         echo '</div>';
+        $teller++;
     }
     echo '</div>';
-    echo anchor('vrijwilliger/overzichtAlbums', 'Terug naar overzicht albums')
+    echo anchor('personeel/overzichtAlbums', 'Terug naar overzicht albums', array('role' => 'button' , 'class' => 'btn btn-primary'));
     ?>
 </div>

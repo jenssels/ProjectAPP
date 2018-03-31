@@ -16,6 +16,27 @@ class Dagindeling_model extends CI_Model {
     {
         parent::__construct();
     }     
+
+    
+    /**
+     * Joren Synaeve
+     * Ophalen van de dagindeling met een bepaald id
+     * @param $dagindelingId id van de dagindeling
+     * @return de dagindeling met het bepaalde id
+     */
+    function get($dagindelingId) {
+        $this->db->where('id', $dagindelingId);
+        $query = $this->db->get('dagindeling');
+        return $query->row();
+    }
+    
+
+    function getAll(){
+        // Thomas Vansprengel -     //Alle dagindelingen halen
+        $query = $this->db->get('dagindeling');
+        return $query->result();
+    }
+
     /**
      * Jens Sels - Ophalen van alle dagindelingen van een personeelsfeest
      * @param $feestId Id van personeelsfeest
