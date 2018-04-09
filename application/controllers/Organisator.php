@@ -66,10 +66,7 @@ class Organisator extends CI_Controller {
             $data['feest'] = $this->Personeelsfeest_model->get($feestId);
             $data['titel'] = 'Personeelsfeest bewerken';
         }
-
-        $partials = array("hoofding" => "hoofding",
-            "inhoud" => "personeelsFeestAanmaken",
-            "voetnoot" => "voetnoot");
+        $partials = array("hoofding" => "hoofding", "inhoud" => "personeelsFeestAanmaken", "voetnoot" => "voetnoot");
         $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
@@ -93,27 +90,27 @@ class Organisator extends CI_Controller {
             $this->Personeelsfeest_model->update($feest);
         }
 
-        
-        $this->personeelsFeestUploadForm($feest->id);
+        redirect('/organisator/personeelsFeestUploadForm/' . $feest->id);
     }
-    
+
     /**
      * Jens Sels - Upload pagina openen van personeelsfeest om personeelsleden toe te voegen
      * @param $feestId Id van personeelsfeest
      */
-    public function personeelsFeestUploadForm($feestId){
+    public function personeelsFeestUploadForm($feestId) {
+        $this->session->set_userdata('feestId', $feestId);
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "personeelsFeestUploadForm",
             "voetnoot" => "voetnoot");
         $data['feestId'] = $feestId;
-        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
+        $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
         $data['titel'] = 'Personeelsfeest personeel uploaden';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
-        
+
         $this->template->load('main_master', $partials, $data);
-        
     }
-    
+
+   
     //Thomas vansprengel, taak verwijderen
     public function verwijdertaak($id){
         $this->load->model('taak_model');
@@ -188,44 +185,109 @@ class Organisator extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
     
-    public function ajaxUploadFile(){
+    
+
+        public function ajaxUploadFile(){
         $config['upload_path'] = './assets/files/';
         $config['allowed_types'] = 'xls';
         $config['encrypt_name'] = TRUE;
         $this->upload->initialize($config);
-        if ( ! $this->upload->do_upload('excel'))
-                {
-                        $data['errors'] = array('error' => $this->upload->display_errors());
+        if (!$this->upload->do_upload('excel')) {
+            $data['errors'] = array('error' => $this->upload->display_errors());
 
-                        $this->load->view('ajax_uploadStatus', $data);
-                }
-                else
-                {
-                        $data  = $this->upload->data();
-                        @chmod($data['full_path'], 0777);
-                        $this->spreadsheet_excel_reader->setOutputEncoding('CP1251');
-                        
-                        $data = $this->spreadsheet_excel_reader->read($data['full_path'],false);
-                        $sheets = $this->spreadsheet_excel_reader->sheets[0];
-                        
-                        error_reporting(0);
-                        
-                        $data_excel = array();
-                        for ($i = 2; $i <= $sheets['numRows']; $i++) {
-                            if ($sheets['cells'][$i][1] == '') break;
-                                $data_excel[$i - 1]['Voornaam'] = $sheets['cells'][$i][1];
-                                $data_excel[$i - 1]['Naam'] = $sheets['cells'][$i][2];
-                                $data_excel[$i - 1]['Email'] = $sheets['cells'][$i][3];
-                            
-}                       print_r($data_excel);
-                        die();
-                        
-                        $this->load->view('ajax_uploadStatus', $data);
-                }
+            $this->load->view('ajax_uploadStatus', $data);
+        } else {
+            $uploadData = $this->upload->data();
+            $data_excel = $this->readExcel($uploadData);
+            $data['personeel'] = $this->uploadPersoneel($data_excel);
+            unlink($data['full_path']);
+            $this->load->view('ajax_uploadStatus', $data);
+        }
+    }
 
+    /**
+     * Jens Sels - Ajax die de excel file gaat uploaden
+     */
 
-        $this->personeelsFeestOverzicht();
+    public function ajaxAddPersoon() {
+        $feestId = $this->session->userdata('feestId');
+        $voornaam = $this->input->get('voornaam');
+        $naam = $this->input->get('naam');
+        $email = strval($this->input->get('email'));
+        $check = $this->insertPersoon($feestId, $voornaam, $naam, $email);
+        if ($check) {
+            $data['personeel'] = 'Toegevoegd - ' . $voornaam . ' ' . $naam . '</br>';
+        } else {
+            $data['personeel'] = 'Al aanwezig in de database - ' . $voornaam . ' ' . $naam . '</br>';
+        }
+        $this->load->view('ajax_uploadStatus', $data);
+    }
 
+    /*
+     * Jens Sels - Uitlezen van excel bestand en terug geven van array met personeelsleden in
+     */
+
+    public function readExcel($data) {
+        chmod($data['full_path'], 0775);
+        $this->spreadsheet_excel_reader->setOutputEncoding('CP1251');
+        $data = $this->spreadsheet_excel_reader->read($data['full_path'], false);
+        $sheets = $this->spreadsheet_excel_reader->sheets[0];
+        error_reporting(0);
+        $data_excel = array();
+        for ($i = 2; $i <= $sheets['numRows']; $i++) {
+            if ($sheets['cells'][$i][1] == '')
+                break;
+            $data_excel[$i - 1]['Voornaam'] = $sheets['cells'][$i][1];
+            $data_excel[$i - 1]['Naam'] = $sheets['cells'][$i][2];
+            $data_excel[$i - 1]['Email'] = $sheets['cells'][$i][3];
+        } return $data_excel;
+    }
+
+    /**
+     * Jens Sels - Alle personeelsleden toevoegen aan de databank
+     * @param personeel Object met gegevens van de personeelsleden
+     * @return Lijst met alle personeelsleden en of ze toegevoegd zijn of niet
+     */
+    public function uploadPersoneel($personeel) {
+        $this->load->model('Persoon_model');
+        $feestId = $this->session->userdata('feestId');
+        $personeelsLijst = "";
+        for ($i = 1; $i < (count($personeel) + 1); $i++) {
+            $voornaam = $personeel[$i]["Voornaam"];
+            $naam = $personeel[$i]["Naam"];
+            $email = strval($personeel[$i]["Email"]);
+            $check = $this->insertPersoon($feestId, $voornaam, $naam, $email);
+            if ($check) {
+                $personeelsLijst .= 'Toegevoegd - ' . $voornaam . ' ' . $naam . '</br>';
+            } else {
+                $personeelsLijst .= 'Al aanwezig in de database - ' . $voornaam . ' ' . $naam . '</br>';
+            }
+        }
+        return $personeelsLijst;
+    }
+
+    /**
+     * Jens Sels - Toevoegen van personeelslid als hij nog niet aanwezig is in een personeelsfeest
+     * @param $feestId Id van personeelsfeest
+     * @param $voornaam Voornaam van personeelslid
+     * @param $naam naam van personeelslid
+     * @param $email Email van personeelslid
+     * @return True als personeelslid is toegevoegd en false als hij al in de databank zit
+     */
+    public function insertPersoon($feestId, $voornaam, $naam, $email) {
+        $this->load->model('Persoon_model');
+        $personeelDatabase = $this->Persoon_model->getAllWherePersoneelsFeestAndEmail($feestId, $email);
+        if (count($personeelDatabase) == 0) {
+            $persoonObject = new stdClass();
+            $persoonObject->voornaam = $voornaam;
+            $persoonObject->naam = $naam;
+            $persoonObject->email = $email;
+            $persoonObject->typeId = 3;
+            $persoonObject->personeelsfeestId = $feestId;
+            $this->Persoon_model->insert($persoonObject);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -237,7 +299,7 @@ class Organisator extends CI_Controller {
 
         $this->Personeelsfeest_model->delete($feestId);
 
-        $this->personeelsFeestOverzicht();
+        redirect('/organisator/personeelsFeestOverzicht');
     }
 
     /**
@@ -372,7 +434,7 @@ class Organisator extends CI_Controller {
             redirect('organisator/beheerDagindeling/' . $dagindeling->personeelsfeestId);
         }
     }
-    
+
     /**
      * Joren Synaeve
      * @param type $dagindelingId     * 
@@ -381,7 +443,7 @@ class Organisator extends CI_Controller {
     public function verwijderDagindeling($personeelsfeestId, $dagindelingId) {
         $this->load->model('dagindeling_model');
         $this->dagindeling_model->delete($dagindelingId);
-        
+
         redirect('organisator/beheerDagindeling/' . $personeelsfeestId);
     }
     

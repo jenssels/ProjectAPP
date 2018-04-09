@@ -35,6 +35,30 @@ class Persoon_model extends CI_Model {
     }
     
     /**
+     * Jens Sels - Toevoegen van persoon
+     * @param $persoon Persoon object
+     * @return Id van toegevoegd persoon
+     */
+    function insert($persoon){
+        $this->db->insert('persoon', $persoon);
+        return $this->db->insert_id();
+    }
+    
+    /**
+     * Jens Sels - Ophalen van alle personen met een email van een bepaald personeelsfeest
+     * @param $feestId Id van personeelsfeest
+     * @param $email Email van persoon
+     * @return Alle personen met een email van een bepaald personeelsfeest
+     */
+    function getAllWherePersoneelsFeestAndEmail($feestId, $email){
+        $this->db->where('personeelsfeestId', $feestId);
+        $this->db->where('email', $email);
+        $query = $this->db->get('persoon');
+
+        return $query->result();
+    }
+    
+    /**
      * Jens Sels - Verwijder een persoon en al zijn keuzes voor opties en taken
      * @param $persoonId Id van een persoon
      */
