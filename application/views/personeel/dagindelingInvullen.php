@@ -16,7 +16,7 @@
     <?php
     $attributenFormulier = array('id' => 'mijnFormulier',
         'role' => 'form');
-    echo form_open('personeel/bevestigIngevuldeDagindeling', $attributenFormulier)
+    echo form_open('personeel/bevestigIngevuldeDagindeling/' . $deelnemer->hashcode, $attributenFormulier)
     ?>
 
     <?php
@@ -41,12 +41,6 @@
         'name'  => 'aantalSelects',
         'id'    => 'aantalSelects',
         'value' => $teller)); 
-    ?>
-    
-    <?php echo form_input(array('type'  => 'hidden',
-        'name'  => 'persoonId',
-        'id'    => 'persoonId',
-        'value' => $personeelslidId)); 
     ?>
     
     <div class="form-group">

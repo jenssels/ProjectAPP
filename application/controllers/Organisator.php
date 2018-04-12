@@ -408,6 +408,12 @@ class Organisator extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 
+    /**
+     * Joren Synaeve
+     * Toont een pagina met een formulier om de gekozen dagindeling te bewerken.
+     * @param $personeelsfeestId Het id van het personeelsfeest waaraan de dagindeling gelinkt is
+     * @param $dagindelingId Het id van de gekozen dagindeling
+     */
     public function wijzigDagindeling($personeelsfeestId, $dagindelingId) {
         // Standaardvariabelen
         $data['titel'] = 'Dagindeling bewerken';
@@ -460,8 +466,8 @@ class Organisator extends CI_Controller {
 
     /**
      * Joren Synaeve
-     * @param type $dagindelingId     * 
-     * Verwijdert de dagindeling
+     * @param $dagindelingId Het id van de te verwijderen dagindeling 
+     * Verwijdert de gekozen dagindeling
      */
     public function verwijderDagindeling($personeelsfeestId, $dagindelingId) {
         $this->load->model('dagindeling_model');

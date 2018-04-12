@@ -64,8 +64,14 @@
                     $voorVrijwilliger = 'Ja';
                 }
 
-                echo "<tr><td>" . divanchor('', $dagindeling->naam, array('data-id' => $dagindeling->id, 'class' => 'dagindelingLink')) . "</td><td>" . $dagindeling->beginuur . " - " . $dagindeling->einduur .
-                "</td><td>" . $voorVrijwilliger . "</td><td>" . anchor('organisator/wijzigDagindeling/' . $personeelsfeest->id . '/' . $dagindeling->id, 'Bewerken') . "</td><td>" . anchor('organisator/verwijderDagindeling/' . $personeelsfeest->id . '/' . $dagindeling->id, 'Verwijder') . "</td></tr>";
+                $beginuur = substr($dagindeling->beginuur, 0, 5);
+                $einduur = substr($dagindeling->einduur, 0, 5);
+                
+                echo "<tr><td>" . divanchor('', $dagindeling->naam, array('data-id' => $dagindeling->id, 'class' => 'dagindelingLink')) . "</td>"
+                        . "<td>" . $beginuur . "u - " . $einduur . "u</td>"
+                        . "<td>" . $voorVrijwilliger . "</td>"
+                        . "<td>" . anchor('organisator/wijzigDagindeling/' . $personeelsfeest->id . '/' . $dagindeling->id, 'Bewerken') . "</td>"
+                        . "<td>" . anchor('organisator/verwijderDagindeling/' . $personeelsfeest->id . '/' . $dagindeling->id, 'Verwijder') . "</td></tr>";
             }
             ?>
             <tr>

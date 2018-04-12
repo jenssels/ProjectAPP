@@ -135,10 +135,11 @@ class Persoon_model extends CI_Model {
     }
     
     /**
-     * 
-     * @param type $hashcode
+     * Joren Synaeve
+     * @param $hashcode De hashcode van het op te halen personeelslid
+     * @return Het persoonobject
      */
-    function getPersoneelslid($hashcode) {
+    function getWhereHashcode($hashcode) {
         $this->db->where('hashcode', $hashcode);
         $query = $this->db->get('persoon');
         

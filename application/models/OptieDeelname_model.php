@@ -47,4 +47,14 @@ class OptieDeelname_model extends CI_Model {
         $this->db->where('id', $optieDeelnameId);
         $this->db->delete('optiedeelname');
     }
+    
+    /**
+     * Joren Synaeve - Voegt een nieuwe optieDeelname toe
+     * @param Een $optieDeelname object
+     * @return Het id van het nieuwe optieDeelname record
+     */
+    function insert($optieDeelname) {
+        $this->db->insert('optieDeelname', $optieDeelname);
+        return $this->db->insert_id();
+    }
 }
