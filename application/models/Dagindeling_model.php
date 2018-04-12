@@ -105,9 +105,14 @@ class Dagindeling_model extends CI_Model {
         return $dagindelingen;
     }
 
+    /**
+     * Joren Synaeve - Maakt een leeg dagindeling object aan
+     * @return Een leeg $dagindeling object
+     */
     function getEmptyDagindeling() {
         $dagindeling = new stdClass();
 
+        $dagindeling->id = 0;
         $dagindeling->naam = '';
         $dagindeling->beginuur = '00:00';
         $dagindeling->einduur = '00:00';
