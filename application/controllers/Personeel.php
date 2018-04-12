@@ -80,7 +80,6 @@ class Personeel extends CI_Controller {
      */
     public function bevestigIngevuldeDagindeling() {
         $aantalSelects = $this->input->post('aantalSelects');
-        echo $aantalSelects;
         for ($i = 0; $i < $aantalSelects; $i++) {
             $optieDeelname = new stdClass();
 

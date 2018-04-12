@@ -12,16 +12,12 @@
 </div>
 
 <div>
-    <p>Je gaat een dagindeling toevoegen voor <?php echo $personeelsfeest->naam ?></p>
-</div>
-
-<div>
     <?php echo haalJavascriptOp("validator.js"); ?>
 
     <?php
     $attributenFormulier = array('id' => 'mijnFormulier',
         'role' => 'form');
-    echo form_open('organisator/voegDagindelingToe', $attributenFormulier)
+    echo form_open('organisator/registreerDagindeling', $attributenFormulier)
     ?>
 
     <div class="form-group row">
@@ -32,6 +28,7 @@
             <?php
             echo form_input(array('name' => 'naam',
                 'id' => 'naam',
+                'value' => $dagindeling->naam,
                 'class' => 'form-control',
                 'placeholder' => 'Naam',
                 'required' => 'required'));
@@ -47,6 +44,7 @@
             <?php
             echo form_input(array('name' => 'beginuur',
                 'id' => 'beginuur',
+                'value' => $dagindeling->beginuur,
                 'class' => 'form-control',
                 'placeholder' => 'hh:mm',
                 'required' => 'required'));
@@ -62,6 +60,7 @@
             <?php
             echo form_input(array('name' => 'einduur',
                 'id' => 'einduur',
+                'value' => $dagindeling->einduur,
                 'class' => 'form-control',
                 'placeholder' => 'hh:mm',
                 'required' => 'required'));
@@ -77,6 +76,7 @@
             <?php
             echo form_textarea(array('name' => 'beschrijving',
                 'id' => 'beschrijving',
+                'value' => $dagindeling->beschrijving,
                 'class' => 'form-control'));
             ?>
         </div>
@@ -102,9 +102,13 @@
         </div>
     </fieldset>
 
-        <?php
-        echo form_hidden('personeelsfeestId', $personeelsfeest->id);
-        ?>
+    <?php
+    echo form_hidden('personeelsfeestId', $personeelsfeest->id);
+    ?>
+
+    <?php
+    echo form_hidden('dagindelingId', $dagindeling->id);
+    ?>
 
     <div class="form-group">
         <?php echo form_submit('knop', 'Bevestigen', "class='btn btn-primary'") ?>
