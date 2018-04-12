@@ -25,7 +25,22 @@ class OptieDeelname_model extends CI_Model {
     function getAllWherePersoon($persoonId){
         $this->db->where('persoonid', $persoonId);
         $query = $this->db->get('optiedeelname');
-        return $query->result();
+        return $query->result();        
+    }
+    /**
+     * Joren - Ophalen van alle optiedeenames met bijhorende opties van een persoon
+     * @param $persoonId Id van een persoon
+     * @return Alle keuzes van opties van een persoon
+     */
+    function getAllWherePersoonWithOpties($persoonId) {
+        $this->db->where('persoonid', $persoonId);
+        $query = $this->db->get('optiedeelname');
+        $optiedeelnames = $query->result();
+        $this->load->model('optie_model');
+        foreach ($optiedeelnames as $optiedeelname) {
+            $optiedeelname->optie = $this->optie_model->get($optiedeelname->optieId);
+        }
+        return $optiedeelnames;
     }
     
     /**

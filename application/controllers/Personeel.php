@@ -11,15 +11,15 @@ class Personeel extends CI_Controller {
      * @param $feestId Het id van het personeelsfeest waarvoor de deelnemer uitgenodigd is
      */
     public function index($hashcode, $feestId) {
-        $data['titel'] = 'Dagindeling invullen';
-        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
-        // User data zetten in sessie
+        // Gegevens ophalen van persoon
         $this->load->model('persoon_model');
         $personeelslid = $this->persoon_model->getWhereHashcode($hashcode);
         $data['deelnemer'] = $personeelslid;
+        // Standaardvariabelen
+        $data['titel'] = 'Dagindeling invullen';
+        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
         $this->session->set_userdata('emailgebruiker', $personeelslid->email);
         $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
-
         // Toon alle dagindeling met opties het voor het personeelslid
         $this->load->model('dagindeling_model');
         $data['dagindelingenMetOpties'] = $this->dagindeling_model->getAllDagindelingenWherePersoneelsfeestWithOpties($feestId);
@@ -99,20 +99,36 @@ class Personeel extends CI_Controller {
             // Wegschrijven in database
             $this->optiedeelname_model->insert($optieDeelname);
         }
-        
+
         // Laden van overzichtspagina
-        $this->toonOverzichtIngevuldeDagindeling($hashcode, $persoon->personeelsfeestId);
+        $this->toonOverzichtIngevuldeDagindeling($hashcode);
     }
-    
+
     /**
      * Joren Synaeve
      * @param $hashcode De hashcode van de deelnemer
      * @param $feestId Het id van het personeelsfeest waarvoor de deelnemer uitgenodigd is
      */
-    public function toonOverzichtIngevuldeDagindeling($hashcode, $feestId) {
-        // Gegevens van persoon ophalen
+    public function toonOverzichtIngevuldeDagindeling($hashcode) {
+        // Gegevens ophalen van persoon
         $this->load->model('persoon_model');
-        $persoon = $this->persoon_model->getWhereHashcode($hashcode);
+        $personeelslid = $this->persoon_model->getWhereHashcode($hashcode);
+        $data['deelnemer'] = $personeelslid;
+        // Standaardvariabelen
+        $data['titel'] = 'Overzicht ingevulde dagindeling';
+        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+        $this->session->set_userdata('emailgebruiker', $personeelslid->email);
+        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
+        
+        // Opties ophalen van persoon
+        $this->load->model('optiedeelname_model');
+        $data['optiedeelnames'] = $this->optiedeelname_model->getAllWherePersoonWithOpties($personeelslid->id);
+        // Laden van pagina
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'personeel/overzichtIngevuldeDagindeling',
+            'voetnoot' => 'voetnoot');
+
+        $this->template->load('main_master', $partials, $data);
     }
 
 }

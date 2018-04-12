@@ -18,6 +18,17 @@ class Optie_model extends CI_Model {
     }
     
     /**
+     * Joren Synaeve
+     * @param $optieId Het id van de optie
+     * @return Het optieobject
+     */
+    function get($optieId) {
+        $this->db->where('id', $optieId);
+        $query = $this->db->get('optie');
+        return $query->row();
+    }
+    
+    /**
      * Jens Sels - Ophalen van alle opties van een dagindeling
      * @param $dagindelingId Id van een dagindeling
      * @return Alle opties van een dagindeling
