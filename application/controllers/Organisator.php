@@ -312,6 +312,38 @@ class Organisator extends CI_Controller {
 
         $this->load->view('ajax_overzichtGebruikers', $data);
     }
+    
+    /**
+     * Joren Synaeve
+     * Toont een pagina waar alle organisatoren getoond worden.
+     * Van hieruit kan je de organisatoren beheren.
+     */
+    public function beheerOrganisatoren () {
+        // Standaardvariabelen
+        $data['titel'] = 'Organisatoren beheren';
+        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+        // Organisatoren laden
+        $this->load->model('persoon_model');
+        $data['organisatoren'] = $this->persoon_model->getAllWhereTypeId(1);
+        // Laden van pagina
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'organisator/beheerOrganisatoren',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    /**
+     * Joren Synaeve
+     * Haalt de details van een organisator op aan de hand van de hashcode van de persoon.
+     * Toont hierna de details in de huidige pagina in een tabel.
+     */
+    public function ajaxHaalOrganisatorDetailsOp() {
+        $hashcode = $this->input->get('hashcode');
+        $this->load->model('persoon_model');
+        $data['organisator'] = $this->persoon_model->getWhereHashcode($hashcode);
+        
+        $this->load->view('organisator/ajax_detailsOrganisator', $data);
+    }
 
     /**
      * Toont een formulierpagina om een nieuwe organisator toe te voegen.
@@ -327,6 +359,7 @@ class Organisator extends CI_Controller {
     }
 
     /**
+     * Joren Synaeve
      * Registreert de nieuwe gebruiker indien er op 'Bevestigen' geklikt werd. 
      * Gaat terug naar de vorige pagina wanneer er op 'Annuleren' geklikt werd.
      */
@@ -347,6 +380,8 @@ class Organisator extends CI_Controller {
             $this->load->model('persoon_model');
             $this->persoon_model->insertOrganisator($organisator);
         }
+        
+        redirect('organisator/beheerOrganisatoren');
     }
 
     //Foutmelding als aanmelden fout loopt

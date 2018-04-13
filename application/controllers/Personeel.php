@@ -19,7 +19,6 @@ class Personeel extends CI_Controller {
         $data['titel'] = 'Dagindeling invullen';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
         $this->session->set_userdata('emailgebruiker', $personeelslid->email);
-        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         // Toon alle dagindeling met opties het voor het personeelslid
         $this->load->model('dagindeling_model');
         $data['dagindelingenMetOpties'] = $this->dagindeling_model->getAllDagindelingenWherePersoneelsfeestWithOpties($feestId);

@@ -15,78 +15,77 @@ class Persoon_model extends CI_Model {
     function __construct() {
         parent::__construct();
     }
-    
-    
+
     function getByPersoonid($id) {
         $this->db->where('id', $id);
-        $query = $this->db->get('persoon');       
+        $query = $this->db->get('persoon');
         return $query->row();
     }
+
     /**
      * Jens Sels - Ophalen van alle personen van een personeelsfeest
      * @param $feestId Id van een personeelsfeest
      * @return Alle personen van een personeelsfeest
      */
-    function getAllWherePersoneelsFeest($feestId){
+    function getAllWherePersoneelsFeest($feestId) {
         $this->db->where('personeelsfeestId', $feestId);
         $query = $this->db->get('persoon');
 
         return $query->result();
     }
-    
+
     /**
      * Jens Sels - Toevoegen van persoon
      * @param $persoon Persoon object
      * @return Id van toegevoegd persoon
      */
-    function insert($persoon){
+    function insert($persoon) {
         $this->db->insert('persoon', $persoon);
         return $this->db->insert_id();
     }
-    
+
     /**
      * Jens Sels - Ophalen van alle personen met een email van een bepaald personeelsfeest
      * @param $feestId Id van personeelsfeest
      * @param $email Email van persoon
      * @return Alle personen met een email van een bepaald personeelsfeest
      */
-    function getAllWherePersoneelsFeestAndEmail($feestId, $email){
+    function getAllWherePersoneelsFeestAndEmail($feestId, $email) {
         $this->db->where('personeelsfeestId', $feestId);
         $this->db->where('email', $email);
         $query = $this->db->get('persoon');
 
         return $query->result();
     }
-    
+
     /**
      * Jens Sels - Verwijder een persoon en al zijn keuzes voor opties en taken
      * @param $persoonId Id van een persoon
      */
-    function delete($persoonId){
+    function delete($persoonId) {
         $this->load->model('OptieDeelname_model');
         $this->load->model('TaakDeelname_model');
-        
+
         $optieDeelnames = $this->OptieDeelname_model->getAllWherePersoon();
         // Alle keuzes van opties doorlopen en ze verwijderen
-        foreach($optieDeelnames as $optieDeelname){
+        foreach ($optieDeelnames as $optieDeelname) {
             $this->OptieDeelname_model->delete($optieDeelname->id);
         }
-        
+
         $taakDeelnames = $this->TaakDeelname_model->getAllWherePersoon();
         // Alle keuzes van taken doorlopen en ze verwijderen
-        foreach($taakDeelnames as $taakDeelname){
+        foreach ($taakDeelnames as $taakDeelname) {
             $this->TaakDeelname_model->delete($taakDeelname->id);
         }
         $this->db->where('id', $persoonId);
         $this->db->delete('persoon');
-        
     }
 
     /**
-    *  Jens Sels - Ophalen van alle gebruikers van geselecteerde personeelsfeest
-    * @param $feestId Id van personeelsfeest
-    * @return Alle personeelsleden van het personeelsfeest 
-    */
+     *  Jens Sels - Ophalen van alle gebruikers van geselecteerde personeelsfeest
+     * @param $feestId Id van personeelsfeest
+     * @return Alle personeelsleden van het personeelsfeest 
+     */
     function getAllPersoneelsLedenWherePersoneelsFeest($feestId) {
         $this->db->where('personeelsfeestId', $feestId);
         $this->db->where('typeId', '3');
@@ -96,12 +95,12 @@ class Persoon_model extends CI_Model {
     }
 
     /**
-    *  Jens Sels - Ophalen van alle gebruikers van geselecteerde personeelsfeest
-    * @param $feestId Id van personeelsfeest
-    * @return Alle vrijwilligers van het personeelsfeest 
-    */
+     *  Jens Sels - Ophalen van alle gebruikers van geselecteerde personeelsfeest
+     * @param $feestId Id van personeelsfeest
+     * @return Alle vrijwilligers van het personeelsfeest 
+     */
     function getAllVrijwilligersWherePersoneelsFeest($feestId) {
-        
+
         $this->db->where('personeelsfeestId', $feestId);
         $this->db->where('typeId', '2');
         $query = $this->db->get('persoon');
@@ -118,22 +117,22 @@ class Persoon_model extends CI_Model {
         $this->db->insert('persoon', $organisator);
         return $this->db->insert_id();
     }
-    
-    function getOrganisator($email, $wachtwoord, $typeId){
+
+    function getOrganisator($email, $wachtwoord, $typeId) {
         //ophalen van de organisator
         $this->db->where('email', $email);
         $this->db->where('typeId', $typeId);
         $query = $this->db->get('persoon');
-        
+
         $organisator = $query->row();
-        
+
         if (password_verify($wachtwoord, $organisator->wachtwoord)) {
             return $organisator;
         } else {
             return null;
         }
     }
-    
+
     /**
      * Joren Synaeve
      * @param $hashcode De hashcode van het op te halen personeelslid
@@ -142,7 +141,7 @@ class Persoon_model extends CI_Model {
     function getWhereHashcode($hashcode) {
         $this->db->where('hashcode', $hashcode);
         $query = $this->db->get('persoon');
-        
+
         return $query->row();
     }
 
@@ -161,6 +160,28 @@ class Persoon_model extends CI_Model {
 
         if ($query->num_rows() > 0) {
             return $query->result();
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Joren Synaeve
+     * Haalt alle personen uit de database met een bepaald typeId. 
+     * @param $id Het typeId waarop gezocht wordt
+     * @return Een persoonobject
+     * @return Een false wanneer er geen personen gevonden worden
+     */
+    function getAllWhereTypeId($id) {
+        $this->db->where('typeId', $id);
+        $query = $this->db->get('persoon');
+
+        if ($query->num_rows() > 0) {
+            if ($query->num_rows() == 1) {
+                return $query->row();
+            } else {
+                return $query->result();
+            }
         } else {
             return false;
         }
