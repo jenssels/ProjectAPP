@@ -12,8 +12,13 @@
 <div>
     <p>Hieronder de opties die jij gekozen hebt.</p>
     <?php
-    foreach ($optiedeelnames as $optiedeelname) {
-            echo $optiedeelname->optie->naam;
+    foreach ($dagindelingen as $dagindeling) {
+        echo "<h5>" . $dagindeling->naam . "</h5>";
+        foreach ($optiedeelnames as $optiedeelname) {
+            if ($optiedeelname->optie->dagindeling->naam == $dagindeling->naam) {
+                echo "<p>" . $optiedeelname->optie->naam . "</p>";      
+            } 
+        }
     }
     ?>
 </div>

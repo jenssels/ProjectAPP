@@ -37,9 +37,12 @@ class OptieDeelname_model extends CI_Model {
         $query = $this->db->get('optiedeelname');
         $optiedeelnames = $query->result();
         $this->load->model('optie_model');
+        $this->load->model('dagindeling_model');
         foreach ($optiedeelnames as $optiedeelname) {
             $optiedeelname->optie = $this->optie_model->get($optiedeelname->optieId);
+            $optiedeelname->optie->dagindeling = $this->dagindeling_model->get($optiedeelname->optie->dagindelingId);
         }
+        
         return $optiedeelnames;
     }
     
