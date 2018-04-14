@@ -21,20 +21,17 @@
                 <th>Naam voornaam</th>
                 <th>Email</th>
                 <th></th>
-                <th></th>
             </tr>
             <?php
             foreach ($organisatoren as $organisator) {
                 echo "<tr>";
                 echo "<td>" . $organisator->voornaam . " " . $organisator->naam . "</td>";
                 echo "<td>" . $organisator->email . "</td>";
-                echo "<td>" . anchor('#', 'Bewerken') . "</td>";
                 echo "<td>" . anchor('#', 'Verwijderen') . "</td>";
                 echo "</tr>";
             }
             ?>
             <td><?php echo anchor('organisator/maakNieuweOrganisator', 'Toevoegen') ?></td>
-            <td></td>
             <td></td>
             <td></td>
         </table>
