@@ -22,9 +22,6 @@
  * View waarin wordt uitgelegd waarvoor de applicatie dient.
  */
 ?>
-<div class="page-header">
-    <h1>Welkom</h1>
-</div>
 <div class="row">
     <div class="col-sm-12">
         <h5>Doel van de applicatie</h5>

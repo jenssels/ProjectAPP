@@ -5,9 +5,6 @@
  * and open the template in the editor.
  */
 ?>
-<div class="page-header">
-    <h1><?php echo $titel ?></h1>
-</div>
 
 <div>
     <p>Hieronder de opties die jij gekozen hebt.</p>
@@ -16,6 +13,9 @@
         echo "<h5>" . $dagindeling->naam . "</h5>";
         foreach ($optiedeelnames as $optiedeelname) {
             if ($optiedeelname->optie->dagindeling->naam == $dagindeling->naam) {
+                if ($optiedeelname->optie->naam == "") {
+                    echo "Nee";
+                }
                 echo "<p>" . $optiedeelname->optie->naam . "</p>";      
             } 
         }

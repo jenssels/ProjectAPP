@@ -12,7 +12,7 @@ and open the template in the editor.
         <title><?php echo $titel; ?></title>
 
         <!-- Load bootstrap css -->
-        
+
         <?php echo pasStylesheetAan("bootstrap.css"); ?>
         <?php echo pasStylesheetAan("buttons.css"); ?>
 
@@ -39,6 +39,10 @@ and open the template in the editor.
         <?php echo $hoofding . "\n"; ?>
         <!-- Inhoud -->
         <div class="container">  
+        <div class="page-header">
+            <h1><?php echo $titel ?></h1>
+            <hr>
+        </div>
             <?php echo $inhoud ?>
         </div>
         <!-- Voetnoot -->
