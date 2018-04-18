@@ -576,5 +576,21 @@ class Organisator extends CI_Controller {
 
         $this->load->view('organisator/ajax_optiesBijDagindeling', $data);
     }
+    
+    /**
+     * Stef Goor - Laad de view voor het sturen van mails
+     */
+    public function mailSturen() {
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "organisator/mailSturen",
+            "voetnoot" => "voetnoot");
+        $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
+        $data['titel'] = 'Mail Sturen';
+        $data['paginaverantwoordelijke'] = 'Stef Goor';
+        
+        $this->load->model('personeelsfeest_model');
+        $data['personeelsfeesten'] = $this->personeelsfeest_model->getAll();
 
+        $this->template->load('main_master', $partials, $data);
+    }
 }
