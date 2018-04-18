@@ -45,7 +45,7 @@ class Organisator extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
     public function stuurTestMail(){
-        $this->stuurMail('Test mail met link', 'Dit is een test bericht', 'jenssels1998@gmail.com', 'personeel', '6xkY28eLg9ho1tfu', true);
+        $this->stuurMail('Test mail met link', 'Dit is een test bericht /n nieuwe lijn', 'jenssels1998@gmail.com', 'personeel', '6xkY28eLg9ho1tfu', true);
     }
     public function stuurMail($titel,$message,$mail,$type,$hash, $isInschrijfLink = false){
         $config = Array('protocol' => 'smtp','smtp_host' => 'ssl://smtp.gmail.com','smtp_port' => 465,'smtp_user' => 'team17project@gmail.com','smtp_pass' => 'team17project','mailtype'  => 'html',  'charset'   => 'utf-8');
@@ -58,7 +58,7 @@ class Organisator extends CI_Controller {
                 $link = 'http://localhost/index.php/vrijwilliger/index/' . $hash;
                 
             }
-            $message .= '\n Gebruik onderstaande link om u keuzes voor het personeelsfeest op te geven \n' . $link;
+            $message .= '\n Gebruik onderstaande link om u keuzes voor het personeelsfeest op te geven: \n ' . $link;
         }
         $this->load->library('email');
         $this->load->library('encrypt');
@@ -67,7 +67,7 @@ class Organisator extends CI_Controller {
         $this->email->from('team17project@gmail.com', 'Personeelsfeest Thomas More');
         $this->email->to($mail); 
         $this->email->subject($titel);
-        $this->email->message($message);    
+        $this->email->message(nl2br($message));    
         $this->email->send();    
     }
 
