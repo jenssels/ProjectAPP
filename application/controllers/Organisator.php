@@ -39,11 +39,40 @@ class Organisator extends CI_Controller {
             "inhoud" => "personeelsFeestOverzicht",
             "voetnoot" => "voetnoot");
 
-        $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
         $this->template->load('main_master', $partials, $data);
+    }
+    
+    public function stuurMail($titel,$message,$mail,$type,$hash, $isInschrijfLink = false){
+        $config = Array(
+                'protocol' => 'smtp',
+                'smtp_host' => 'ssl://smtp.gmail.com',
+                'smtp_port' => 465,
+                'smtp_user' => 'team17project@gmail.com',
+                'smtp_pass' => 'team17project',
+                'mailtype'  => 'html',  
+                'charset'   => 'utf-8'
+                );
+        if ($isInschrijfLink){
+            if($type = 'personeel'){
+                $link = 'http://localhost//index.php/personeel/index/' . $hash;
+            }
+            else{
+                $link = 'http://localhost//index.php/vrijwilliger/index/' . $hash;
+            }
+            $message += '\r\n Gebruik onderstaande link om u keuzes voor het personeelsfeest op te geven \r\n' + $link;
+        }
+        $this->load->library('email');
+        $this->load->library('encrypt');
+        $this->email->initialize($config);
+        $this->email->set_newline("\r\n");
+        $this->email->from('team17project@gmail.com', 'Personeelsfeest Thomas More');
+        $this->email->to($mail); 
+        $this->email->subject($titel);
+        $this->email->message($message);    
+        $this->email->send();    
     }
 
     /**
@@ -67,7 +96,6 @@ class Organisator extends CI_Controller {
             $data['titel'] = 'Personeelsfeest bewerken';
         }
         $partials = array("hoofding" => "hoofding", "inhoud" => "personeelsFeestAanmaken", "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
         $this->template->load('main_master', $partials, $data);
@@ -103,7 +131,6 @@ class Organisator extends CI_Controller {
             "inhoud" => "personeelsFeestUploadForm",
             "voetnoot" => "voetnoot");
         $data['feestId'] = $feestId;
-        $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
         $data['titel'] = 'Personeelsfeest personeel uploaden';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
@@ -141,7 +168,6 @@ class Organisator extends CI_Controller {
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "taakShiften",
             "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
 
@@ -163,7 +189,6 @@ class Organisator extends CI_Controller {
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "taakBewerken",
             "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
 
@@ -179,7 +204,6 @@ class Organisator extends CI_Controller {
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "takenBeheren",
             "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
 
@@ -199,7 +223,7 @@ class Organisator extends CI_Controller {
             $uploadData = $this->upload->data();
             $data_excel = $this->readExcel($uploadData);
             $data['personeel'] = $this->uploadPersoneel($data_excel);
-            unlink($data['full_path']);
+
             $this->load->view('ajax_uploadStatus', $data);
         }
     }
@@ -223,12 +247,13 @@ class Organisator extends CI_Controller {
 
     /*
      * Jens Sels - Uitlezen van excel bestand en terug geven van array met personeelsleden in
+     * @param data Object met gegevens van het excel bestand
      */
 
     public function readExcel($data) {
         chmod($data['full_path'], 0775);
         $this->spreadsheet_excel_reader->setOutputEncoding('CP1251');
-        $data = $this->spreadsheet_excel_reader->read($data['full_path'], false);
+        $this->spreadsheet_excel_reader->read($data['full_path'], false);
         $sheets = $this->spreadsheet_excel_reader->sheets[0];
         error_reporting(0);
         $data_excel = array();
@@ -238,7 +263,9 @@ class Organisator extends CI_Controller {
             $data_excel[$i - 1]['Voornaam'] = $sheets['cells'][$i][1];
             $data_excel[$i - 1]['Naam'] = $sheets['cells'][$i][2];
             $data_excel[$i - 1]['Email'] = $sheets['cells'][$i][3];
-        } return $data_excel;
+        } 
+        unlink($data['full_path']);
+        return $data_excel;
     }
 
     /**
@@ -552,16 +579,15 @@ class Organisator extends CI_Controller {
     /**
      * Stef Goor - Laad de view voor het sturen van mails
      */
-    public function mailSturen() {
+    public function mailSturen($personeelsfeestId) {
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "organisator/mailSturen",
             "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
         $data['titel'] = 'Mail Sturen';
         $data['paginaverantwoordelijke'] = 'Stef Goor';
         
         $this->load->model('personeelsfeest_model');
-        $data['personeelsfeesten'] = $this->personeelsfeest_model->getAll();
+        $data['personen'] = $this->persoon_model->getAllWherePersoneelsFeest($personeelsfeestId);
 
         $this->template->load('main_master', $partials, $data);
     }
