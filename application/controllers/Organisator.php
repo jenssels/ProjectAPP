@@ -58,7 +58,7 @@ class Organisator extends CI_Controller {
                 $link = 'http://localhost//index.php/vrijwilliger/index/' . $hash;
                 
             }
-            $message += '\r\n Gebruik onderstaande link om u keuzes voor het personeelsfeest op te geven \r\n' . $link;
+            $message .= '\r\n Gebruik onderstaande link om u keuzes voor het personeelsfeest op te geven \r\n' . $link;
         }
         $this->load->library('email');
         $this->load->library('encrypt');
