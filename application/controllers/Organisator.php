@@ -48,21 +48,15 @@ class Organisator extends CI_Controller {
         $this->stuurMail('Test mail met link', 'Dit is een test bericht', 'jenssels1998@gmail.com', 'personeel', '6xkY28eLg9ho1tfu', true);
     }
     public function stuurMail($titel,$message,$mail,$type,$hash, $isInschrijfLink = false){
-        $config = Array(
-                'protocol' => 'smtp',
-                'smtp_host' => 'ssl://smtp.gmail.com',
-                'smtp_port' => 465,
-                'smtp_user' => 'team17project@gmail.com',
-                'smtp_pass' => 'team17project',
-                'mailtype'  => 'html',  
-                'charset'   => 'utf-8'
-                );
+        $config = Array('protocol' => 'smtp','smtp_host' => 'ssl://smtp.gmail.com','smtp_port' => 465,'smtp_user' => 'team17project@gmail.com','smtp_pass' => 'team17project','mailtype'  => 'html',  'charset'   => 'utf-8');
         if ($isInschrijfLink){
-            if($type = 'personeel'){
+            if($type === 'personeel'){
                 $link = 'http://localhost//index.php/personeel/index/' . $hash;
+                
             }
             else{
                 $link = 'http://localhost//index.php/vrijwilliger/index/' . $hash;
+                
             }
             $message += '\r\n Gebruik onderstaande link om u keuzes voor het personeelsfeest op te geven \r\n' + $link;
         }
