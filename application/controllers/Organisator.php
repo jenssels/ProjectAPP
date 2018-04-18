@@ -51,14 +51,14 @@ class Organisator extends CI_Controller {
         $config = Array('protocol' => 'smtp','smtp_host' => 'ssl://smtp.gmail.com','smtp_port' => 465,'smtp_user' => 'team17project@gmail.com','smtp_pass' => 'team17project','mailtype'  => 'html',  'charset'   => 'utf-8');
         if ($isInschrijfLink){
             if($type === 'personeel'){
-                $link = 'http://localhost//index.php/personeel/index/' . $hash;
+                $link = 'http://localhost/index.php/personeel/index/' . $hash;
                 
             }
             else{
-                $link = 'http://localhost//index.php/vrijwilliger/index/' . $hash;
+                $link = 'http://localhost/index.php/vrijwilliger/index/' . $hash;
                 
             }
-            $message .= '\r\n Gebruik onderstaande link om u keuzes voor het personeelsfeest op te geven \r\n' . $link;
+            $message .= '\n Gebruik onderstaande link om u keuzes voor het personeelsfeest op te geven \n' . $link;
         }
         $this->load->library('email');
         $this->load->library('encrypt');
