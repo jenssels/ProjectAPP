@@ -45,33 +45,34 @@ class Organisator extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
     
-    public function stuurMail(){
+    public function stuurMail($titel,$message,$mail,$type,$hash, $isInschrijfLink = false){
         $config = Array(
                 'protocol' => 'smtp',
-                'smtp_host' => 'ssl://smtp.googlemail.com',
+                'smtp_host' => 'ssl://smtp.gmail.com',
                 'smtp_port' => 465,
                 'smtp_user' => 'team17project@gmail.com',
                 'smtp_pass' => 'team17project',
-                'mailtype'  => 'html', 
+                'mailtype'  => 'html',  
                 'charset'   => 'utf-8'
                 );
-
+        if ($isInschrijfLink){
+            if($type = 'personeel'){
+                $link = 'http://localhost//index.php/personeel/index/' . $hash;
+            }
+            else{
+                $link = 'http://localhost//index.php/vrijwilliger/index/' . $hash;
+            }
+            $message += '\r\n Gebruik onderstaande link om u keuzes voor het personeelsfeest op te geven \r\n' + $link;
+        }
         $this->load->library('email');
         $this->load->library('encrypt');
         $this->email->initialize($config);
-        $this->email->set_mailtype("html");
         $this->email->set_newline("\r\n");
-
-        $this->email->from('team17project@gmail.com', 'admin');
-        $this->email->to('jenssels1998@gmail.com'); 
-        $this->email->cc('jenssels1998@gmail.com'); 
-
-        $this->email->subject('Email Test');
-        $this->email->message('Testing the email class.');    
-
-        $this->email->send();
-        
-        
+        $this->email->from('team17project@gmail.com', 'Personeelsfeest Thomas More');
+        $this->email->to($mail); 
+        $this->email->subject($titel);
+        $this->email->message($message);    
+        $this->email->send();    
     }
 
     /**
