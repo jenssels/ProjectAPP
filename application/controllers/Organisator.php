@@ -46,23 +46,21 @@ class Organisator extends CI_Controller {
     }
     
     public function stuurMail(){
-        $config['useragent']    = 'CodeIgniter';
-        $config['protocol']     = 'smtp';
-        $config['smtp_host']    = 'ssl://smtp.googlemail.com';
-        $config['smtp_user']    = 'team17project@gmail.com'; // Your gmail id
-        $config['smtp_pass']    = 'team17'; // Your gmail Password
-        $config['smtp_port']    = 465;
-        $config['wordwrap']     = TRUE;    
-        $config['wrapchars']    = 76;
-        $config['mailtype']     = 'html';
-        $config['charset']      = 'iso-8859-1';
-        $config['validate']     = FALSE;
-        $config['priority']     = 3;
-        $config['newline']      = "\r\n";
-        $config['crlf']         = "\r\n";
+        $config = Array(
+                'protocol' => 'smtp',
+                'smtp_host' => 'ssl://smtp.googlemail.com',
+                'smtp_port' => 465,
+                'smtp_user' => 'team17project@gmail.com',
+                'smtp_pass' => 'team17project',
+                'mailtype'  => 'html', 
+                'charset'   => 'utf-8'
+                );
 
         $this->load->library('email');
+        $this->load->library('encrypt');
         $this->email->initialize($config);
+        $this->email->set_mailtype("html");
+        $this->email->set_newline("\r\n");
 
         $this->email->from('team17project@gmail.com', 'admin');
         $this->email->to('jenssels1998@gmail.com'); 
