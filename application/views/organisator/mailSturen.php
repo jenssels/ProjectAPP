@@ -37,8 +37,8 @@
                 <?php
                 //select voor soort
                 $options1 = array();
-                $options1[0] = "-- Kies het soort gebruiker --";
-                $options1[1] = "Iedereen";
+                $options1['niks'] = "-- Kies het soort gebruiker --";
+                $options1['iedereen'] = "Iedereen";
                 $options1[3] = 'Personeelsleden';
                 $options1[2] = 'Vrijwilligers';
                 $attributes1 = array('id' => 'soortSelect',
@@ -56,8 +56,8 @@
                 <?php
                 //select voor dagindeling
                 $options2 = array();
-                $options2[0] = "-- Kies een dagindeling --";
-                $options2[1] = "Alle dagindelingen";
+                $options2['niks'] = "-- Kies een dagindeling --";
+                $options2['alles'] = "Alle dagindelingen";
                 foreach ($dagindelingen as $dagindeling) {
                     $options2[$dagindeling->id] = $dagindeling->naam;
                 }
