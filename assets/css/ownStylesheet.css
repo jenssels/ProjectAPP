@@ -61,3 +61,21 @@ body {
 #hoofding a:hover {
     text-decoration: underline;
 }
+
+/* btn color */
+.btn-primary {
+    color: #fff;
+    background-color: #f04c25;
+    border-color: #f04c25;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #ff6844;
+    border-color: #ff6844;
+}
+
+/* link color */
+a {
+    color: #009cab;
+}
