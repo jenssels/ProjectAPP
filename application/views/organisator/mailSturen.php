@@ -22,7 +22,9 @@
         var e = document.getElementById("dagindelingSelect");
         if (e.selectedIndex !== 0) {
             var dagindelingId = e.selectedIndex;
-            alert(dagindelingId);
+            if (dagindelingId === 1){
+                alert(Alle dagindelingen worden doorgegeven!);
+            }
         }
     }
 </script>
@@ -54,7 +56,8 @@
                 <?php
                 //select voor dagindeling
                 $options2 = array();
-                $options2[] = "-- Kies een personeelsfeest --";
+                $options2[0] = "-- Kies een dagindeling --";
+                $options2[1] = "Alle dagindelingen";
                 foreach ($dagindelingen as $dagindeling) {
                     $options2[$dagindeling->id] = $dagindeling->naam;
                 }

@@ -593,6 +593,7 @@ class Organisator extends CI_Controller {
     
     /**
      * Stef Goor - Laad de view voor het sturen van mails
+     * @param type $personeelsfeestId
      */
     public function mailSturen($personeelsfeestId) {
         $partials = array("hoofding" => "hoofding",
