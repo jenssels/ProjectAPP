@@ -44,25 +44,21 @@ class Organisator extends CI_Controller {
 
         $this->template->load('main_master', $partials, $data);
     }
-    
+    public function stuurTestMail(){
+        $this->stuurMail('Test mail met link', 'Dit is een test bericht \n nieuwe lijn', 'jenssels1998@gmail.com', 'personeel', '6xkY28eLg9ho1tfu', true);
+    }
     public function stuurMail($titel,$message,$mail,$type,$hash, $isInschrijfLink = false){
-        $config = Array(
-                'protocol' => 'smtp',
-                'smtp_host' => 'ssl://smtp.gmail.com',
-                'smtp_port' => 465,
-                'smtp_user' => 'team17project@gmail.com',
-                'smtp_pass' => 'team17project',
-                'mailtype'  => 'html',  
-                'charset'   => 'utf-8'
-                );
+        $config = Array('protocol' => 'smtp','smtp_host' => 'ssl://smtp.gmail.com','smtp_port' => 465,'smtp_user' => 'team17project@gmail.com','smtp_pass' => 'team17project','mailtype'  => 'html',  'charset'   => 'utf-8');
         if ($isInschrijfLink){
-            if($type = 'personeel'){
-                $link = 'http://localhost//index.php/personeel/index/' . $hash;
+            if($type === 'personeel'){
+                $link = 'http://localhost/index.php/personeel/index/' . $hash;
+                
             }
             else{
-                $link = 'http://localhost//index.php/vrijwilliger/index/' . $hash;
+                $link = 'http://localhost/index.php/vrijwilliger/index/' . $hash;
+                
             }
-            $message += '\r\n Gebruik onderstaande link om u keuzes voor het personeelsfeest op te geven \r\n' + $link;
+            $message .= '\n Gebruik onderstaande link om u keuzes voor het personeelsfeest op te geven: \n ' . $link;
         }
         $this->load->library('email');
         $this->load->library('encrypt');
@@ -71,7 +67,7 @@ class Organisator extends CI_Controller {
         $this->email->from('team17project@gmail.com', 'Personeelsfeest Thomas More');
         $this->email->to($mail); 
         $this->email->subject($titel);
-        $this->email->message($message);    
+        $this->email->message(str_replace('/n', '<br />', $message));    
         $this->email->send();    
     }
 
@@ -232,11 +228,17 @@ class Organisator extends CI_Controller {
      * Jens Sels - Ajax die de excel file gaat uploaden
      */
     public function ajaxAddPersoon() {
+        $this->load->model('Persoon_model');
+        $hashCodes = $this->persoon_model->getAllHashCodes();
         $feestId = $this->session->userdata('feestId');
         $voornaam = $this->input->get('voornaam');
         $naam = $this->input->get('naam');
         $email = strval($this->input->get('email'));
-        $check = $this->insertPersoon($feestId, $voornaam, $naam, $email);
+        $hash = random_string('alnum', 16);
+            while(in_array($hash, $hashCodes)){
+                $hash = random_string('alnum', 16);
+            }
+        $check = $this->insertPersoon($feestId, $voornaam, $naam, $email, $hash);
         if ($check) {
             $data['personeel'] = 'Toegevoegd - ' . $voornaam . ' ' . $naam . '</br>';
         } else {
@@ -275,13 +277,18 @@ class Organisator extends CI_Controller {
      */
     public function uploadPersoneel($personeel) {
         $this->load->model('Persoon_model');
+        $hashCodes = $this->persoon_model->getAllHashCodes();
         $feestId = $this->session->userdata('feestId');
         $personeelsLijst = "";
         for ($i = 1; $i < (count($personeel) + 1); $i++) {
+            $hash = random_string('alnum', 16);
+            while(in_array($hash, $hashCodes)){
+                $hash = random_string('alnum', 16);
+            }
             $voornaam = $personeel[$i]["Voornaam"];
             $naam = $personeel[$i]["Naam"];
             $email = strval($personeel[$i]["Email"]);
-            $check = $this->insertPersoon($feestId, $voornaam, $naam, $email);
+            $check = $this->insertPersoon($feestId, $voornaam, $naam, $email, $hash);
             if ($check) {
                 $personeelsLijst .= 'Toegevoegd - ' . $voornaam . ' ' . $naam . '</br>';
             } else {
@@ -297,9 +304,10 @@ class Organisator extends CI_Controller {
      * @param $voornaam Voornaam van personeelslid
      * @param $naam naam van personeelslid
      * @param $email Email van personeelslid
+     * @param $hash Hashcode waarmee het personeelslid naar de webpagina kan surfen
      * @return True als personeelslid is toegevoegd en false als hij al in de databank zit
      */
-    public function insertPersoon($feestId, $voornaam, $naam, $email) {
+    public function insertPersoon($feestId, $voornaam, $naam, $email, $hash) {
         $this->load->model('Persoon_model');
         $personeelDatabase = $this->Persoon_model->getAllWherePersoneelsFeestAndEmail($feestId, $email);
         if (count($personeelDatabase) == 0) {
@@ -307,6 +315,7 @@ class Organisator extends CI_Controller {
             $persoonObject->voornaam = $voornaam;
             $persoonObject->naam = $naam;
             $persoonObject->email = $email;
+            $persoonObject->hashcode= $hash;
             $persoonObject->typeId = 3;
             $persoonObject->personeelsfeestId = $feestId;
             $this->Persoon_model->insert($persoonObject);
@@ -578,6 +587,7 @@ class Organisator extends CI_Controller {
     
     /**
      * Stef Goor - Laad de view voor het sturen van mails
+     * @param type $personeelsfeestId
      */
     public function mailSturen($personeelsfeestId) {
         $partials = array("hoofding" => "hoofding",
@@ -586,9 +596,15 @@ class Organisator extends CI_Controller {
         $data['titel'] = 'Mail Sturen';
         $data['paginaverantwoordelijke'] = 'Stef Goor';
         
-        $this->load->model('personeelsfeest_model');
+        $this->load->model('persoon_model');
         $data['personen'] = $this->persoon_model->getAllWherePersoneelsFeest($personeelsfeestId);
-
+        $data['personeelsleden'] = $this->persoon_model->getAllPersoneelsLedenWherePersoneelsFeest($personeelsfeestId);
+        $data['vrijwillgers'] = $this->persoon_model->getAllVrijwilligersWherePersoneelsFeest($personeelsfeestId);
+        
+        
+        $this->load->model('dagindeling_model');
+        $data['dagindelingen'] = $this->dagindeling_model->getAllWherePersoneelsFeest($personeelsfeestId);
+        
         $this->template->load('main_master', $partials, $data);
     }
     
