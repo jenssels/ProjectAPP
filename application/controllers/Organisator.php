@@ -550,8 +550,7 @@ class Organisator extends CI_Controller {
     }
     
     /**
-     * Jens Sels - Upload pagina openen van personeelsfeest om personeelsleden toe te voegen
-     * @param $feestId Id van personeelsfeest
+     * Stef Goor - Laad de view voor het sturen van mails
      */
     public function mailSturen() {
         $partials = array("hoofding" => "hoofding",
@@ -560,6 +559,9 @@ class Organisator extends CI_Controller {
         $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
         $data['titel'] = 'Mail Sturen';
         $data['paginaverantwoordelijke'] = 'Stef Goor';
+        
+        $this->load->model('personeelsfeest_model');
+        $data['personeelsfeesten'] = $this->personeelsfeest_model->getAll();
 
         $this->template->load('main_master', $partials, $data);
     }

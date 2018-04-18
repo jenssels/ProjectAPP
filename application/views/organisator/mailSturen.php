@@ -9,18 +9,19 @@
 
 <div>
     <?php echo haalJavascriptOp("validator.js"); ?>
-
-    <?php
-    echo form_open()
-    ?>
-
-
-
-    <div class="form-group">
-        <?php echo form_submit('knop', 'Bevestigen', "class='btn btn-primary'") ?>
-        <?php echo form_submit('knop', 'Annuleren', "class='btn btn-primary'") ?>
-    </div>
-
-
-    <?php echo form_close(); ?>
+    <form>
+        <fieldset>
+            <legend>Kies het juiste personeelsfeest</legend>
+            <p>
+                <label>Personeelsfeest:</label>
+                <select id = "personeelsfeest">
+                    <?php
+                    foreach ($personeelsfeesten as $personeelsfeest) {
+                        echo '<option value = "' + $personeelsfeest->id + '">' + $personeelsfeest->naam + '</option>';
+                    }
+                    ?>
+                </select>
+            </p>
+        </fieldset>
+    </form>
 </div>
