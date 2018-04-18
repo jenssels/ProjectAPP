@@ -67,7 +67,7 @@ class Organisator extends CI_Controller {
         $this->email->from('team17project@gmail.com', 'Personeelsfeest Thomas More');
         $this->email->to($mail); 
         $this->email->subject($titel);
-        $this->email->message(str_replace('/n', '<br />', $message));    
+        $this->email->message(str_replace('\n', '<br />', $message));    
         $this->email->send();    
     }
 
