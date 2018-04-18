@@ -587,6 +587,7 @@ class Organisator extends CI_Controller {
     
     /**
      * Stef Goor - Laad de view voor het sturen van mails
+     * @param type $personeelsfeestId
      */
     public function mailSturen($personeelsfeestId) {
         $partials = array("hoofding" => "hoofding",
@@ -595,9 +596,15 @@ class Organisator extends CI_Controller {
         $data['titel'] = 'Mail Sturen';
         $data['paginaverantwoordelijke'] = 'Stef Goor';
         
-        $this->load->model('personeelsfeest_model');
+        $this->load->model('persoon_model');
         $data['personen'] = $this->persoon_model->getAllWherePersoneelsFeest($personeelsfeestId);
-
+        $data['personeelsleden'] = $this->persoon_model->getAllPersoneelsLedenWherePersoneelsFeest($personeelsfeestId);
+        $data['vrijwillgers'] = $this->persoon_model->getAllVrijwilligersWherePersoneelsFeest($personeelsfeestId);
+        
+        
+        $this->load->model('dagindeling_model');
+        $data['dagindelingen'] = $this->dagindeling_model->getAllWherePersoneelsFeest($personeelsfeestId);
+        
         $this->template->load('main_master', $partials, $data);
     }
     
