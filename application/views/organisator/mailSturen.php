@@ -10,18 +10,19 @@
 <?php echo haalJavascriptOp("validator.js"); ?>
 
 <script type="text/javascript">
-    function personeelsfeestSelectFunctie() {
-        var e = document.getElementById("soortSelect");
-        if (e.selectedIndex !== 0) {
-                alert("yo");
-        }
-    }
-    
     function soortSelectFunctie() {
         var e = document.getElementById("soortSelect");
         if (e.selectedIndex !== 0) {
-                var id = e.selectedIndex;
-                alert(id);
+            var soortId = e.selectedIndex;
+            alert(soortId);
+        }
+    }
+
+    function dagindelingSelectFunctie() {
+        var e = document.getElementById("dagindelingSelect");
+        if (e.selectedIndex !== 0) {
+            var dagindelingId = e.selectedIndex;
+            alert(dagindelingId);
         }
     }
 </script>
@@ -33,19 +34,41 @@
                 <label>Soort:</label>
                 <?php
                 //select voor soort
-                $options2 = array();
-                $options2[] = "-- Kies het soort gebruiker --";
-                $options2[3] = 'Personeelsleden';
-                $options2[2] = 'Vrijwilligers';
-                $attributes2 = array('id' => 'soortSelect',
+                $options1 = array();
+                $options1[0] = "-- Kies het soort gebruiker --";
+                $options1[1] = "Iedereen";
+                $options1[3] = 'Personeelsleden';
+                $options1[2] = 'Vrijwilligers';
+                $attributes1 = array('id' => 'soortSelect',
                     'onchange' => 'soortSelectFunctie()',
                     'class' => 'form-control');
-                $js2 = 'onChange="some_function();"';
                 echo "<div class='form-group'>";
-                echo form_dropdown('soortSelect', $options2, '', $attributes2, $js2);
+                echo form_dropdown('soortSelect', $options1, '', $attributes1);
+                echo "</div>";
+                ?>
+            </p>
+        </fieldset>
+        <fieldset>
+            <p>
+                <label>Dagindeling:</label>
+                <?php
+                //select voor dagindeling
+                $options2 = array();
+                $options2[] = "-- Kies een personeelsfeest --";
+                foreach ($dagindelingen as $dagindeling) {
+                    $options2[$dagindeling->id] = $dagindeling->naam;
+                }
+                $attributes2 = array('id' => 'dagindelingSelect',
+                    'onchange' => 'dagindelingSelectFunctie()',
+                    'class' => 'form-control');
+                echo "<div class='form-group'>";
+                echo form_dropdown('dagindelingSelect', $options2, '', $attributes2);
                 echo "</div>";
                 ?>
             </p>
         </fieldset>
     </form>
+    <?php
+    echo anchor('organisator/personeelsFeestOverzicht', 'Terug naar overzicht', array('role' => 'button' , 'class' => 'btn btn-primary'));
+    ?>
 </div>
