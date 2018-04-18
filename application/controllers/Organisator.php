@@ -578,7 +578,6 @@ class Organisator extends CI_Controller {
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "organisator/mailSturen",
             "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
         $data['titel'] = 'Mail Sturen';
         $data['paginaverantwoordelijke'] = 'Stef Goor';
         
