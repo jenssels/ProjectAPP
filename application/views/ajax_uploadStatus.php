@@ -6,7 +6,7 @@
                 echo $error;
             
         }
-        else{
+        elseif(isset($personeel)){
             echo $personeel;
         }
     ?>
