@@ -44,7 +44,9 @@ class Organisator extends CI_Controller {
 
         $this->template->load('main_master', $partials, $data);
     }
-    
+    public function stuurTestMail(){
+        $this->stuurMail('Test mail met link', 'Dit is een test bericht', 'jenssels1998@gmail.com', 'personeel', '6rjdaQzn45x9VZlO', true);
+    }
     public function stuurMail($titel,$message,$mail,$type,$hash, $isInschrijfLink = false){
         $config = Array(
                 'protocol' => 'smtp',
