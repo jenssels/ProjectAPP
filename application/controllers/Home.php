@@ -27,7 +27,7 @@ class Home extends CI_Controller {
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
         
         if(!$this->authex->isAangemeld()){
-            $data['emailGebruiker'] = anchor('home/aanmelden', 'Organisator login');
+            $data['emailGebruiker'] = '';
         } else {
             $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
         }
@@ -50,6 +50,15 @@ class Home extends CI_Controller {
             "inhoud" => "organisator/aanmelden",
             "voetnoot" => "voetnoot");
         $this->template->load('main_master', $partials, $data);
+    }
+    
+    /**
+     * Joren Synaeve
+     * Meldt de huidige gebruiker af door de sessie te verwijderen en toont de homepagina
+     */
+    public function afmelden () {
+        $this->authex->meldAf();
+        redirect('');
     }
     
     /**

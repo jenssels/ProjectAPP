@@ -31,6 +31,11 @@
             haalOptiesBijDagindelingOp ( id );
         });
         
+        $('#knopVoegOptieToe').on('click', function() {
+            console.log("Test");
+        });
+        
+        
     });
 
 </script>
@@ -42,7 +47,7 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12">
         <table class="table">
             <tr>
                 <th>Naam</th>
@@ -59,12 +64,18 @@
                     $voorVrijwilliger = 'Ja';
                 }
 
-                echo "<tr><td>" . divanchor('', $dagindeling->naam, array('data-id' => $dagindeling->id, 'class' => 'dagindelingLink')) . "</td><td>" . $dagindeling->beginuur . " - " . $dagindeling->einduur .
-                "</td><td>" . $voorVrijwilliger . "</td><td>" . anchor('?', '<i class="fas fa-edit"></i>') . "</td><td>" . anchor('organisator/verwijderDagindeling/' . $personeelsfeest->id . '/' . $dagindeling->id, '<i class="fas fa-trash-alt"></i>') . "</td></tr>";
+                $beginuur = substr($dagindeling->beginuur, 0, 5);
+                $einduur = substr($dagindeling->einduur, 0, 5);
+                
+                echo "<tr><td>" . divanchor('', $dagindeling->naam, array('data-id' => $dagindeling->id, 'class' => 'dagindelingLink')) . "</td>"
+                        . "<td>" . $beginuur . "u - " . $einduur . "u</td>"
+                        . "<td>" . $voorVrijwilliger . "</td>"
+                        . "<td>" . anchor('organisator/wijzigDagindeling/' . $personeelsfeest->id . '/' . $dagindeling->id, 'Bewerken') . "</td>"
+                        . "<td>" . anchor('organisator/verwijderDagindeling/' . $personeelsfeest->id . '/' . $dagindeling->id, 'Verwijder') . "</td></tr>";
             }
             ?>
             <tr>
-                <td><?php echo anchor('organisator/toevoegenDagindeling/' . $personeelsfeest->id, 'Toevoegen') ?></td>
+                <td><?php echo anchor('organisator/maakNieuweDagindeling/' . $personeelsfeest->id, 'Toevoegen') ?></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -73,7 +84,7 @@
         </table>
     </div>
 
-    <div class="col-sm-6" id="resultaat">
+    <div class="col-sm-12" id="resultaat">
         
     </div>
 </div>
