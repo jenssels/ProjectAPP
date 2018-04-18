@@ -30,8 +30,6 @@
             echo anchor('Organisator/personeelsFeestAanmakenForm/nieuw', 'Personeelsfeest aanmaken');
             echo anchor('Organisator/?', 'Fotoalbums beheren');
             echo anchor('Organisator/?', 'Locaties beheren');
-            echo anchor('Organisator/mailSturen', 'Mail sturen');
-            echo anchor('organisator/taakbeheren', 'Taak beheren');
         ?>
     </div>
     <div class="col-md-12">
@@ -39,7 +37,16 @@
         <?php
             //Jens Sels - Overzicht van feesten in tabel tonen
             foreach($personeelsFeesten as $feest){
-                echo "<tr><td>" . $feest->naam .  "</td><td>" .  $feest->datum . "</td><td> <a href=#! class='overzicht' data-id='" . $feest->id . "'>Overzicht inschrijvingen</a></td><td>" . anchor('Organisator/personeelsFeestUploadForm/' . $feest->id, 'Personeel toevoegen') . "</td><td>" . anchor('Organisator/personeelsFeestAanmakenForm/' . $feest->id, 'Bewerken') . "</td><td>" . anchor('Organisator/personeelsFeestVerwijderen/' . $feest->id, 'Verwijderen') . "</td></tr>"; 
+                echo "<tr>";
+                echo "<td>" . $feest->naam .  "</td>"
+                        . "<td>" .  $feest->datum . "</td>"
+                        . "<td> <a href=#! class='overzicht' data-id='" . $feest->id . "'>Overzicht inschrijvingen</a></td>"
+                        . "<td>" . anchor('Organisator/personeelsFeestUploadForm/' . $feest->id, 'Personeel toevoegen') . "</td>"
+                        . "<td>" . anchor('Organisator/personeelsFeestAanmakenForm/' . $feest->id, 'Bewerken') . "</td>"
+                        . "<td>" . anchor('Organisator/personeelsFeestVerwijderen/' . $feest->id, 'Verwijderen') . "</td>"
+                        . "<td>" . anchor('organisator/taakbeheren', 'Taak beheren') . "</td>"
+                        . "<td>" . anchor('Organisator/mailSturen/' . $feest->id, 'Mail sturen') . "</td>";
+                echo "</tr>"; 
             }
         ?>
         </table>

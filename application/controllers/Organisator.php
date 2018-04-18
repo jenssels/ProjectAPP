@@ -565,4 +565,28 @@ class Organisator extends CI_Controller {
 
         $this->template->load('main_master', $partials, $data);
     }
+    
+    /**
+     * Joren Synaeve
+     * @param type $dagindelingId
+     */
+    public function beheerShiftenBijDagindeling ($dagindelingId) {
+        // Standaardvariabelen
+        $data['titel'] = 'Shiften beheren';
+        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+        
+        // Taken laden met shiften aan
+        $this->load->model('taak_model');
+        $taken = $this->taak_model->getAllWhereDagindeling($dagindelingId);
+        $this->load->model('shift_model');
+        foreach ($taken as $taak) {
+            $taak->shiften = $this->shift_model->getAllWhereTaak($taak->id);
+        }
+        $data['taken'] = $taken;
+        
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'organisator/beheerShiftenBijDagindeling',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
+    }
 }
