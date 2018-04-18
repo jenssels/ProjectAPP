@@ -39,11 +39,41 @@ class Organisator extends CI_Controller {
             "inhoud" => "personeelsFeestOverzicht",
             "voetnoot" => "voetnoot");
 
-        $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
         $this->template->load('main_master', $partials, $data);
+    }
+    
+    public function stuurMail(){
+        $config['useragent']    = 'CodeIgniter';
+        $config['protocol']     = 'smtp';
+        $config['smtp_host']    = 'ssl://smtp.googlemail.com';
+        $config['smtp_user']    = 'team17project@gmail.com'; // Your gmail id
+        $config['smtp_pass']    = 'team17'; // Your gmail Password
+        $config['smtp_port']    = 465;
+        $config['wordwrap']     = TRUE;    
+        $config['wrapchars']    = 76;
+        $config['mailtype']     = 'html';
+        $config['charset']      = 'iso-8859-1';
+        $config['validate']     = FALSE;
+        $config['priority']     = 3;
+        $config['newline']      = "\r\n";
+        $config['crlf']         = "\r\n";
+
+        $this->load->library('email');
+        $this->email->initialize($config);
+
+        $this->email->from('team17project@gmail.com', 'admin');
+        $this->email->to('jenssels1998@gmail.com'); 
+        $this->email->cc('jenssels1998@gmail.com'); 
+
+        $this->email->subject('Email Test');
+        $this->email->message('Testing the email class.');    
+
+        $this->email->send();
+        
+        
     }
 
     /**
@@ -67,7 +97,6 @@ class Organisator extends CI_Controller {
             $data['titel'] = 'Personeelsfeest bewerken';
         }
         $partials = array("hoofding" => "hoofding", "inhoud" => "personeelsFeestAanmaken", "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
         $this->template->load('main_master', $partials, $data);
@@ -103,7 +132,6 @@ class Organisator extends CI_Controller {
             "inhoud" => "personeelsFeestUploadForm",
             "voetnoot" => "voetnoot");
         $data['feestId'] = $feestId;
-        $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
         $data['titel'] = 'Personeelsfeest personeel uploaden';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
@@ -141,7 +169,6 @@ class Organisator extends CI_Controller {
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "taakShiften",
             "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
 
@@ -163,7 +190,6 @@ class Organisator extends CI_Controller {
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "taakBewerken",
             "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
 
@@ -179,7 +205,6 @@ class Organisator extends CI_Controller {
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "takenBeheren",
             "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
 
@@ -199,7 +224,7 @@ class Organisator extends CI_Controller {
             $uploadData = $this->upload->data();
             $data_excel = $this->readExcel($uploadData);
             $data['personeel'] = $this->uploadPersoneel($data_excel);
-            unlink($data['full_path']);
+
             $this->load->view('ajax_uploadStatus', $data);
         }
     }
@@ -223,12 +248,13 @@ class Organisator extends CI_Controller {
 
     /*
      * Jens Sels - Uitlezen van excel bestand en terug geven van array met personeelsleden in
+     * @param data Object met gegevens van het excel bestand
      */
 
     public function readExcel($data) {
         chmod($data['full_path'], 0775);
         $this->spreadsheet_excel_reader->setOutputEncoding('CP1251');
-        $data = $this->spreadsheet_excel_reader->read($data['full_path'], false);
+        $this->spreadsheet_excel_reader->read($data['full_path'], false);
         $sheets = $this->spreadsheet_excel_reader->sheets[0];
         error_reporting(0);
         $data_excel = array();
@@ -238,7 +264,9 @@ class Organisator extends CI_Controller {
             $data_excel[$i - 1]['Voornaam'] = $sheets['cells'][$i][1];
             $data_excel[$i - 1]['Naam'] = $sheets['cells'][$i][2];
             $data_excel[$i - 1]['Email'] = $sheets['cells'][$i][3];
-        } return $data_excel;
+        } 
+        unlink($data['full_path']);
+        return $data_excel;
     }
 
     /**
