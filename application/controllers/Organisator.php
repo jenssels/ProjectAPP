@@ -548,5 +548,19 @@ class Organisator extends CI_Controller {
 
         $this->load->view('organisator/ajax_optiesBijDagindeling', $data);
     }
+    
+    /**
+     * Jens Sels - Upload pagina openen van personeelsfeest om personeelsleden toe te voegen
+     * @param $feestId Id van personeelsfeest
+     */
+    public function mailSturen() {
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "organisator/mailSturen",
+            "voetnoot" => "voetnoot");
+        $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
+        $data['titel'] = 'Mail Sturen';
+        $data['paginaverantwoordelijke'] = 'Stef Goor';
 
+        $this->template->load('main_master', $partials, $data);
+    }
 }

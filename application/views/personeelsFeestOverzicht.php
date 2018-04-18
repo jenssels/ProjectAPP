@@ -30,7 +30,7 @@
             echo anchor('Organisator/personeelsFeestAanmakenForm/nieuw', 'Personeelsfeest aanmaken');
             echo anchor('Organisator/?', 'Fotoalbums beheren');
             echo anchor('Organisator/?', 'Locaties beheren');
-            echo anchor('Organisator/?', 'Mail sturen');
+            echo anchor('Organisator/mailSturen', 'Mail sturen');
             echo anchor('organisator/taakbeheren', 'Taak beheren');
         ?>
     </div>
