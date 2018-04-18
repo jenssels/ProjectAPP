@@ -7,10 +7,6 @@
  */
 ?>
 
-<div class="page-header">
-    <h1>Inloggen</h1>
-</div>
-
 <div>
     <p>Gelieve u aan te melden met uw gegevens</p>
 </div>
