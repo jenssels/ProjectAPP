@@ -47,16 +47,20 @@ class Organisator extends CI_Controller {
     
     public function stuurMail(){
         $config = Array(
-    'protocol' => 'smtp',
-    'smtp_host' => 'ssl://smtp.googlemail.com',
-    'smtp_port' => 465,
-    'smtp_user' => 'team17project@gmail.com',
-    'smtp_pass' => 'team17project',
-    'mailtype'  => 'html', 
-    'charset'   => 'iso-8859-1'
-);
+                'protocol' => 'smtp',
+                'smtp_host' => 'ssl://smtp.googlemail.com',
+                'smtp_port' => 465,
+                'smtp_user' => 'team17project@gmail.com',
+                'smtp_pass' => 'team17project',
+                'mailtype'  => 'html', 
+                'charset'   => 'utf-8'
+                );
 
-        $this->load->library('email', $config);
+        $this->load->library('email');
+        $this->load->library('encrypt');
+        $this->email->initialize($config);
+        $this->email->set_mailtype("html");
+        $this->email->set_newline("\r\n");
 
         $this->email->from('team17project@gmail.com', 'admin');
         $this->email->to('jenssels1998@gmail.com'); 
