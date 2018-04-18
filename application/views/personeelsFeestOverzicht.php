@@ -47,7 +47,7 @@
     <div class="col-md-12">
         <?php
             //Jens Sels - button organisator toevoegen
-            echo anchor('Organisator/?', 'Organisator toevoegen');
+            echo anchor('Organisator/beheerOrganisatoren', 'Organisatoren beheren');
         ?>
     </div>
 </div>

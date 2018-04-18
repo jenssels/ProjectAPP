@@ -2,13 +2,13 @@
     <div class="container">
         <div class="footer-copyright">
             <div class="row">
-                <div class="col-4">
+                <div class="col-sm-4">
                     Opdrachtgever: Natalie Smets
                 </div>
-                <div class="col-4">
+                <div class="col-sm-4">
                     Team 17
                 </div>  
-                <div class="col-4">
+                <div class="col-sm-4">
                     Paginaverantwoordelijke: <?php echo $paginaverantwoordelijke ?>
                 </div>                
             </div>
@@ -16,7 +16,12 @@
     </div>
     <div class="teammembers">
         <div class="container col-12">
-            Joren Synaeve, Stef Goor, Jens Sels, Thomas Vansprengel en Jorne Lambrechts       
+            <div class="row">
+                <div class="col-sm-12">
+                    <p>
+                        Joren Synaeve, Stef Goor, Jens Sels, Thomas Vansprengel en Jorne Lambrechts</p>
+                </div>
+            </div>       
         </div>
     </div>
 </footer>

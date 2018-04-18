@@ -23,7 +23,7 @@ class Authex {
 
         $CI->load->model('persoon_model');
     }
-    
+
     function meldAan($email, $wachtwoord, $typeId) {
         // Jorne Lambrechts - Meldt de organisator aan a.d.h.v. zijn e-mail en wachtwoord
         $CI = & get_instance();
@@ -34,12 +34,12 @@ class Authex {
             return false;
         } else {
             $CI->session->set_userdata('organisator_id', $organisator->id);
-            $CI->session->set_userdata('organisatorMail', $email);
+            $CI->session->set_userdata('emailgebruiker', $email);
             return true;
         }
     }
-    
-        function isAangemeld() {
+
+    function isAangemeld() {
         // gebruiker is aangemeld als sessievariabele organisator_id bestaat
         $CI = & get_instance();
 
@@ -49,4 +49,11 @@ class Authex {
             return false;
         }
     }
+    
+    function meldAf () {
+        $CI = & get_instance();
+        $CI->session->sess_destroy();
+        redirect('');
+    }
+
 }

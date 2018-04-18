@@ -17,6 +17,6 @@
 </table>
 
 <!-- Roep dialoogvenster op via de knop -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-id="<?php $dagindeling->id ?>">
+<button type="button" class="btn btn-primary" data-toggle="modal" id="knopVoegOptieToe" data-target="#exampleModal" data-id="<?php echo $dagindeling->id ?>">
   Toevoegen
 </button>
