@@ -537,7 +537,7 @@ class Organisator extends CI_Controller {
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
         // Organisatoren laden
         $this->load->model('persoon_model');
-        $data['organisatoren'] = $this->persoon_model->getAllWhereTypeId(1);
+        $data['organisatoren'] = $this->persoon_model->getAllWhereTypeId('1');
         // Laden van pagina
         $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'organisator/beheerOrganisatoren',
