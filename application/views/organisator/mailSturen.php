@@ -11,20 +11,36 @@
 
 <script type="text/javascript">
     function soortSelectFunctie() {
-        var e = document.getElementById("soortSelect");
-        if (e.selectedIndex !== 0) {
-            var soortId = e.selectedIndex;
-            alert(soortId);
+        var soortSelect = document.getElementById("soortSelect");
+        var dagindelingSelect = document.getElementById("dagindelingSelect");
+        if (soortSelect.value !== 'niks') {
+            var soortId = soortSelect.selectedIndex;
+            if (soortId !== 'niks') {
+                dagindelingSelect.disabled = false;
+            }
+        } else {
+            dagindelingSelect.value = 'niks';
+            dagindelingSelect.disabled = true;
         }
     }
 
     function dagindelingSelectFunctie() {
-        var e = document.getElementById("dagindelingSelect");
-        if (e.selectedIndex !== 0) {
-            var dagindelingId = e.selectedIndex;
-            if (dagindelingId === 1){
-                alert(Alle dagindelingen worden doorgegeven!);
+        var dagindelingSelect = document.getElementById("dagindelingSelect");
+        if (dagindelingSelect.value !== 'niks') {
+            var dagindelingId = dagindelingSelect.selectedIndex;
+            if (dagindelingId === 'alles') {
+                //Alle dagindelingen zijn geselecteerd
             }
+            $.ajax({type: "GET",
+                url: site_url + "/organisator/haalAjaxOp_SelectOptiesBijDagindeling",
+                data: {dagindelingId: dagindelingId},
+                success: function (result) {
+                    $("#optieResultaat").html(result);
+                },
+                error: function (xhr, status, error) {
+                    alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+                }
+            });
         }
     }
 </script>
@@ -63,15 +79,17 @@
                 }
                 $attributes2 = array('id' => 'dagindelingSelect',
                     'onchange' => 'dagindelingSelectFunctie()',
-                    'class' => 'form-control');
+                    'class' => 'form-control',
+                    'disabled' => 'true');
                 echo "<div class='form-group'>";
                 echo form_dropdown('dagindelingSelect', $options2, '', $attributes2);
                 echo "</div>";
                 ?>
             </p>
         </fieldset>
+        <div id="optieResultaat"></div>
     </form>
     <?php
-    echo anchor('organisator/personeelsFeestOverzicht', 'Terug naar overzicht', array('role' => 'button' , 'class' => 'btn btn-primary'));
+    echo anchor('organisator/personeelsFeestOverzicht', 'Terug naar overzicht', array('role' => 'button', 'class' => 'btn btn-primary'));
     ?>
 </div>

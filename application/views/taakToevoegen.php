@@ -21,44 +21,43 @@
 	
     <?php
     $attributes = array('name' => 'mijnFormulier');
-    echo form_open('organisator/pasTaakAan', $attributes);
+    echo form_open('organisator/voegLocatieToe', $attributes);
     ?>
     <table>
         <tr>
             <td><?php echo form_label('Naam:', 'naam'); ?></td>
             <td><?php
-            $data = array('value' => $taak->naam,'name' => 'naam', 'id' => 'naam', 'size' => '30');
+            $data = array('name' => 'naam', 'id' => 'naam', 'size' => '30');
             echo form_input($data);
             ?>
             </td>
         </tr>
         <tr>
             <td><?php echo form_label('Beschrijving:', 'beschrijving'); ?></td>
-            <td><?php echo form_input(array('value' => $taak->beschrijving,'name' => 'beschrijving', 'id' => 'beschrijving', 'size' => '50')); ?></td>
+            <td><?php echo form_input(array('name' => 'beschrijving', 'id' => 'beschrijving', 'size' => '50')); ?></td>
         </tr>
         <tr>
             <td><?php echo form_label('Locatie:', 'locatie'); ?></td>
             <td><?php
-                echo form_dropdown('locatie', $locatieOpties, $taak->locatie->id);
+                echo form_dropdown('locatie', $locatieOpties, $locatie->id);
                 ?>
             </td>
         </tr>
         <tr>
             <td><?php echo form_label('Dagindeling:', 'dagindeling'); ?></td>
             <td><?php
-                echo form_dropdown('dagindeling', $dagindelingOpties, $taak->dagindeling->id);
+                echo form_dropdown('dagindeling', $dagindelingOpties, $dagindeling->id);
                 ?>
             </td>
         </tr>
         <tr>
-            <td><?php echo form_hidden('id', $taak->id); ?></td></td>
             <td><?php echo form_submit('knop', 'Submit'); ?></td>
         </tr>
     </table>
 
     <?php echo form_close(); ?>
 
-    <?php echo "<a href=\"javascript:history.go(-1)\">Terug</a>"; ?>
+        <?php echo "<a href=\"javascript:history.go(-1)\">Terug</a>"; ?>
 
 </body>
 </html>

@@ -42,6 +42,10 @@ class Taak_model extends CI_Model {
         $this->db->delete('taak');
         
     }       
+        function insert($taak) {
+            $this->db->insert('taak', $taak);
+            return $this->db->insert_id();
+        }
         function update($taak)
         {
         $this->db->where('id', $taak->id);
@@ -68,14 +72,28 @@ class Taak_model extends CI_Model {
         
         $this->load->model('dagindeling_model');
         $this->load->model('locatie_model');
-        foreach ($taken as $taak) {
-            $taak->dagindeling = $this->dagindeling_model->getByTaak($taak->dagindelingId);
-            $taak->locatie = $this->locatie_model->getByTaak($taak->dagindelingId);
-        }
-        
+            foreach ($taken as $taak) {
+                $taak->dagindeling = $this->dagindeling_model->getByTaak($taak->dagindelingId);
+                $taak->locatie = $this->locatie_model->getById($taak->dagindelingId);
+            }
+
         return $taken;
         }
+        function getAllWithDagindelingWhereDagindelingId($dagindelingId){
+        // Thomas Vansprengel 
+        $this->db->where('dagindelingId', $dagindelingId);
+        $query = $this->db->get('taak');
+        $taken = $query->result();
         
+        $this->load->model('dagindeling_model');
+        $this->load->model('locatie_model');
+            foreach ($taken as $taak) {
+                $taak->dagindeling = $this->dagindeling_model->getByTaak($taak->dagindelingId);
+                $taak->locatie = $this->locatie_model->getByTaak($taak->dagindelingId);
+            }
+
+        return $taken;
+        }
         function getWithDagindeling($id){
         // Thomas Vansprengel 
         $this->db->where('id', $id);
