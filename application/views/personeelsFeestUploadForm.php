@@ -42,45 +42,37 @@
 
 <div class="row">
     <div class="col-md-6">
-        <div class="row">
-            <p>Hier kan je een personeelslijst uit Excel importeren</p>
+        <p>Hier kan je een personeelslijst uit Excel importeren</p>
 
+        <?php
+        $attributenFormulier = array('id' => 'uploadFile',
+            'role' => 'form');
+        echo form_open('', $attributenFormulier);
+        echo form_labelpro('Upload excel (.xls):', 'excel');
+        ?>
+        <div class="form-group">
             <?php
-            $attributenFormulier = array('id' => 'uploadFile',
-                'role' => 'form');
-            echo form_open('', $attributenFormulier);
-            echo form_labelpro('Upload excel (.xls):', 'excel');
+            echo form_input(array('name' => 'excel',
+                'id' => 'excel',
+                'type' => 'file',
+                'required' => 'required'));
+            ?>                    
+        </div>
+        <div class="form-group">
+            <?php
+            echo form_submit('knop', 'Upload', "class='btn btn-primary'");
+            echo form_close();
             ?>
-            <div class="form-group">
-                <?php
-                echo form_input(array('name' => 'excel',
-                    'id' => 'excel',
-                    'type' => 'file',
-                    'required' => 'required'));
-                ?>                    
-            </div>
-            <div class="form-group">
-                <?php
-                echo form_submit('knop', 'Upload', "class='btn btn-primary'");
-                echo form_close();
-                ?>
 
-            </div>
         </div>
     </div>
     <div class="col-md-6">
-        <div class="row">
             <p>Zorg ervoor dat uw excel deze 3 kolommen heeft: Voornaam, Naam, Email</p>
-            <p>Download hier een voorbeeld excel: </p> <?php echo anchor('assets/files/Voorbeeld.xls', 'Download', "class='btn btn-primary'") ?>
-            <p id="uploadMessage"></p>
-        </div>
-        <div class="row">
-            <?php
-            echo anchor('/organisator/personeelsFeestOverzicht', 'Terug naar overzicht');
-            ?>
-        </div>
+            <p>Download hier een voorbeeld excel: </p>
+            <p> <?php echo anchor('assets/files/Voorbeeld.xls', 'Download', "class='btn btn-primary'") ?></p>
     </div>
 </div>
+<hr>
 <div class="row">
     <div class="col-md-6">
         <p>Manueel een personeelslid toevoegen</p>
@@ -129,15 +121,21 @@
 
             </div>
         </div>
-    </div>
-    <div class="col-md-6">
+        <div class="form-group">
+            <?php
+            echo form_submit('knop', 'Voeg toe', 'class="btn btn-primary"');
+            echo form_close();
+            ?>
+        </div>
+        <p>
+            <?php
+            echo anchor('/organisator/personeelsFeestOverzicht', 'Terug naar overzicht');
+            ?>
+        </p>
 
     </div>
-    <div class="col-md-12">
-        <?php
-        echo form_submit('knop', 'Voeg persoon toe', "class='btn btn-primary'");
-        echo form_close();
-        ?>
+    <div id="uploadMessage" class="col-md-6">
+        
     </div>
 </div>
 
