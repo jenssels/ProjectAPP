@@ -577,6 +577,7 @@ class Organisator extends CI_Controller {
      * Gaat terug naar de vorige pagina wanneer er op 'Annuleren' geklikt werd.
      */
     public function registreerNieuweOrganisator() {
+        $hashCodes = $this->persoon_model->getAllHashCodes();
         $knop = $this->input->post('knop');
         if ($knop == "Annuleren") {
             redirect('');
@@ -587,7 +588,11 @@ class Organisator extends CI_Controller {
             $organisator->naam = $this->input->post('naam');
             $organisator->email = $this->input->post('email');
             $organisator->wachtwoord = password_hash($this->input->post('wachtwoord'), PASSWORD_DEFAULT);
-            $organisator->hashcode = random_string('alnum', 16);
+            $hash = random_string('alnum', 16);
+            while (in_array($hash, $hashCodes)) {
+                $hash = random_string('alnum', 16);
+            }
+            $organisator->hashcode = $hash;
             $organisator->typeId = 1;
 
             $this->load->model('persoon_model');
