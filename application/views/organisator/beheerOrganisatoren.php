@@ -9,12 +9,6 @@
 ?>
 
 <div class="row">
-    <div class="page-header col-sm-12 pb-2">
-        <h1><?php echo $titel; ?></h1>
-    </div>
-</div>
-
-<div class="row">
     <div class="col-sm-12">
         <table class="table">
             <tr>

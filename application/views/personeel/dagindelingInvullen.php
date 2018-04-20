@@ -5,9 +5,6 @@
  * and open the template in the editor.
  */
 ?>
-<div class="page-header">
-    <h1><?php echo $titel ?></h1>
-</div>
 
 <div>
     <p>Welkom!</p>
@@ -23,7 +20,7 @@
     $teller = 0;
     foreach ($dagindelingenMetOpties as $dagindeling) {
         $teller++;
-        echo "<h3>" . $dagindeling->naam . "</h3>";
+        echo "<h5>" . $dagindeling->naam . "</h5>";
         $options = array();
         $options[] = "-- Kies een optie --";
         foreach ($dagindeling->opties as $optie) {

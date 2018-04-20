@@ -39,11 +39,36 @@ class Organisator extends CI_Controller {
             "inhoud" => "personeelsFeestOverzicht",
             "voetnoot" => "voetnoot");
 
-        $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
         $this->template->load('main_master', $partials, $data);
+    }
+    public function stuurTestMail(){
+        $this->stuurMail('Test mail met link', 'Dit is een test bericht \n nieuwe lijn', 'jenssels1998@gmail.com', 'personeel', '6xkY28eLg9ho1tfu', true);
+    }
+    public function stuurMail($titel,$message,$mail,$type,$hash, $isInschrijfLink = false){
+        $config = Array('protocol' => 'smtp','smtp_host' => 'ssl://smtp.gmail.com','smtp_port' => 465,'smtp_user' => 'team17project@gmail.com','smtp_pass' => 'team17project','mailtype'  => 'html',  'charset'   => 'utf-8');
+        if ($isInschrijfLink){
+            if($type === 'personeel'){
+                $link = 'http://localhost/index.php/personeel/index/' . $hash;
+                
+            }
+            else{
+                $link = 'http://localhost/index.php/vrijwilliger/index/' . $hash;
+                
+            }
+            $message .= '\n Gebruik onderstaande link om u keuzes voor het personeelsfeest op te geven: \n ' . $link;
+        }
+        $this->load->library('email');
+        $this->load->library('encrypt');
+        $this->email->initialize($config);
+        $this->email->set_newline("\r\n");
+        $this->email->from('team17project@gmail.com', 'Personeelsfeest Thomas More');
+        $this->email->to($mail); 
+        $this->email->subject($titel);
+        $this->email->message(str_replace('\n', '<br />', $message));    
+        $this->email->send();    
     }
 
     /**
@@ -67,7 +92,6 @@ class Organisator extends CI_Controller {
             $data['titel'] = 'Personeelsfeest bewerken';
         }
         $partials = array("hoofding" => "hoofding", "inhoud" => "personeelsFeestAanmaken", "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
         $this->template->load('main_master', $partials, $data);
@@ -103,7 +127,6 @@ class Organisator extends CI_Controller {
             "inhoud" => "personeelsFeestUploadForm",
             "voetnoot" => "voetnoot");
         $data['feestId'] = $feestId;
-        $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
         $data['titel'] = 'Personeelsfeest personeel uploaden';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
@@ -141,7 +164,6 @@ class Organisator extends CI_Controller {
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "taakShiften",
             "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
 
@@ -163,7 +185,6 @@ class Organisator extends CI_Controller {
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "taakBewerken",
             "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
 
@@ -179,7 +200,6 @@ class Organisator extends CI_Controller {
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "takenBeheren",
             "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
 
@@ -199,7 +219,7 @@ class Organisator extends CI_Controller {
             $uploadData = $this->upload->data();
             $data_excel = $this->readExcel($uploadData);
             $data['personeel'] = $this->uploadPersoneel($data_excel);
-            unlink($data['full_path']);
+
             $this->load->view('ajax_uploadStatus', $data);
         }
     }
@@ -208,11 +228,17 @@ class Organisator extends CI_Controller {
      * Jens Sels - Ajax die de excel file gaat uploaden
      */
     public function ajaxAddPersoon() {
+        $this->load->model('Persoon_model');
+        $hashCodes = $this->persoon_model->getAllHashCodes();
         $feestId = $this->session->userdata('feestId');
         $voornaam = $this->input->get('voornaam');
         $naam = $this->input->get('naam');
         $email = strval($this->input->get('email'));
-        $check = $this->insertPersoon($feestId, $voornaam, $naam, $email);
+        $hash = random_string('alnum', 16);
+            while(in_array($hash, $hashCodes)){
+                $hash = random_string('alnum', 16);
+            }
+        $check = $this->insertPersoon($feestId, $voornaam, $naam, $email, $hash);
         if ($check) {
             $data['personeel'] = 'Toegevoegd - ' . $voornaam . ' ' . $naam . '</br>';
         } else {
@@ -223,12 +249,13 @@ class Organisator extends CI_Controller {
 
     /*
      * Jens Sels - Uitlezen van excel bestand en terug geven van array met personeelsleden in
+     * @param data Object met gegevens van het excel bestand
      */
 
     public function readExcel($data) {
         chmod($data['full_path'], 0775);
         $this->spreadsheet_excel_reader->setOutputEncoding('CP1251');
-        $data = $this->spreadsheet_excel_reader->read($data['full_path'], false);
+        $this->spreadsheet_excel_reader->read($data['full_path'], false);
         $sheets = $this->spreadsheet_excel_reader->sheets[0];
         error_reporting(0);
         $data_excel = array();
@@ -238,7 +265,9 @@ class Organisator extends CI_Controller {
             $data_excel[$i - 1]['Voornaam'] = $sheets['cells'][$i][1];
             $data_excel[$i - 1]['Naam'] = $sheets['cells'][$i][2];
             $data_excel[$i - 1]['Email'] = $sheets['cells'][$i][3];
-        } return $data_excel;
+        } 
+        unlink($data['full_path']);
+        return $data_excel;
     }
 
     /**
@@ -248,13 +277,18 @@ class Organisator extends CI_Controller {
      */
     public function uploadPersoneel($personeel) {
         $this->load->model('Persoon_model');
+        $hashCodes = $this->persoon_model->getAllHashCodes();
         $feestId = $this->session->userdata('feestId');
         $personeelsLijst = "";
         for ($i = 1; $i < (count($personeel) + 1); $i++) {
+            $hash = random_string('alnum', 16);
+            while(in_array($hash, $hashCodes)){
+                $hash = random_string('alnum', 16);
+            }
             $voornaam = $personeel[$i]["Voornaam"];
             $naam = $personeel[$i]["Naam"];
             $email = strval($personeel[$i]["Email"]);
-            $check = $this->insertPersoon($feestId, $voornaam, $naam, $email);
+            $check = $this->insertPersoon($feestId, $voornaam, $naam, $email, $hash);
             if ($check) {
                 $personeelsLijst .= 'Toegevoegd - ' . $voornaam . ' ' . $naam . '</br>';
             } else {
@@ -270,9 +304,10 @@ class Organisator extends CI_Controller {
      * @param $voornaam Voornaam van personeelslid
      * @param $naam naam van personeelslid
      * @param $email Email van personeelslid
+     * @param $hash Hashcode waarmee het personeelslid naar de webpagina kan surfen
      * @return True als personeelslid is toegevoegd en false als hij al in de databank zit
      */
-    public function insertPersoon($feestId, $voornaam, $naam, $email) {
+    public function insertPersoon($feestId, $voornaam, $naam, $email, $hash) {
         $this->load->model('Persoon_model');
         $personeelDatabase = $this->Persoon_model->getAllWherePersoneelsFeestAndEmail($feestId, $email);
         if (count($personeelDatabase) == 0) {
@@ -280,6 +315,7 @@ class Organisator extends CI_Controller {
             $persoonObject->voornaam = $voornaam;
             $persoonObject->naam = $naam;
             $persoonObject->email = $email;
+            $persoonObject->hashcode= $hash;
             $persoonObject->typeId = 3;
             $persoonObject->personeelsfeestId = $feestId;
             $this->Persoon_model->insert($persoonObject);
@@ -563,4 +599,50 @@ class Organisator extends CI_Controller {
         redirect('organisator/overzichtAlbums');
     }
 
+    /**
+     * Stef Goor - Laad de view voor het sturen van mails
+     * @param type $personeelsfeestId
+     */
+    public function mailSturen($personeelsfeestId) {
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "organisator/mailSturen",
+            "voetnoot" => "voetnoot");
+        $data['titel'] = 'Mail Sturen';
+        $data['paginaverantwoordelijke'] = 'Stef Goor';
+        
+        $this->load->model('persoon_model');
+        $data['personen'] = $this->persoon_model->getAllWherePersoneelsFeest($personeelsfeestId);
+        $data['personeelsleden'] = $this->persoon_model->getAllPersoneelsLedenWherePersoneelsFeest($personeelsfeestId);
+        $data['vrijwillgers'] = $this->persoon_model->getAllVrijwilligersWherePersoneelsFeest($personeelsfeestId);
+        
+        
+        $this->load->model('dagindeling_model');
+        $data['dagindelingen'] = $this->dagindeling_model->getAllWherePersoneelsFeest($personeelsfeestId);
+        
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    /**
+     * Joren Synaeve
+     * @param type $dagindelingId
+     */
+    public function beheerShiftenBijDagindeling ($dagindelingId) {
+        // Standaardvariabelen
+        $data['titel'] = 'Shiften beheren';
+        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+        
+        // Taken laden met shiften aan
+        $this->load->model('taak_model');
+        $taken = $this->taak_model->getAllWhereDagindeling($dagindelingId);
+        $this->load->model('shift_model');
+        foreach ($taken as $taak) {
+            $taak->shiften = $this->shift_model->getAllWhereTaak($taak->id);
+        }
+        $data['taken'] = $taken;
+        
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'organisator/beheerShiftenBijDagindeling',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
+    }
 }

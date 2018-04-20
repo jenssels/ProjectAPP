@@ -42,7 +42,7 @@
 
 <div class="row">
     <div class="page-header col-sm-12 pb-2">
-        <h1><?php echo $titel; ?> - <?php echo $personeelsfeest->naam ?></h1>
+        <h5>Dagindeling van <?php echo $personeelsfeest->naam ?></h5>
     </div>
 </div>
 
@@ -70,6 +70,7 @@
                 echo "<tr><td>" . divanchor('', $dagindeling->naam, array('data-id' => $dagindeling->id, 'class' => 'dagindelingLink')) . "</td>"
                         . "<td>" . $beginuur . "u - " . $einduur . "u</td>"
                         . "<td>" . $voorVrijwilliger . "</td>"
+                        . "<td>" . anchor('organisator/taakBeheren/' . $dagindeling->id, 'Beheer taken') . "</td>"
                         . "<td>" . anchor('organisator/wijzigDagindeling/' . $personeelsfeest->id . '/' . $dagindeling->id, 'Bewerken') . "</td>"
                         . "<td>" . anchor('organisator/verwijderDagindeling/' . $personeelsfeest->id . '/' . $dagindeling->id, 'Verwijder') . "</td></tr>";
             }
