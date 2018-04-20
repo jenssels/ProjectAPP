@@ -15,11 +15,10 @@
         var dagindelingSelect = document.getElementById("dagindelingSelect");
         if (soortSelect.selectedIndex !== 0) {
             var soortId = soortSelect.selectedIndex;
-            if (soortId !== 0){
+            if (soortId !== 0) {
                 dagindelingSelect.disabled = false;
             }
-        }
-        else{
+        } else {
             dagindelingSelect.value = 'niks';
             dagindelingSelect.disabled = true;
         }
@@ -29,9 +28,19 @@
         var e = document.getElementById("dagindelingSelect");
         if (e.selectedIndex !== 0) {
             var dagindelingId = e.selectedIndex;
-            if (dagindelingId === 1){
+            if (dagindelingId === 1) {
                 alert('Alle dagindelingen worden doorgegeven!');
             }
+            $.ajax({type: "GET",
+                url: site_url + "/organisator/haalAjaxOp_SelectOptiesBijDagindeling",
+                data: {dagindelingId: dagindelingId},
+                success: function (result) {
+                    $("#optieResultaat").html(result);
+                },
+                error: function (xhr, status, error) {
+                    alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+                }
+            });
         }
     }
 </script>
@@ -78,8 +87,9 @@
                 ?>
             </p>
         </fieldset>
+        <div id="optieResultaat"></div>
     </form>
     <?php
-    echo anchor('organisator/personeelsFeestOverzicht', 'Terug naar overzicht', array('role' => 'button' , 'class' => 'btn btn-primary'));
+    echo anchor('organisator/personeelsFeestOverzicht', 'Terug naar overzicht', array('role' => 'button', 'class' => 'btn btn-primary'));
     ?>
 </div>
