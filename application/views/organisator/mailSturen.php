@@ -30,6 +30,16 @@
             var dagindelingId = dagindelingSelect.selectedIndex;
             if (dagindelingId === 'alles') {
                 //Alle dagindelingen zijn geselecteerd
+                $.ajax({type: "GET",
+                    url: site_url + "/organisator/haalAjaxOp_SelectOptiesBijDagindeling",
+                    data: {feestId: $feestId},
+                    success: function (result) {
+                        $("#optieResultaat").html(result);
+                    },
+                    error: function (xhr, status, error) {
+                        alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+                    }
+                });
             }
             $.ajax({type: "GET",
                 url: site_url + "/organisator/haalAjaxOp_SelectOptiesBijDagindeling",
