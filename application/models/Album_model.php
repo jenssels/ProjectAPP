@@ -50,4 +50,14 @@ class Album_model extends CI_Model {
         }
         return $albums;
     }
+    
+    //Jorne Lambrechts - album met foto's verwijderen
+    function deleteWithFotos($albumId){
+        $this->load->model('foto_model');
+        $this->foto_model->deleteFotosWhereAlbum($albumId);
+        
+        $this->db->where('id', $albumId);
+        $query = $this->db->delete('album');
+        
+    }
 }

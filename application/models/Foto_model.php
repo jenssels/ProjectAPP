@@ -41,4 +41,10 @@ class Foto_model extends CI_Model {
             return false;
         }
     }
+    
+    //Jorne Lambrechts - verwijder alle foto's van bepaald album
+    function deleteFotosWhereAlbum($albumId){
+        $this->db->where('albumId', $albumId);
+        $query = $this->db->delete(foto);
+    }
 }

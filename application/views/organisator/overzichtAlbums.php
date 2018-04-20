@@ -2,13 +2,51 @@
 /**
  * @file overzichtAlbums.php
  * 
- * View waarin een personeelslid/vrijwilliger het overzicht van de albums kan bekijken
+ * View waarin een organisator het overzicht van de albums kan bekijken
  */
 ?>
 
-<div class="page-header">
+<script>
+    /*var sURL = decodeURI(window.location.pathname);
+
+    function refresh()
+    {
+        window.location.href = sURL;
+    }*/
+    
+    function verwijderAlbum(albumId){
+         $.ajax({type: "GET",
+            url: site_url + "/organisator/verwijderAjaxAlbum",
+            data: {albumId: albumId},
+            success: function (result) {
+                
+                $("#resultaat").html(result);
+            },
+            error: function (xhr, status, error) {
+                alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+            }
+        });
+    }
+    
+    $(document).ready(function () {
+        var albumId = ''; // globale variabele om later te kunnen gebruiken bij verwijderen
+        $('.verwijderen').on('click', function() {
+          albumId = $(this).data('id');
+          // modal wordt automatisch opgeroepen door data-toggle in knop
+        });
+
+        $('#knopVerwijder').click(function() {
+          verwijderAlbum(albumId); 
+          //location.reload();
+        });
+
+    });
+
+</script>
+<div id="resultaat">
+<!--<div class="page-header">
     <h1>Overzicht albums</h1>
-</div>
+</div>-->
 
 <div>
     <p>Op deze pagina vindt u het overzicht van fotoalbums van de vorige personeelsfeesten. Zo kan u alvast eens de sfeer opsnuiven van de vorige jaren.</p>
@@ -30,11 +68,30 @@
         //Jorne Lambrechts - knoppen om album te bewerken of te verwijderen
         echo "</div><div>";
         echo anchor('home/aanmelden','<button type="button" class="btn"><i class="fas fa-edit"></i></button>');
-        echo anchor('home/aanmelden','<button type="button" class="btn"><i class="fas fa-times"></i></button>');
+        echo '<button type="button" class="btn verwijderen" data-id="' . $album->id . '" data-toggle="modal" data-target="#bevestigVerwijderen"><i class="fas fa-times"></i></button>';
         echo '</div></div><br>';
     }
     
     //Jorne Lambrechts - knop om naar het aanmaken van albums te gaan
-    echo anchor ('home/aanmelden', 'Album aanmaken', 'class="btn btn-primary"')
+    echo anchor ('home/aanmelden', 'Album aanmaken', 'class="btn btn-primary"');
     ?>
+    
+    <!--Modal dialog om het verwijderen van een album te bevestigen-->
+    <div class="modal fade" id="bevestigVerwijderen" role="dialog" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Album verwijderen</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Bent u zeker dat u dit Album wilt verwijderen?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Annuleer</button>
+                    <button class="btn btn-danger" id="knopVerwijder" type="button">Verwijder</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>

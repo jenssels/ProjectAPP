@@ -548,5 +548,19 @@ class Organisator extends CI_Controller {
 
         $this->load->view('organisator/ajax_optiesBijDagindeling', $data);
     }
+    
+    /**
+     * Jorne Lambrechts
+     * @param $albumId Het id van het te verwijderen album
+     * Verwijdert het gekozen album en de foto's die bij het album horen
+     */
+    public function verwijderAjaxAlbum(){
+        $albumId = $this->input->get('albumId');
+        
+        $this->load->model('album_model');
+        $this->album_model->deleteWithFotos($albumId);
+        
+        redirect('organisator/overzichtAlbums');
+    }
 
 }
