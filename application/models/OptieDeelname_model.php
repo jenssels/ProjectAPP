@@ -47,6 +47,17 @@ class OptieDeelname_model extends CI_Model {
     }
     
     /**
+     * Jens Sels - Ophalen van het aantal inschrijvingen van een optie
+     * @param $optieId Id van de optie
+     * @return Aantal inschrijvingen
+     */
+    function getCountWhereOptie($optieId){
+        $this->db->select('count(*)');
+        $this->db->where('optieid', $optieId);
+        $query = $this->db->get('optiedeelname');
+        return $query->result();
+    }
+    /**
      * Jens Sels - Ophalen van alle keuzes van opties van een optie
      * @param $optieId Id van een optie
      * @return Alle keuzes van opties van een optie

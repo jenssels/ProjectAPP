@@ -16,14 +16,14 @@ class Shift_model extends CI_Model {
     {
         parent::__construct();
     }
-    
+
     /**
      * Jens Sels - Ophalen van alle shifts van een taak
      * @param $taakId Id van een taak
      * @return Alle shifts van een taak
      */
     function getAllWhereTaak($taakId){
-        $this->db->where('taakid', $taakId);
+        $this->db->where('taakId', $taakId);
         $query = $this->db->get('shift');
         return $query->result();
     }
