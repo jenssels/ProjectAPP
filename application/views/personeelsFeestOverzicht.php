@@ -30,6 +30,7 @@
                 <th>Naam</th>
                 <th>Datum</th>
                 <th>Inschrijvingen</th>
+                <th>Inschrijvingen</th>
                 <th>Personeel toevoegen</th>
                 <th>Bewerken</th>
                 <th>Verwijderen</th>
@@ -43,6 +44,7 @@
                 echo "<td>" . $feest->naam .  "</td>"
                         . "<td>" . zetOmNaarDDMMYYYY($feest->datum) . "</td>"
                         . "<td> <a href=#! class='overzicht' data-id='" . $feest->id . "'><i class='fas fa-list-ul'></i></a></td>"
+                        . "<td>" . anchor('Organisator/personeelsFeestInschrijvingen/' . $feest->id, '<i class="fas fa-user-plus"></i>') . "</td>"
                         . "<td>" . anchor('Organisator/personeelsFeestUploadForm/' . $feest->id, '<i class="fas fa-user-plus"></i>') . "</td>"
                         . "<td>" . anchor('Organisator/personeelsFeestAanmakenForm/' . $feest->id, '<i class="fas fa-pencil-alt"></i>') . "</td>"
                         . "<td>" . anchor('Organisator/personeelsFeestVerwijderen/' . $feest->id, '<i class="far fa-trash-alt"></i>') . "</td>"

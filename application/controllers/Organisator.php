@@ -44,9 +44,66 @@ class Organisator extends CI_Controller {
 
         $this->template->load('main_master', $partials, $data);
     }
-    public function stuurTestMail(){
-        $this->stuurMail('Test mail met link', 'Dit is een test bericht \n nieuwe lijn', 'jenssels1998@gmail.com', 'personeel', '6xkY28eLg9ho1tfu', true);
+    
+    public function personeelsFeestInschrijvingen($feestId){
+        $totaalInschrijvingen = 0;
+        $totaalHelpers = 0;
+        $this->load->model('Persoon_model');
+        $this->load->model('OptieDeelname_model');
+        $this->load->model('TaakDeelname_model');
+        $personen = $this->Persoon_model->getAllWherePersoneelsFeest($feestId);
+        foreach($personen as $persoon){
+            if(count($this->OptieDeelname_model->getAllWherePersoon($persoon->id)) != 0){
+                $totaalInschrijvingen++;
+            }
+            if(count($this->TaakDeelname_model->getAllWherePersoon($persoon->id)) != 0){
+                $totaalHelpers++;
+            }
+        } 
+        $optiesEnTaken = $this->getDagindelingenWithOptiesEnTaken($feestId);
+        $data['opties'] = $optiesEnTaken['opties'];
+        $data['taken'] = $optiesEnTaken['taken'];
+        $partials = array("hoofding" => "hoofding","inhoud" => "personeelsInschrijvingen","voetnoot" => "voetnoot");
+        $data['helpers'] = $totaalHelpers;
+        $data['inschrijvingen'] = $totaalInschrijvingen;
+        $data['titel'] = 'Personeelsfeest overzicht';
+        $data['paginaverantwoordelijke'] = 'Jens Sels';
+
+        $this->template->load('main_master', $partials, $data);
+
     }
+    
+    public function getDagindelingenWithOptiesEnTaken($feestId){
+        $this->load->model('Dagindeling_model');
+        $this->load->model('Optie_model');
+        $this->load->model('Taak_model');
+        $this->load->model('OptieDeelname_model');
+        $this->load->model('TaakDeelname_model');
+        $this->load->model('Shift_model');
+        $dagindelingen = $this->Dagindeling_model->getAllWherePersoneelsfeest($feestId);
+        foreach($dagindelingen as $dagindeling){
+            $opties = $this->Optie_model->getAllWhereDagindeling($dagindeling->id);
+            $taken = $this->Taak_model->getAllWhereDagindeling($dagindeling->id);
+            foreach($opties as $optie){
+                $optie->aantal = $this->OptieDeelname_model->getCountWhereOptie($optie->id);
+            }
+            foreach($taken as $taak){
+                $shiften = $this->Shift_model->getAllWhereTaak($taak->id);
+                foreach($shiften as $shift){
+                    $taak->aantal .= $this->TaakDeelname_model->getCountWhereshift($shift->id);}
+            }
+        }
+        return array("opties" => $opties, "taken" => $taken);
+    }
+    /**
+     * Jens Sels - Functie die mail gaat versturen via gmail
+     * @param $titel Titel van de mail 
+     * @param $message Inhoud die via de mail word verstuurd
+     * @param $mail Mail adres naar wie de mail verstuurd word
+     * @param $type Type persoon naar wie de mail word verstuurd
+     * @param $hash Code die aan link word toegevoegd zodat ze op de site kunnen inloggen
+     * @param $isInschrijfLink Moet er een inschrijflink meegestuurd worden ? 
+     */
     public function stuurMail($titel,$message,$mail,$type,$hash, $isInschrijfLink = false){
         $config = Array('protocol' => 'smtp','smtp_host' => 'ssl://smtp.gmail.com','smtp_port' => 465,'smtp_user' => 'team17project@gmail.com','smtp_pass' => 'team17project','mailtype'  => 'html',  'charset'   => 'utf-8');
         if ($isInschrijfLink){
@@ -58,7 +115,7 @@ class Organisator extends CI_Controller {
                 $link = 'http://localhost/index.php/vrijwilliger/index/' . $hash;
                 
             }
-            $message .= '\n Gebruik onderstaande link om u keuzes voor het personeelsfeest op te geven: \n ' . $link;
+            $message .= '\n Gebruik onderstaande link om u keuzes voor het personeelsfeest door te geven: \n ' . $link;
         }
         $this->load->library('email');
         $this->load->library('encrypt');
