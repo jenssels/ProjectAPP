@@ -775,15 +775,8 @@ class Organisator extends CI_Controller {
 
         if ($dagindelingId == 'alles') {
             //Alle dagindelingen zijn gekozen
-            $this->load->model('dagindeling_model');
-            $data['dagindelingen'] = $this->dagindeling_model->getAllWherePersoneelsfeest($feestId);
-            $dagindelingen = $data['dagindelingen'];
-            
             $this->load->model('optie_model');
-            //Haal voor elke dagindeling de opties op
-            foreach ($dagindelingen as $dagindeling){
-                $data['opties'] = $this->optie_model->getAllWhereDagindeling($dagindeling->id);
-            }
+            $data['opties'] = $this->optie_model->getAllWherePersoneelsfeest($feestId);
         }
         else{
             //1 bepaalde dagindeling is geselecteerd

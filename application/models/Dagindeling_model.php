@@ -40,7 +40,7 @@ class Dagindeling_model extends CI_Model {
      * @return alle dagindelingen van een personeelsfeest
      */
     function getAllWherePersoneelsfeest($feestId) {
-        $this->db->where('personeelsfeestid', $feestId);
+        $this->db->where('personeelsfeestId', $feestId);
         $query = $this->db->get('dagindeling');
         return $query->result();
     }
