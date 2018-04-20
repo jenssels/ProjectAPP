@@ -1,4 +1,9 @@
-
+<?php/**
+ * @file vrijwilligerOverzicht.php
+ * 
+ * Een overzicht van alle vrijwilligers
+ * 
+ */?>
 <div class="row">
     <div class="col-md-12">
         <p>Overzicht vrijwilligers</p>

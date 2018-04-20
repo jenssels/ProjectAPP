@@ -1,4 +1,9 @@
-
+<?php/**
+ * @file locatiesBeheren.php
+ * 
+ * Pagina waar je alle locaties kan beheren
+ * 
+ */?>
 <div class="row">
     <div class="col-md-12">
         <table>
