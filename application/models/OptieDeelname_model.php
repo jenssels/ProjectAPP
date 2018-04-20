@@ -95,7 +95,7 @@ class OptieDeelname_model extends CI_Model {
      * @return Het id van het nieuwe optieDeelname record
      */
     function insert($optieDeelname) {
-        $this->db->insert('optieDeelname', $optieDeelname);
+        $this->db->insert('optiedeelname', $optieDeelname);
         return $this->db->insert_id();
     }
 }

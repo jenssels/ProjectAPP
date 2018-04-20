@@ -68,22 +68,32 @@ class Taak_model extends CI_Model {
         $this->db->where('id', $taak->id);
         $this->db->update('taak', $taak);
         }
-    
+         /**
+     * Thomas Vansprengel 
+     * Haal alle gegevens uit tabel
+     */
         function getAll(){
-        // Thomas Vansprengel
         $query = $this->db->get('taak');
         return $query->result();
         }   
-    
+         /**
+        * Thomas Vansprengel 
+        * Haal alle taken aan de hand van de shift
+        * @param $id shift Id
+        * @return Een rij met taak en shift
+        */
         function getByShift($id){
         // Thomas Vansprengel
         $this->db->where('id', $id);
         $query = $this->db->get('taak');
         return $query->row();
         }
-    
+         /**
+     * Thomas Vansprengel 
+     * Toon alle taken in relatie met de tabel dagindeling
+          * @return Overzicht van alle taken met dagindeling
+     */
         function getAllWithDagindeling(){
-        // Thomas Vansprengel 
         $query = $this->db->get('taak');
         $taken = $query->result();
         
@@ -96,8 +106,13 @@ class Taak_model extends CI_Model {
 
         return $taken;
         }
+             /**
+     * Thomas Vansprengel 
+     * Toon een bepaalde taak met dagindeling aan de hand van een dagindeling Id
+     * @param $dagindelingId dagindeling ID waar je de taak van haalt
+              * @return Overzicht van alle taken met dagindeling aan de hand van dagindelingid
+     */
         function getAllWithDagindelingWhereDagindelingId($dagindelingId){
-        // Thomas Vansprengel 
         $this->db->where('dagindelingId', $dagindelingId);
         $query = $this->db->get('taak');
         $taken = $query->result();
@@ -111,8 +126,13 @@ class Taak_model extends CI_Model {
 
         return $taken;
         }
+             /**
+     * Thomas Vansprengel 
+     * Haal een bepaalde taak op met de dagindeling
+     * @param $id Dagindeling id
+              * @return Een bepaalde taak aan de hand van dagindelingid
+     */
         function getWithDagindeling($id){
-        // Thomas Vansprengel 
         $this->db->where('id', $id);
         $query = $this->db->get('taak');
         $taak = $query->row();

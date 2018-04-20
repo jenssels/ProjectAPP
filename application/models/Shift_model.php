@@ -58,39 +58,44 @@ class Shift_model extends CI_Model {
         $this->db->where('id', $shiftId);
         $this->db->delete('shift');
     }
-    
+             /**
+     * Thomas Vansprengel 
+     * Ophalen van alle shiften aan de hand van bepaalde taak
+     * @param $id Id van de taak 
+     */
         function getAllWithTaakWhereTaak($id){
-        // Thomas Vansprengel
         $this->db->where('id', $id);
         $query = $this->db->get('shift');
         $shiften = $query->result();
         
         $this->load->model('taak_model');
     
-        foreach ($shiften as $shift) {
-            $shift->taak = $this->taak_model->getByShift($shift->taakId);
-        }
+            foreach ($shiften as $shift) {
+                $shift->taak = $this->taak_model->getByShift($shift->taakId);
+            }
         
             return $shiften;
         }     
-    
+             /**
+     * Thomas Vansprengel 
+     * Haal alle shiften op
+     */
         function getAll(){
-        // Thomas Vansprengel
         $query = $this->db->get('taak');
         return $query->result();
         }   
-    
+             /**
+     * Thomas Vansprengel 
+     * Haal alle shiften op met de bijhorende taken
+     */
         function getAllWithTaak(){
-        // Thomas Vansprengel
         $query = $this->db->get('shift');
         $shiften = $query->result();
         
         $this->load->model('taak_model');
-    
-        foreach ($shiften as $shift) {
-            $shift->taak = $this->taak_model->getByShift($shift->taakId);
-        }
-        
+            foreach ($shiften as $shift) {
+                $shift->taak = $this->taak_model->getByShift($shift->taakId);
+            }
             return $shiften;
         }       
         

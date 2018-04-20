@@ -1,4 +1,9 @@
- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<?php/**
+ * @file taakBewerken.php
+ * 
+ * Pagina waar je een huidige taak kan bewerken
+ * 
+ */?> <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
     <?php
     $locatieOpties = "";
