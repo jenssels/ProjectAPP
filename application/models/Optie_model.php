@@ -40,6 +40,17 @@ class Optie_model extends CI_Model {
     }
     
     /**
+     * Stef Goor - Ophalen van alle opties van een personeelsfeest
+     * @param $feestId Id van een personeelsfeest
+     * @return Alle opties van een personeelsfeest
+     */
+    function getAllWherePersoneelsfeest($feestId){
+        $this->db->where('personeelsfeestId', $feestId);
+        $query = $this->db->get('optie');
+        return $query->result();
+    }
+    
+    /**
      * Jens Sels - Verwijder optie en al zijn deelnames 
      * @param $optieId Id van een optie
      */
