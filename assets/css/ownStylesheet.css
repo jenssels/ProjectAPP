@@ -31,6 +31,16 @@ body {
     line-height: 70px;
 }
 
+.footer p {
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .footer {
+        height: 240px;
+    }
+}
+
 .teammembers {
     height: 50px;
     line-height: 50px;
@@ -78,4 +88,17 @@ body {
 /* link color */
 a {
     color: #009cab;
+}
+
+a:hover {
+    color: #009cab;
+}
+
+/* Klasse om een link te laten scalen */
+.grow { 
+    transition: all .1s ease-in-out; 
+}
+
+.grow:hover { 
+    transform: scale(1.5); 
 }
