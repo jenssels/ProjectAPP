@@ -37,6 +37,17 @@
                 <th>Mail sturen</th>
             </tr>
         <?php
+            //Jens Sels - 4 buttons aanmaken
+            echo anchor('Organisator/personeelsFeestAanmakenForm/nieuw', 'Personeelsfeest aanmaken');
+            echo anchor('Organisator/?', 'Fotoalbums beheren');
+            echo anchor('Organisator/?', 'Locaties beheren');
+            echo anchor('Organisator/?', 'Mail sturen');
+            echo anchor('organisator/takenBeheren', 'Taak beheren');
+        ?>
+    </div>
+    <div class="col-md-12">
+        <table>
+        <?php
             //Jens Sels - Overzicht van feesten in tabel tonen
             foreach($personeelsFeesten as $feest){
                 echo "<tr>";

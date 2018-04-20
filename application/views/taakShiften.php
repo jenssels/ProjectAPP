@@ -57,4 +57,4 @@
     echo form_submit('knop', 'Submit'); 
     echo form_close(); 
 
-    echo anchor('organisator/taakbeheren', 'Back', 'title = "Back"'); ?>
+    echo "<a href=\"javascript:history.go(-1)\">Terug</a>"; ?>

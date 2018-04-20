@@ -58,7 +58,7 @@
 
     <?php echo form_close(); ?>
 
-    <?php echo anchor('organisator/taakbeheren', 'Back', 'title = "Back"'); ?>
+    <?php echo "<a href=\"javascript:history.go(-1)\">Terug</a>"; ?>
 
 </body>
 </html>

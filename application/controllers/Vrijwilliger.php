@@ -11,8 +11,13 @@ class Vrijwilliger extends CI_Controller {
     public function taakindeling() {
         // Thomas Vansprengel - Taakindeling invullen
         $this->load->model('shift_model');
+        $this->load->model('locatie_model');
         $this->load->helper('form');
-        $data['shiften'] = $this->shift_model->getAllWithTaak();
+        $shiften = $this->shift_model->getAllWithTaak();
+        foreach ($shiften as $shift) {
+            $shift->taak->locatie = $this->locatie_model->getById($shift->taak->locatieId);
+        }
+        $data['shiften'] = $shiften;
 
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "vrijwilligerTaakindeling",
