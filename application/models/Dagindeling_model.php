@@ -66,6 +66,24 @@ class Dagindeling_model extends CI_Model {
         $this->db->where('id', $dagindelingId);
         $this->db->delete('dagindeling');
     }
+    
+    /**
+     * Jens Sels - Opvragen van alle dagindelingen met zijn opties en taken van een personeelsfeest
+     * @param $feestId Id van een personeelsfeest
+     * @return Alle dagindelingen van een personeelsfeest
+     */
+    function getAllDagIndelingenWithOptiesAndTakenWhereFeest($feestId){
+        $this->db->where('personeelsfeestid', $feestId);
+        $query = $this->db->get('dagindeling');
+        $dagindelingen =  $query->result();
+        $this->load->model('Optie_model');
+        $this->load->model('Taak_model');
+        foreach($dagindelingen as $dagindeling){
+           $dagindeling->opties = $this->Optie_model->getAllWithDeelnamesWhereDagindeling($dagindeling->id);
+           $dagindeling->taken = $this->Taak_model->getAllWithDeelnamesWhereDagindeling($dagindeling->id);
+        }
+        return $dagindelingen;
+    }
 
     /**
      * Joren Synaeve - Voegt een nieuwe dagindeling toe aan de database

@@ -33,16 +33,25 @@ class TaakDeelname_model extends CI_Model {
         
         return $deelnames;
     }
+    /**
+     * Jens Sels - Opvragen aantal taakdeelnames van een persoon
+     * @param $persoonId Id van een persoon
+     * @return Aantal taakdeelnames
+     */
+    function getCountWherePersoon($persoonId){
+        $this->db->where('persoonId', $persoonId);
+        return $this->db->count_all_results('taakdeelname');
+
+    }
      /**
      * Jens Sels - Ophalen van alle inschrijvingen van een shift
-     * @param $taakId Id van een taak
+     * @param $shiftId Id van een taak
      * @return Aantal inschrijvingen
      */
-    function getCountWhereshift($shiftId){
-        $this->db->select('count(*)');
+    function getCountWhereShift($shiftId){
         $this->db->where('shiftid', $shiftId);
-        $query = $this->db->get('taakdeelname');
-        return $query->result();
+        return $this->db->count_all_results('taakdeelname');
+
     }
     /**
      * Jens Sels - Ophalen van alle keuzes van taken van een persoon

@@ -40,6 +40,24 @@ class Optie_model extends CI_Model {
     }
     
     /**
+     * Jens Sels - Ophalen van alle opties van een dagindeling en hoeveel mensen eraan deelnemen
+     * @param $dagindelingId Id van een dagindeling
+     * @return Alle opties van een dagindeling
+     */
+    function getAllWithDeelnamesWhereDagindeling($dagindelingId){
+        $this->load->model('OptieDeelname_model');
+        $this->db->where('dagindelingid', $dagindelingId);
+        $query = $this->db->get('optie');
+        $opties = $query->result();
+        
+        foreach($opties as $optie){
+            $optie->deelnemers = $this->OptieDeelname_model->getCountWhereOptie($optie->id);
+        }
+        return $opties;   
+    }
+    
+    
+    /**
      * Jens Sels - Verwijder optie en al zijn deelnames 
      * @param $optieId Id van een optie
      */

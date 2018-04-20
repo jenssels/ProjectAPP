@@ -28,6 +28,22 @@ class Personeelsfeest_model extends CI_Model {
     }
     
     /**
+     * Jens Sels - Functie die alle informatie van een personeelsfeest opvraagd en ook de totaal inschrijvingen van het feest
+     * @param $id Id van een personeelsfeest
+     * @return Een Personeelsfeest
+     */
+    function getWithInschrijvingenWherePersoneelsfeest($id){
+        $this->load->model('Dagindeling_model');
+        $this->load->model('Persoon_model');
+        $this->db->where('id', $id);
+        $query = $this->db->get('personeelsfeest');
+        $personeelsfeest = $query->row();
+        $personeelsfeest->dagindelingen = $this->Dagindeling_model->getAllDagIndelingenWithOptiesAndTakenWhereFeest($personeelsfeest->id);
+        $personeelsfeest->inschrijvingen = $this->Persoon_model->getInschrijvingenWherePersoneelsFeest($personeelsfeest->id);
+        return $personeelsfeest;
+    }
+    
+    /**
     *  Jens Sels - ophalen van een personeelsfeest
     * @param $id Id van het personeelsfeest
     * @return Het personeelsfeest
@@ -55,7 +71,10 @@ class Personeelsfeest_model extends CI_Model {
         $this->db->update('personeelsfeest', $feest);
         
     }
-    
+    /**
+     * Jens Sels - delete personeelsfeest en alle gerelateerde info
+     * @param $feestId Id van personeelsfeest
+     */
     function delete($feestId){
         $this->load->model('Dagindeling_model');
         $this->load->model('Persoon_model');
@@ -77,4 +96,6 @@ class Personeelsfeest_model extends CI_Model {
         $this->db->where('id', $feestId);
         $this->db->delete('personeelsfeest');
     }
+    
+
 }

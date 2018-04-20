@@ -45,27 +45,15 @@ class Organisator extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
     
+    /**
+     * Jens Sels - Tonen van inschrijvingen van een personeelsfeest
+     * @param $feestId Id van een personeelsfeest
+     */
+    
     public function personeelsFeestInschrijvingen($feestId){
-        $totaalInschrijvingen = 0;
-        $totaalHelpers = 0;
-        $this->load->model('Persoon_model');
-        $this->load->model('OptieDeelname_model');
-        $this->load->model('TaakDeelname_model');
-        $personen = $this->Persoon_model->getAllWherePersoneelsFeest($feestId);
-        foreach($personen as $persoon){
-            if(count($this->OptieDeelname_model->getAllWherePersoon($persoon->id)) != 0){
-                $totaalInschrijvingen++;
-            }
-            if(count($this->TaakDeelname_model->getAllWherePersoon($persoon->id)) != 0){
-                $totaalHelpers++;
-            }
-        } 
-        $optiesEnTaken = $this->getDagindelingenWithOptiesEnTaken($feestId);
-        $data['opties'] = $optiesEnTaken['opties'];
-        $data['taken'] = $optiesEnTaken['taken'];
+        $this->load->model('Personeelsfeest_model');
+        $data["personeelsfeest"] = $this->Personeelsfeest_model->getWithInschrijvingenWherePersoneelsfeest($feestId);
         $partials = array("hoofding" => "hoofding","inhoud" => "personeelsInschrijvingen","voetnoot" => "voetnoot");
-        $data['helpers'] = $totaalHelpers;
-        $data['inschrijvingen'] = $totaalInschrijvingen;
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
@@ -73,28 +61,6 @@ class Organisator extends CI_Controller {
 
     }
     
-    public function getDagindelingenWithOptiesEnTaken($feestId){
-        $this->load->model('Dagindeling_model');
-        $this->load->model('Optie_model');
-        $this->load->model('Taak_model');
-        $this->load->model('OptieDeelname_model');
-        $this->load->model('TaakDeelname_model');
-        $this->load->model('Shift_model');
-        $dagindelingen = $this->Dagindeling_model->getAllWherePersoneelsfeest($feestId);
-        foreach($dagindelingen as $dagindeling){
-            $opties = $this->Optie_model->getAllWhereDagindeling($dagindeling->id);
-            $taken = $this->Taak_model->getAllWhereDagindeling($dagindeling->id);
-            foreach($opties as $optie){
-                $optie->aantal = $this->OptieDeelname_model->getCountWhereOptie($optie->id);
-            }
-            foreach($taken as $taak){
-                $shiften = $this->Shift_model->getAllWhereTaak($taak->id);
-                foreach($shiften as $shift){
-                    $taak->aantal .= $this->TaakDeelname_model->getCountWhereshift($shift->id);}
-            }
-        }
-        return array("opties" => $opties, "taken" => $taken);
-    }
     /**
      * Jens Sels - Functie die mail gaat versturen via gmail
      * @param $titel Titel van de mail 
