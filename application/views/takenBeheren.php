@@ -1,4 +1,9 @@
-
+<?php/**
+ * @file takenBeheren.php
+ * 
+ * Pagina waar je alle taken in kan beheren
+ * 
+ */?>
 <div class="row">
     <div class="col-md-12">
         <table>

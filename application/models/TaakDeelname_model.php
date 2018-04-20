@@ -17,7 +17,11 @@ class TaakDeelname_model extends CI_Model {
         parent::__construct();
     }     
 
-    //Thomas Vansprengel - Ophalen van overzicht deelnemers
+         /**
+     * Thomas Vansprengel 
+     * Ophalen overzicht van deelnemers aan de hand van shift
+     * @param $id Shift id
+     */
     function getAllWhereId($id)
      {
         $this->db->where('shiftid', $id);
@@ -26,10 +30,10 @@ class TaakDeelname_model extends CI_Model {
         
         $this->load->model('Persoon_model');
         foreach ($deelnames as $deelname){
-            $deelname->persoon = $this->persoon_model->getByPersoonid($deelname->persoonId);
+            $deelname->persoon = $this->persoon_model->getByPersoonid($deelname->persoonId);    
             
             
-        }
+        }    
         
         return $deelnames;
     }

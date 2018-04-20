@@ -14,7 +14,7 @@
         var soortSelect = document.getElementById("soortSelect");
         var dagindelingSelect = document.getElementById("dagindelingSelect");
         if (soortSelect.value !== 'niks') {
-            var soortId = soortSelect.selectedIndex;
+            var soortId = soortSelect.value;
             if (soortId !== 'niks') {
                 dagindelingSelect.disabled = false;
             }
@@ -27,12 +27,13 @@
     function dagindelingSelectFunctie() {
         var dagindelingSelect = document.getElementById("dagindelingSelect");
         if (dagindelingSelect.value !== 'niks') {
-            var dagindelingId = dagindelingSelect.selectedIndex;
+            var dagindelingId = dagindelingSelect.value;
             if (dagindelingId === 'alles') {
                 //Alle dagindelingen zijn geselecteerd
+                var feestId = document.getElementById("feestId").value;
                 $.ajax({type: "GET",
                     url: site_url + "/organisator/haalAjaxOp_SelectOptiesBijDagindeling",
-                    data: {feestId: $feestId},
+                    data: {feestId: feestId},
                     success: function (result) {
                         $("#optieResultaat").html(result);
                     },
@@ -57,6 +58,10 @@
 
 <div>
     <form>
+        <?php
+            //Verborgen veld om Id van personeelsfest me te kunnen geven
+            echo '<input type="hidden" id="feestId" name="feestId" value="'. $feestId .'">';
+        ?>
         <fieldset>
             <p>
                 <label>Soort:</label>
