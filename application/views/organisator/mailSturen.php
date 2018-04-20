@@ -63,7 +63,7 @@
                 }
                 $attributes2 = array('id' => 'dagindelingSelect',
                     'onchange' => 'dagindelingSelectFunctie()',
-                    'class' => 'form-control');
+                    'class' => 'form-control disabled');
                 echo "<div class='form-group'>";
                 echo form_dropdown('dagindelingSelect', $options2, '', $attributes2);
                 echo "</div>";
