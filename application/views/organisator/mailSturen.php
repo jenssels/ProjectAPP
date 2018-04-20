@@ -13,9 +13,9 @@
     function soortSelectFunctie() {
         var soortSelect = document.getElementById("soortSelect");
         var dagindelingSelect = document.getElementById("dagindelingSelect");
-        if (soortSelect.selectedIndex !== 0) {
+        if (soortSelect.value !== 'niks') {
             var soortId = soortSelect.selectedIndex;
-            if (soortId !== 0) {
+            if (soortId !== 'niks') {
                 dagindelingSelect.disabled = false;
             }
         } else {
@@ -25,11 +25,11 @@
     }
 
     function dagindelingSelectFunctie() {
-        var e = document.getElementById("dagindelingSelect");
-        if (e.selectedIndex !== 0) {
-            var dagindelingId = e.selectedIndex;
-            if (dagindelingId === 1) {
-                alert('Alle dagindelingen worden doorgegeven!');
+        var dagindelingSelect = document.getElementById("dagindelingSelect");
+        if (dagindelingSelect.value !== 'niks') {
+            var dagindelingId = dagindelingSelect.selectedIndex;
+            if (dagindelingId === 'alles') {
+                //Alle dagindelingen zijn geselecteerd
             }
             $.ajax({type: "GET",
                 url: site_url + "/organisator/haalAjaxOp_SelectOptiesBijDagindeling",

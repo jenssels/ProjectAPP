@@ -573,7 +573,7 @@ class Organisator extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 
-    public function haalAjaxOp_SelectOptiesBijDagindeling() {
+    public function haalAjaxOp_OptiesBijDagindeling() {
         $dagindelingId = $this->input->get('dagindelingId');
 
         $this->load->model('optie_model');
@@ -585,7 +585,7 @@ class Organisator extends CI_Controller {
         $this->load->view('organisator/ajax_selectOptiesBijDagindeling', $data);
     }
     
-    public function haalAjaxOp_OptiesBijDagindeling() {
+    public function haalAjaxOp_SelectOptiesBijDagindeling() {
         $dagindelingId = $this->input->get('dagindelingId');
 
         $this->load->model('optie_model');
