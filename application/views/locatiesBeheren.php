@@ -2,11 +2,20 @@
 <div class="row">
     <div class="col-md-12">
         <table>
+            <tr>
+                <th>Naam</th>
+                <th>Adres</th>
+                <th>Plaats</th>
+            </tr>
         <?php
             //Thomas Vansprengel - Overzicht van taken
-            foreach($taken as $taak){
-                echo "<tr><td>" .  $taak->naam . "</td><td>" .  $taak->beschrijving . "</td><td>" .  $taak->dagindeling->naam . "</td><td>" .  $taak->locatie->naam . "</td><td>" . anchor("organisator/verwijdertaak/".$taak->id,"Verwijderen") . "</td><td>" . anchor("organisator/edittaak/".$taak->id,"Bewerk") . "</td><td>" . anchor("organisator/shifttaak/".$taak->id,"Shiften") . "</td></tr>"; 
+            foreach($locaties as $locatie){
+                echo "<tr><td>" .  $locatie->naam . "</td><td>" .  $locatie->adres . "</td><td>" .  $locatie->plaats . "</td><td>" . anchor("organisator/verwijderlocatie/".$locatie->id,"Verwijderen") . "</td><td>" . anchor("organisator/editlocatie/".$locatie->id,"Bewerk") . "</td></tr>"; 
             }
+            
+            
+            echo "<tr><td>" . anchor("organisator/locatieToevoegen/","Locatie toevoegen"). "</tr></td>";
+            echo "<tr><td>" . anchor("organisator/personeelsFeestOverzicht/","Terug naar homepagina"). "</tr></td>";
         ?>
         </table>
     </div>

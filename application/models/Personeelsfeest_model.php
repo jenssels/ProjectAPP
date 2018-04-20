@@ -52,7 +52,7 @@ class Personeelsfeest_model extends CI_Model {
     */
     function update($feest){
         $this->db->where('id', $feest->id);
-        $this->db->replace('personeelsfeest', $feest);
+        $this->db->update('personeelsfeest', $feest);
         
     }
     

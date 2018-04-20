@@ -33,6 +33,7 @@ class Persoon_model extends CI_Model {
 
         return $query->result();
     }
+
     /**
      * Jens Sels - ophalen van alle hashcodes
      * @return Alle hashcodes

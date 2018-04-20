@@ -1,18 +1,5 @@
  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-    <?php
-    $locatieOpties = "";
-    foreach ($locaties as $locatie) {
-        $locatieOpties[$locatie->id] = $locatie->naam;
-    }
-    
-    $dagindelingOpties = "";
-    foreach ($dagindelingen as $dagindeling) {
-        $dagindelingOpties[$dagindeling->id] = ($dagindeling->naam . ' ' . $dagindeling->beginuur . ' ' . $dagindeling->einduur);
-    }
-    
-    
-    ?>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><?php echo $titel; ?></title>
@@ -21,34 +8,21 @@
 	
     <?php
     $attributes = array('name' => 'mijnFormulier');
-    echo form_open('organisator/voegTaakToe', $attributes);
+    echo form_open('organisator/voegLocatieToe', $attributes);
     ?>
     <table>
         <tr>
             <td><?php echo form_label('Naam:', 'naam'); ?></td>
-            <td><?php
-            $data = array('name' => 'naam', 'id' => 'naam', 'size' => '30');
-            echo form_input($data);
-            ?>
-            </td>
+            <td><?php echo form_input(array('name' => 'naam', 'id' => 'naam', 'size' => '50')); ?></td>
+        </tr>
+                <tr>
+            <td><?php echo form_label('Adres:', 'adres'); ?></td>
+            <td><?php echo form_input(array('name' => 'adres', 'id' => 'adres', 'size' => '50')); ?></td>
         </tr>
         <tr>
-            <td><?php echo form_label('Beschrijving:', 'beschrijving'); ?></td>
-            <td><?php echo form_input(array('name' => 'beschrijving', 'id' => 'beschrijving', 'size' => '50')); ?></td>
-        </tr>
-        <tr>
-            <td><?php echo form_label('Locatie:', 'locatie'); ?></td>
-            <td><?php
-                echo form_dropdown('locatie', $locatieOpties, $locatie->id);
-                ?>
-            </td>
-        </tr>
-        <tr>
-            <td><?php echo form_label('Dagindeling:', 'dagindeling'); ?></td>
-            <td><?php
-                echo form_dropdown('dagindeling', $dagindelingOpties, $dagindeling->id);
-                ?>
-            </td>
+            <td><?php echo form_label('Plaats:', 'plaats'); ?></td>
+            <td><?php echo form_input(array('name' => 'plaats', 'id' => 'plaats', 'size' => '50')); ?></td>
+            <td><?php echo form_hidden('id'); ?></td>
         </tr>
         <tr>
             <td><?php echo form_submit('knop', 'Submit'); ?></td>
