@@ -11,10 +11,17 @@
 
 <script type="text/javascript">
     function soortSelectFunctie() {
-        var e = document.getElementById("soortSelect");
-        if (e.selectedIndex !== 0) {
-            var soortId = e.selectedIndex;
-            alert(soortId);
+        var soortSelect = document.getElementById("soortSelect");
+        var dagindelingSelect = document.getElementById("dagindelingSelect");
+        if (soortSelect.selectedIndex !== 0) {
+            var soortId = soortSelect.selectedIndex;
+            if (soortId !== 0){
+                dagindelingSelect.disabled = false;
+            }
+        }
+        else{
+            dagindelingSelect.value = 'niks';
+            dagindelingSelect.disabled = true;
         }
     }
 
@@ -23,7 +30,7 @@
         if (e.selectedIndex !== 0) {
             var dagindelingId = e.selectedIndex;
             if (dagindelingId === 1){
-                alert(Alle dagindelingen worden doorgegeven!);
+                alert('Alle dagindelingen worden doorgegeven!');
             }
         }
     }
@@ -63,7 +70,8 @@
                 }
                 $attributes2 = array('id' => 'dagindelingSelect',
                     'onchange' => 'dagindelingSelectFunctie()',
-                    'class' => 'form-control disabled');
+                    'class' => 'form-control',
+                    'disabled' => 'true');
                 echo "<div class='form-group'>";
                 echo form_dropdown('dagindelingSelect', $options2, '', $attributes2);
                 echo "</div>";
