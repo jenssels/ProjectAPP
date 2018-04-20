@@ -16,29 +16,45 @@ class Locatie_model extends CI_Model {
     {
         parent::__construct();
     }       
+        /**
+     * Thomas Vansprengel - Ophalen van een locatie aan de hand van id
+     * @param $id Id van een locatie
+     * @return Een locatie
+     */
     function getById($id){
-        // Thomas Vansprengel - ophalen van alle dagindelingen
         $this->db->where('id', $id);
         $query = $this->db->get('locatie');
         return $query->row();
     }
-    //Thomas vansprengel - Locatie toevoegen
-        function insert($locatie) {
-            $this->db->insert('locatie', $locatie);
-            return $this->db->insert_id();
-        }
+        /**
+     * Thomas Vansprengel - Locatie toevoegen
+     * @return Een nieuwe id
+     */
+    function insert($locatie) {
+        $this->db->insert('locatie', $locatie);
+        return $this->db->insert_id();
+    }
+            /**
+     * Thomas Vansprengel - Haal alle locaties op
+     * @return Alle locaties
+     */
     function getAll(){
-        // Thomas Vansprengel -     //Alle locaties halen
         $query = $this->db->get('locatie');
         return $query->result();
     }
-    //Thomas vansprengel - Locatie verwijderen
+            /**
+     * Thomas Vansprengel - Locatie verwijderen
+     * @param $id Id van een locatie
+     */
     function delete($id){
         $this->db->where('id', $id);
         $this->db->delete('locatie');
         
     } 
-    //Thomas vansprengel - locatie updaten
+            /**
+     * Thomas Vansprengel - Locatie aanpassen
+     * @param $locatie Een locatie
+     */
     function update($locatie)
         {
         $this->db->where('id', $locatie->id);

@@ -1,4 +1,9 @@
- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<?php/**
+ * @file taakShiften.php
+ * 
+ * Pagina waar je een overzicht van de shiften bij deze taak kan zien
+ * 
+ */?> <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
     <?php
 
     

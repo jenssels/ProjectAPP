@@ -27,9 +27,11 @@ class Dagindeling_model extends CI_Model {
         $query = $this->db->get('dagindeling');
         return $query->row();
     }
-
+        /**
+     * Thomas Vansprengel - Ophalen van alle dagindelingen
+     * @return Alle dagindelingen
+     */
     function getAll() {
-        // Thomas Vansprengel -     //Alle dagindelingen halen
         $query = $this->db->get('dagindeling');
         return $query->result();
     }

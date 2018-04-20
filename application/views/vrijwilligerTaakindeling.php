@@ -1,4 +1,9 @@
-
+<?php/**
+ * @file vrijwilligerTaakindeling.php
+ * 
+ * View waaruit een vrijwilliger zijn dagindeling kan invullen
+ * 
+ */?>
 <div class="row">
     <div class="col-md-12">
         <p>Je bent uitgenodigd om te helpen op het personeelsfeest van dit jaar.</p>

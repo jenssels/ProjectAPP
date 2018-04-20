@@ -6,11 +6,8 @@
  * 
  */
 ?>
-<div class="page-header">
-    <h1>Geen toegang!</h1>
-</div>
 <div>
-    <p>Gelieve je eerst aan te melden.</p>
+    <p>Je bent niet aangemeld als organisator!</p>
     <p><?php echo anchor('home/aanmelden', 'Aanmelden'); ?></p>
 </div>
 

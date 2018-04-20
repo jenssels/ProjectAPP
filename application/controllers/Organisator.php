@@ -191,14 +191,20 @@ class Organisator extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 
-    //Thomas vansprengel, taak verwijderen
+     /**
+     * Thomas Vansprengel - Verwijder een taak via de ID
+     * @param $id Id van de te verwijderen taak
+     */
     public function verwijdertaak($id) {
         $this->load->model('taak_model');
         $data['taken'] = $this->taak_model->delete($id);
         $this->taakbeheren($taak->dagindelingid);
     }
 
-    //Thomas vansprengel, taak aanpassen
+     /**
+     * Thomas Vansprengel 
+     * Functie om de aangepaste informatie van taak weg te schrijven
+     */
     public function pasTaakAan() {
         $info = new stdClass();
 
@@ -215,7 +221,11 @@ class Organisator extends CI_Controller {
         $this->takenBeheren();
     }
 
-    //Thomas vansprengel, taak shiften
+     /**
+     * Thomas Vansprengel 
+     * Functie om shiften van de taak te beheren
+     * @param $id Taak id
+     */
     public function shifttaak($id) {
         $this->load->model('shift_model');
         $data['shiften'] = $this->shift_model->getAllWithTaakWhereTaak($id);
@@ -228,7 +238,10 @@ class Organisator extends CI_Controller {
 
         $this->template->load('main_master', $partials, $data);
     }
-    //Thomas vansprengel, taak toevoegen
+     /**
+     * Thomas Vansprengel 
+     * Een nieuwe taak maken met lege tekstvakken
+     */
     public function taakToevoegen() {
 
         $this->load->model('Locatie_model');
@@ -246,7 +259,10 @@ class Organisator extends CI_Controller {
 
         $this->template->load('main_master', $partials, $data);
     }
-    //Thomas vansprengel, taak toevoegen
+    /**
+     * Thomas Vansprengel 
+     * De functie om de ingegeven informatie weg te schrijven in de tabel
+     */
     public function voegTaakToe() {
             $taak = new stdClass();
             $taak->id = $this->input->post('id');
@@ -260,7 +276,11 @@ class Organisator extends CI_Controller {
 
             $this->taakbeheren($taak->dagindelingid);
     }
-    //Thomas vansprengel, taak aanpassen
+     /**
+     * Thomas Vansprengel 
+     * Een taak aanpassen met de gegeven informatie in de tekstvakken
+     * @param $id Taak id dat aangepast word
+     */
     public function edittaak($id) {
 
         $this->load->model('Locatie_model');
@@ -280,7 +300,10 @@ class Organisator extends CI_Controller {
 
         $this->template->load('main_master', $partials, $data);
     }
-        //Thomas Vansprengel, overzicht taak beheren
+     /**
+     * Thomas Vansprengel 
+     * Toon het overzicht om de taken te beheren
+     */
     public function takenBeheren() {
         $this->load->model('taak_model');
         $data['taken'] = $this->taak_model->getAllWithDagindeling();
@@ -294,7 +317,11 @@ class Organisator extends CI_Controller {
 
         $this->template->load('main_master', $partials, $data);
     }
-    //Thomas Vansprengel, overzicht taak beheren
+     /**
+     * Thomas Vansprengel 
+     * Toon het overzicht om een individuele taak te beheren aan de hand van een dagindeling
+      * @param $dagindelingId Taak aanpassen aan de hand van deze dagindeling
+     */
     public function taakBeheren($dagindelingId) {
         $this->load->model('taak_model');
         $data['taken'] = $this->taak_model->getAllWithDagindelingWhereDagindelingId($dagindelingId);
@@ -310,7 +337,10 @@ class Organisator extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
     
-        //Thomas Vansprengel, overzicht locaties beheren
+     /**
+     * Thomas Vansprengel 
+     * Toon overzicht om locaties te beheren
+     */
     public function locatiesBeheren() {
         $this->load->model('locatie_model');
         $data['locaties'] = $this->locatie_model->getAll();
@@ -325,13 +355,20 @@ class Organisator extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
     
-        //Thomas vansprengel, locatie verwijderen
+     /**
+     * Thomas Vansprengel 
+     * Functie om een locatie te verwijderen aan de hand van een id
+      * @param $id De gegeven locatie ID te verwijderen
+     */
     public function verwijderLocatie($id) {
         $this->load->model('locatie_model');
         $this->locatie_model->delete($id);
         $this->locatiesBeheren();
     }
-        //Thomas vansprengel, locatie toevoegen
+     /**
+     * Thomas Vansprengel 
+     * Overzicht tonen om een nieuwe locatie aan te maken
+     */
     public function locatieToevoegen() {
         $this->load->model('Locatie_model');
         $data['locaties'] = $this->Locatie_model->getAll();
@@ -344,7 +381,10 @@ class Organisator extends CI_Controller {
 
         $this->template->load('main_master', $partials, $data);
     }
-        //Thomas vansprengel, Locatie info wegschrijven
+     /**
+     * Thomas Vansprengel 
+     * Functie om de gegevens van een nieuwe locatie weg te schrijven
+     */
     public function voegLocatieToe() {
             $locatie = new stdClass();
             $locatie->id = $this->input->post('id');
@@ -357,6 +397,11 @@ class Organisator extends CI_Controller {
 
             $this->locatiesBeheren();
     }
+         /**
+     * Thomas Vansprengel 
+     * Pas een locatie aan aan de hand van een ID
+     * @param $id Locatie id
+     */
     public function editLocatie($id) {
         $this->load->model('locatie_model');
         $data['locatie'] = $this->locatie_model->getById($id);
@@ -369,7 +414,10 @@ class Organisator extends CI_Controller {
 
         $this->template->load('main_master', $partials, $data);
     }
-        //Thomas vansprengel, taak aanpassen
+     /**
+     * Thomas Vansprengel 
+     * Functie om locatie aan te passen met nieuwe informatie
+     */
     public function pasLocatieAan() {
         $locatie = new stdClass();
         $locatie->id = $this->input->post('id');
@@ -577,6 +625,7 @@ class Organisator extends CI_Controller {
      * Gaat terug naar de vorige pagina wanneer er op 'Annuleren' geklikt werd.
      */
     public function registreerNieuweOrganisator() {
+        $hashCodes = $this->persoon_model->getAllHashCodes();
         $knop = $this->input->post('knop');
         if ($knop == "Annuleren") {
             redirect('');
@@ -587,7 +636,11 @@ class Organisator extends CI_Controller {
             $organisator->naam = $this->input->post('naam');
             $organisator->email = $this->input->post('email');
             $organisator->wachtwoord = password_hash($this->input->post('wachtwoord'), PASSWORD_DEFAULT);
-            $organisator->hashcode = random_string('alnum', 16);
+            $hash = random_string('alnum', 16);
+            while (in_array($hash, $hashCodes)) {
+                $hash = random_string('alnum', 16);
+            }
+            $organisator->hashcode = $hash;
             $organisator->typeId = 1;
 
             $this->load->model('persoon_model');
