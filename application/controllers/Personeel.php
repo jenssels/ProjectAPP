@@ -14,11 +14,41 @@ class Personeel extends CI_Controller {
         // Gegevens ophalen van persoon
         $this->load->model('persoon_model');
         $personeelslid = $this->persoon_model->getWhereHashcode($hashcode);
+        $this->session->set_userdata('emailgebruiker', $personeelslid->email);
+        $this->controleerDagindelingIsIngevuld($hashcode);
+    }
+
+    /**
+     * Joren Synaeve
+     * Controleert of een persoon de dagindeling al ingevuld heeft
+     * @param $hashcode De hashcode van de persoon 
+     */
+    public function controleerDagindelingIsIngevuld($hashcode) {
+        // Gegevens ophalen van persoon
+        $this->load->model('persoon_model');
+        $personeelslid = $this->persoon_model->getWhereHashcode($hashcode);
+        // Alle opties ophalen die een persoon al gekozen heeft
+        $this->load->model('optiedeelname_model');
+        $optieDeelnames = $this->optiedeelname_model->getAllWherePersoon($personeelslid->id);
+        if (count($optieDeelnames) > 0) {
+            redirect('personeel/toonOverzichtIngevuldeDagindeling/' . $hashcode);
+        } else {
+            redirect('personeel/dagindelingInvullen/' . $hashcode);
+        }
+    }
+
+    /**
+     * Joren Synaeve
+     * Toont de pagina waarop een persoon zijn dagindeling kan invullen
+     * @param $hashcode De hashcode van de peroon
+     */
+    public function dagindelingInvullen($hashcode) {
+        // Gegevens ophalen van persoon
+        $this->load->model('persoon_model');
+        $personeelslid = $this->persoon_model->getWhereHashcode($hashcode);
         $data['deelnemer'] = $personeelslid;
-        // Standaardvariabelen
         $data['titel'] = 'Dagindeling invullen';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
-        $this->session->set_userdata('emailgebruiker', $personeelslid->email);
         // Toon alle dagindeling met opties het voor het personeelslid
         $this->load->model('dagindeling_model');
         $data['dagindelingenMetOpties'] = $this->dagindeling_model->getAllDagindelingenWherePersoneelsfeestWithOpties($personeelslid->personeelsfeestId);
@@ -28,25 +58,6 @@ class Personeel extends CI_Controller {
             'voetnoot' => 'voetnoot');
 
         $this->template->load('main_master', $partials, $data);
-    }
-    
-    /**
-     * Joren Synaeve
-     * Controleert of een persoon de dagindeling al ingevuld heeft
-     * @param $hashcode De hashcode van de persoon 
-     */
-    public function controleerDagindelingIsIngevuld ($hashcode) {
-        // Gegevens ophalen van persoon
-        $this->load->model('persoon_model');
-        $personeelslid = $this->persoon_model->getWhereHashcode($hashcode);
-        // Alle opties ophalen die een persoon al gekozen heeft
-        $this->load->model('optiedeelname_model');
-        $optieDeelnames = $this->optiedeelname_model->getAllWherePersoon($personeelslid->id);
-        if (count($optieDeelnames) > 0) {
-            $this->toonOverzichtIngevuldeDagindeling($hashcode);
-        } else {
-            echo "Nee";
-        }
     }
 
     /**
@@ -136,11 +147,11 @@ class Personeel extends CI_Controller {
         $data['titel'] = 'Overzicht ingevulde dagindeling';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
         $this->session->set_userdata('emailgebruiker', $personeelslid->email);
-        
+
         // Dagindeling ophalen
         $this->load->model('dagindeling_model');
         $data['dagindelingen'] = $this->dagindeling_model->getAllWherePersoneelsfeest($personeelslid->personeelsfeestId);
-        
+
         // Opties ophalen van persoon
         $this->load->model('optiedeelname_model');
         $data['optiedeelnames'] = $this->optiedeelname_model->getAllWherePersoonWithOpties($personeelslid->id);
