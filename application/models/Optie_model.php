@@ -44,19 +44,17 @@ class Optie_model extends CI_Model {
      * @return Alle opties van een personeelsfeest
      */
     function getAllWherePersoneelsfeest($feestId) {
-        $opties = array();
         //Haal alle dagindelingen op
         $this->load->model('dagindeling_model');
-        $data['dagindelingen'] = $this->dagindeling_model->getAllWherePersoneelsfeest($feestId);
-        $dagindelingen = $data['dagindelingen'];
+        $dagindelingen = $this->dagindeling_model->getAllWherePersoneelsfeest($feestId);
         
         $this->load->model('optie_model');
         //Haal voor elke dagindeling de opties op
         foreach ($dagindelingen as $dagindeling) {
-            $opties[] = $this->optie_model->getAllWhereDagindeling($dagindeling->id);
+            $dagindeling->opties = $this->optie_model->getAllWhereDagindeling($dagindeling->id);
         }
 
-        return $opties;
+        return $dagindelingen;
     }
 
     /**

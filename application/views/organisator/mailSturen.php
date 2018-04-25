@@ -33,7 +33,7 @@
                 var feestId = document.getElementById("feestId").value;
                 $.ajax({type: "GET",
                     url: site_url + "/organisator/haalAjaxOp_SelectOptiesBijDagindeling",
-                    data: {feestId: feestId},
+                    data: {feestId: feestId, dagindelingId: dagindelingId},
                     success: function (result) {
                         $("#optieResultaat").html(result);
                     },
@@ -42,9 +42,10 @@
                     }
                 });
             }
+            var feestId = document.getElementById("feestId").value;
             $.ajax({type: "GET",
                 url: site_url + "/organisator/haalAjaxOp_SelectOptiesBijDagindeling",
-                data: {dagindelingId: dagindelingId},
+                data: {dagindelingId: dagindelingId, feestId: feestId},
                 success: function (result) {
                     $("#optieResultaat").html(result);
                 },
@@ -59,8 +60,8 @@
 <div>
     <form>
         <?php
-            //Verborgen veld om Id van personeelsfest me te kunnen geven
-            echo '<input type="hidden" id="feestId" name="feestId" value="'. $feestId .'">';
+        //Verborgen veld om Id van personeelsfest me te kunnen geven
+        echo '<input type="hidden" id="feestId" name="feestId" value="' . $feestId . '">';
         ?>
         <fieldset>
             <p>
@@ -103,6 +104,7 @@
             </p>
         </fieldset>
         <div id="optieResultaat"></div>
+        <div id="lijstResultaat"></div>
     </form>
     <?php
     echo anchor('organisator/personeelsFeestOverzicht', 'Terug naar overzicht', array('role' => 'button', 'class' => 'btn btn-primary'));
