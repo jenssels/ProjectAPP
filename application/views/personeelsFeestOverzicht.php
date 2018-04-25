@@ -58,7 +58,7 @@
         <div class="btn-group" role="group" aria-label="Basic example">
             <?php 
             echo anchor('organisator/personeelsFeestAanmakenForm/nieuw', 'Personeelsfeest aanmaken', array('role' => 'button' , 'class' => 'btn btn-primary'));
-            echo anchor('organisator/?', 'Fotoalbums beheren', array('role' => 'button' , 'class' => 'btn btn-primary'));
+            echo anchor('organisator/overzichtAlbums', 'Fotoalbums beheren', array('role' => 'button' , 'class' => 'btn btn-primary'));
             echo anchor('organisator/?', 'Locaties beheren', array('role' => 'button' , 'class' => 'btn btn-primary'));
             echo anchor('organisator/beheerOrganisatoren', 'Organisatoren beheren', array('role' => 'button' , 'class' => 'btn btn-primary'));
             ?>

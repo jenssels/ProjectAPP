@@ -37,7 +37,7 @@
 
         $('#knopVerwijder').click(function() {
           verwijderAlbum(albumId); 
-          //location.reload();
+          location.reload();
         });
 
     });
@@ -55,7 +55,9 @@
 <div>
     <?php
     //Stef Goor - Toon alle albums met hun foto
+    echo '<div class="row">';
     foreach ($albums as $album) {
+        echo '<div class="col-sm">';
         echo '<div class="card" style="width: 18rem;">';
         //Als er geen fotos in het album zitten wordt er geen foto getoond
         if($album->eersteFoto != NULL){
@@ -64,16 +66,18 @@
         echo '<div class="card-body">';
         echo '<h5 class="card-title">' . $album->naam . '</h5>';
         echo '<p class="card-text">Bekijk hier alle fotos van dit album!</p>';
-        echo '<a href="'. base_url() . 'index.php/vrijwilliger/toonAlbum/' . $album->id .'" class="btn btn-primary">Bekijk de fotos!</a>';
+        echo anchor('organisator/toonAlbum/' . $album->id, '<button type="button" class="btn btn-primary">Bekijk de fotos!</button>');
+        echo '</div>';
         //Jorne Lambrechts - knoppen om album te bewerken of te verwijderen
-        echo "</div><div>";
-        echo anchor('home/aanmelden','<button type="button" class="btn"><i class="fas fa-edit"></i></button>');
+        echo '<div>';
+        echo anchor('organisator/albumBewerken/' . $album->id,'<button type="button" class="btn"><i class="fas fa-edit"></i></button>');
         echo '<button type="button" class="btn verwijderen" data-id="' . $album->id . '" data-toggle="modal" data-target="#bevestigVerwijderen"><i class="fas fa-times"></i></button>';
-        echo '</div></div><br>';
+        echo '</div>';
+        echo'</div></div><br>';
     }
-    
+    echo '</div>';
     //Jorne Lambrechts - knop om naar het aanmaken van albums te gaan
-    echo anchor ('home/aanmelden', 'Album aanmaken', 'class="btn btn-primary"');
+    echo '<div>'. anchor ('organisator/maakAlbum', 'Album aanmaken', 'class="btn btn-primary"') . '</div>';
     ?>
     
     <!--Modal dialog om het verwijderen van een album te bevestigen-->
