@@ -109,13 +109,13 @@ class Vrijwilliger extends CI_Controller {
         foreach ($shiften as $shift) {
             $taakdeelname = new stdClass();
             $taakdeelname->persoonId = $persoon->id;
-            $taakdeelname->shiftId = $shift->id;
+            $taakdeelname->shiftId = $shift;
             
             $this->load->model('taakdeelname_model');
             $this->taakdeelname_model->insert($taakdeelname);
         }
 
-        redirect('vrijwilliger/bevestigInschrijving');
+        redirect('vrijwilliger/vrijwilligerBevestig');
     }
 
 }

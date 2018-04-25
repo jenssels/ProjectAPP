@@ -40,8 +40,8 @@ class TaakDeelname_model extends CI_Model {
      * Taakdeelname toevoegen
      * @return Id van insert
      */
-    function insert($taak) {
-            $this->db->insert('taak', $taak);
+    function insert($taakdeelname) {
+            $this->db->insert('taakdeelname', $taakdeelname);
             return $this->db->insert_id();
         }
     /**
