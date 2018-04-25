@@ -1,6 +1,6 @@
 <script>
     $(document).ready(function () {
-        function addPersoon(voornaam,naam,email) {
+        function addPersoon(voornaam, naam, email) {
             $.ajax({type: "GET",
                 url: site_url + "/Organisator/ajaxAddPersoon",
                 data: {voornaam: voornaam, naam: naam, email: email},
@@ -13,12 +13,12 @@
             });
         }
         ;
-        $('#uploadPersoon').submit(function(e){
+        $('#uploadPersoon').submit(function (e) {
             e.preventDefault();
             var voornaam = $('#voornaam').val();
             var naam = $('#naam').val();
             var email = $('#email').val();
-            addPersoon(voornaam,naam,email);
+            addPersoon(voornaam, naam, email);
         });
         $('#uploadFile').submit(function (e) {
             var data = new FormData(this);
@@ -42,92 +42,100 @@
 
 <div class="row">
     <div class="col-md-6">
-        <div class="row">
-            <div class="col-md-12">
-                <p>Hier kan je een personeelslijst uit Excel importeren</p>
+        <p>Hier kan je een personeelslijst uit Excel importeren</p>
 
-                <?php
-                $attributenFormulier = array('id' => 'uploadFile',
-                    'role' => 'form');
-                echo form_open('', $attributenFormulier);
-                echo form_labelpro('Upload excel (.xls):', 'excel');
-                echo form_input(array('name' => 'excel',
-                    'id' => 'excel',
-                    'type' => 'file',
-                    'required' => 'required'));
-                ?>
-            </div>
-            <div class="col-md-12">
-                <?php
-                echo form_submit('knop', 'Upload', "class='btn btn-primary'");
-                echo form_close();
-                ?>
-            </div>
-
-            <div class="col-md-12">
-                <?php
-                $attributenFormulier2 = array('id' => 'uploadPersoon',
-                    'role' => 'form');
-                echo form_open('', $attributenFormulier2);
-                ?>
-                <div class="form-group">
-                    <?php
-                    echo form_labelpro('Voornaam', 'voornaam');
-                    echo form_input(array('voornaam' => 'voornaam',
-                        'id' => 'voornaam',
-                        'class' => 'form-control',
-                        'placeholder' => 'Naam',
-                        'required' => 'required'));
-                    ?>
-                    <div class='help-block with-errors'>
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <?php
-                    echo form_labelpro('Naam', 'naam');
-                    echo form_input(array('name' => 'naam',
-                        'id' => 'naam',
-                        'class' => 'form-control',
-                        'placeholder' => 'Naam',
-                        'required' => 'required'));
-                    ?>
-                    <div class='help-block with-errors'>
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <?php
-                    echo form_labelpro('Email', 'email');
-                    echo form_input(array('email' => 'email',
-                        'id' => 'email',
-                        'type' => 'email',
-                        'class' => 'form-control',
-                        'placeholder' => 'Beschrijving',
-                        'required' => 'required'));
-                    ?>
-                    <div class='help-block with-errors'>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <?php
-                echo form_submit('knop', 'Voeg persoon toe', "class='btn btn-primary'");
-                echo form_close();
-                ?>
-            </div>
-        </div>
-
-    </div>
-    <div class="col-md-6">
-        <p>Zorg ervoor dat uw excel deze 3 kolommen heeft: Voornaam, Naam, Email</p>
-        <p>Download hier een voorbeeld excel: </p> <?php echo anchor('assets/files/VoorbeeldExcel.xls', 'Download', "class='btn btn-primary'") ?>
-        <p id="uploadMessage"></p>
-    </div>
-    <div class="col-md-6">
         <?php
-            echo anchor('/organisator/personeelsFeestOverzicht', 'Terug naar overzicht');
+        $attributenFormulier = array('id' => 'uploadFile',
+            'role' => 'form');
+        echo form_open('', $attributenFormulier);
+        echo form_labelpro('Upload excel (.xls):', 'excel');
         ?>
+        <div class="form-group">
+            <?php
+            echo form_input(array('name' => 'excel',
+                'id' => 'excel',
+                'type' => 'file',
+                'required' => 'required'));
+            ?>                    
+        </div>
+        <div class="form-group">
+            <?php
+            echo form_submit('knop', 'Upload', "class='btn btn-primary'");
+            echo form_close();
+            ?>
+
+        </div>
+    </div>
+    <div class="col-md-6">
+            <p>Zorg ervoor dat uw excel deze 3 kolommen heeft: Voornaam, Naam, Email</p>
+            <p>Download hier een voorbeeld excel: </p>
+            <p> <?php echo anchor('assets/files/Voorbeeld.xls', 'Download', "class='btn btn-primary'") ?></p>
     </div>
 </div>
+<hr>
+<div class="row">
+    <div class="col-md-6">
+        <p>Manueel een personeelslid toevoegen</p>
+        <?php
+        $attributenFormulier2 = array('id' => 'uploadPersoon',
+            'role' => 'form');
+        echo form_open('', $attributenFormulier2);
+        ?>
+        <div class="form-group">
+            <?php
+            echo form_labelpro('Voornaam', 'voornaam');
+            echo form_input(array('voornaam' => 'voornaam',
+                'id' => 'voornaam',
+                'class' => 'form-control',
+                'placeholder' => 'Naam',
+                'required' => 'required'));
+            ?>
+            <div class='help-block with-errors'>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <?php
+            echo form_labelpro('Naam', 'naam');
+            echo form_input(array('name' => 'naam',
+                'id' => 'naam',
+                'class' => 'form-control',
+                'placeholder' => 'Naam',
+                'required' => 'required'));
+            ?>
+            <div class='help-block with-errors'>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <?php
+            echo form_labelpro('Email', 'email');
+            echo form_input(array('email' => 'email',
+                'id' => 'email',
+                'type' => 'email',
+                'class' => 'form-control',
+                'placeholder' => 'Beschrijving',
+                'required' => 'required'));
+            ?>
+            <div class='help-block with-errors'>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <?php
+            echo form_submit('knop', 'Voeg toe', 'class="btn btn-primary"');
+            echo form_close();
+            ?>
+        </div>
+        <p>
+            <?php
+            echo anchor('/organisator/personeelsFeestOverzicht', 'Terug naar overzicht');
+            ?>
+        </p>
+
+    </div>
+    <div id="uploadMessage" class="col-md-6">
+        
+    </div>
+</div>
+

@@ -17,7 +17,11 @@ class TaakDeelname_model extends CI_Model {
         parent::__construct();
     }     
 
-    //Thomas Vansprengel - Ophalen van overzicht deelnemers
+         /**
+     * Thomas Vansprengel 
+     * Ophalen overzicht van deelnemers aan de hand van shift
+     * @param $id Shift id
+     */
     function getAllWhereId($id)
      {
         $this->db->where('shiftid', $id);
@@ -26,12 +30,32 @@ class TaakDeelname_model extends CI_Model {
         
         $this->load->model('Persoon_model');
         foreach ($deelnames as $deelname){
-            $deelname->persoon = $this->persoon_model->getByPersoonid($deelname->persoonId);
+            $deelname->persoon = $this->persoon_model->getByPersoonid($deelname->persoonId);    
             
             
-        }
+        }    
         
         return $deelnames;
+    }
+    /**
+     * Jens Sels - Opvragen aantal taakdeelnames van een persoon
+     * @param $persoonId Id van een persoon
+     * @return Aantal taakdeelnames
+     */
+    function getCountWherePersoon($persoonId){
+        $this->db->where('persoonId', $persoonId);
+        return $this->db->count_all_results('taakdeelname');
+
+    }
+     /**
+     * Jens Sels - Ophalen van alle inschrijvingen van een shift
+     * @param $shiftId Id van een taak
+     * @return Aantal inschrijvingen
+     */
+    function getCountWhereShift($shiftId){
+        $this->db->where('shiftid', $shiftId);
+        return $this->db->count_all_results('taakdeelname');
+
     }
     /**
      * Jens Sels - Ophalen van alle keuzes van taken van een persoon

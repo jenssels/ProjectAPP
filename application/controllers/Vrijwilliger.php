@@ -8,11 +8,19 @@ class Vrijwilliger extends CI_Controller {
         
     }
 
+    /**
+     * Thomas Vansprengel
+     * Laat vrijwilligers taakindeling invullen
+     */
     public function taakindeling() {
-        // Thomas Vansprengel - Taakindeling invullen
         $this->load->model('shift_model');
+        $this->load->model('locatie_model');
         $this->load->helper('form');
-        $data['shiften'] = $this->shift_model->getAllWithTaak();
+        $shiften = $this->shift_model->getAllWithTaak();
+        foreach ($shiften as $shift) {
+            $shift->taak->locatie = $this->locatie_model->getById($shift->taak->locatieId);
+        }
+        $data['shiften'] = $shiften;
 
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "vrijwilligerTaakindeling",
@@ -23,9 +31,11 @@ class Vrijwilliger extends CI_Controller {
 
         $this->template->load('main_master', $partials, $data);
     }
-
+    /**
+     * Thomas Vansprengel
+     * Toont overzicht van vrijwilligers
+     */
     public function overzicht($id) {
-        // Thomas Vansprengel - Taakindeling invullen
         $this->load->model('TaakDeelname_model');
         $data['deelnames'] = $this->TaakDeelname_model->getAllWhereId($id);
 

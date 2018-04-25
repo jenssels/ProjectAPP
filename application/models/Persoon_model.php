@@ -23,6 +23,29 @@ class Persoon_model extends CI_Model {
     }
 
     /**
+     * Jens Sels - Opvragen van het totaal aantal inschrijvingen van de personeelsleden en vrijwilligers van een bepaald personeelsfeest
+     * @param $feestId Id van een personeelsfeest
+     * @return Totaal aantal inschrijvingen
+     */
+    function getInschrijvingenWherePersoneelsFeest($feestId){
+        $this->load->model('TaakDeelname_model');
+        $this->load->model('OptieDeelname_model');
+        $deelnemers = 0;
+        $helpers = 0;
+        $this->db->where('personeelsfeestId', $feestId);
+        $query = $this->db->get('persoon');
+        $personen =  $query->result();
+        foreach($personen as $persoon){
+            if($this->OptieDeelname_model->getCountWherePersoon($persoon->id) > 0){
+                $deelnemers++;
+            }
+            if($this->TaakDeelname_model->getCountWherePersoon($persoon->id) > 0){
+                $helpers++;
+            }
+        }
+        return array('deelnemers' => $deelnemers, 'helpers' => $helpers);
+    }
+    /**
      * Jens Sels - Ophalen van alle personen van een personeelsfeest
      * @param $feestId Id van een personeelsfeest
      * @return Alle personen van een personeelsfeest
@@ -33,6 +56,7 @@ class Persoon_model extends CI_Model {
 
         return $query->result();
     }
+
     /**
      * Jens Sels - ophalen van alle hashcodes
      * @return Alle hashcodes
@@ -185,16 +209,8 @@ class Persoon_model extends CI_Model {
     function getAllWhereTypeId($id) {
         $this->db->where('typeId', $id);
         $query = $this->db->get('persoon');
-
-        if ($query->num_rows() > 0) {
-            if ($query->num_rows() == 1) {
-                return $query->row();
-            } else {
-                return $query->result();
-            }
-        } else {
-            return false;
-        }
+        
+        return $query->result();
     }
 
 }

@@ -47,6 +47,29 @@ class OptieDeelname_model extends CI_Model {
     }
     
     /**
+     * Jens Sels - Ophalen van aantal optiedeelnames van een persoon
+     * @param $persoonId Id van een persoon
+     * @return Aantal optiedeelnames
+     */
+    function getCountWherePersoon($persoonId){
+        
+        $this->db->where('persoonId', $persoonId);
+        $aantal = $this->db->count_all_results('optiedeelname');
+        return $aantal;
+    }
+    
+    /**
+     * Jens Sels - Ophalen van het aantal inschrijvingen van een optie
+     * @param $optieId Id van de optie
+     * @return Aantal inschrijvingen
+     */
+    function getCountWhereOptie($optieId){
+        
+        $this->db->where('optieid', $optieId);
+        $aantal = $this->db->count_all_results('optiedeelname');
+        return $aantal;
+    }
+    /**
      * Jens Sels - Ophalen van alle keuzes van opties van een optie
      * @param $optieId Id van een optie
      * @return Alle keuzes van opties van een optie
@@ -72,7 +95,7 @@ class OptieDeelname_model extends CI_Model {
      * @return Het id van het nieuwe optieDeelname record
      */
     function insert($optieDeelname) {
-        $this->db->insert('optieDeelname', $optieDeelname);
+        $this->db->insert('optiedeelname', $optieDeelname);
         return $this->db->insert_id();
     }
 }

@@ -17,20 +17,31 @@ class Foto_model extends CI_Model {
         parent::__construct();
     }
     
-    // Stef Goor - ophalen van alle foto's
+    /**
+     * Stef Goor - Ophalen van alle fotos
+     * @return Alle fotos
+     */
     function getAll(){
         $query = $this->db->get('foto');
         return $query->result();
     }
     
-    // Stef Goor - ophalen van alle foto's van een bepaald album
+    /**
+     * Stef Goor - Ophalen van alle fotos van een album
+     * @param $albumId Id van het album
+     * @return Alle fotos van een album
+     */
     function getAllByAlbum($albumId){
         $this->db->where('albumId', $albumId);
         $query = $this->db->get('foto');
         return $query->result();
     }
     
-    // Stef Goor - ophalen van eerste foto van een bepaald album om te tonen op het overzicht van de albums
+    /**
+     * Stef Goor - ophalen van eerste foto van een bepaald album om te tonen op het overzicht van de albums
+     * @param $albumId Id van het album
+     * @return De eerste foto van een album
+     */
     function getEersteFoto($albumId){
         $this->db->where('albumId', $albumId);
         $query = $this->db->get('foto');

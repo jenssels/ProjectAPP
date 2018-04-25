@@ -19,30 +19,34 @@
     <?php
     $teller = 0;
     foreach ($dagindelingenMetOpties as $dagindeling) {
-        $teller++;
-        echo "<h5>" . $dagindeling->naam . "</h5>";
-        $options = array();
-        $options[] = "-- Kies een optie --";
-        foreach ($dagindeling->opties as $optie) {
-            $options[$optie->id] = $optie->naam;
+        if (count($dagindeling->opties) !== 0) {
+            $teller++;
+            echo "<h5>" . $dagindeling->naam . "</h5>";
+            $options = array();
+            $options[] = "-- Kies een optie --";
+            foreach ($dagindeling->opties as $optie) {
+                $options[$optie->id] = $optie->naam;
+            }
+            $attributes = array('id' => '',
+                'class' => 'form-control');
+            echo "<div class='form-group'>";
+            echo form_dropdown($teller, $options, '', $attributes);
+            echo "</div>";
+            
         }
-        $attributes = array('id' => '',
-            'class' => 'form-control');
-        echo "<div class='form-group'>";
-        echo form_dropdown($teller, $options, '', $attributes);
-        echo "</div>";
     }
     ?>
-    
-    <?php echo form_input(array('type'  => 'hidden',
-        'name'  => 'aantalSelects',
-        'id'    => 'aantalSelects',
-        'value' => $teller)); 
+
+    <?php
+    echo form_input(array('type' => 'hidden',
+        'name' => 'aantalSelects',
+        'id' => 'aantalSelects',
+        'value' => $teller));
     ?>
-    
+
     <div class="form-group">
-    <?php echo form_submit('knop', 'Bevestigen', "class='btn btn-primary'") ?>
-</div>
-    
+        <?php echo form_submit('knop', 'Bevestigen', "class='btn btn-primary'") ?>
+    </div>
+
     <?php echo form_close(); ?>
 </div>
