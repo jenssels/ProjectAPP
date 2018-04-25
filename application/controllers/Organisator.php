@@ -164,7 +164,7 @@ class Organisator extends CI_Controller {
     public function verwijdertaak($id) {
         $this->load->model('taak_model');
         $data['taken'] = $this->taak_model->delete($id);
-        $this->taakbeheren($taak->dagindelingid);
+        redirect('/organisator/taakBeheren/');
     }
 
      /**
@@ -240,7 +240,7 @@ class Organisator extends CI_Controller {
             $this->load->model('Taak_model');
             $this->Taak_model->insert($taak);
 
-            $this->taakbeheren($taak->dagindelingid);
+            $this->takenBeheren();
     }
      /**
      * Thomas Vansprengel 
@@ -262,23 +262,6 @@ class Organisator extends CI_Controller {
             "inhoud" => "taakBewerken",
             "voetnoot" => "voetnoot");
         $data['titel'] = 'Personeelsfeest overzicht';
-        $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
-
-        $this->template->load('main_master', $partials, $data);
-    }
-     /**
-     * Thomas Vansprengel 
-     * Toon het overzicht om de taken te beheren
-     */
-    public function takenBeheren() {
-        $this->load->model('taak_model');
-        $data['taken'] = $this->taak_model->getAllWithDagindeling();
-
-        $partials = array("hoofding" => "hoofding",
-            "inhoud" => "takenBeheren",
-            "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
-        $data['titel'] = "Taken beheren";
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
 
         $this->template->load('main_master', $partials, $data);

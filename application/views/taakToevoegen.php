@@ -26,7 +26,7 @@
 	
     <?php
     $attributes = array('name' => 'mijnFormulier');
-    echo form_open('organisator/voegLocatieToe', $attributes);
+    echo form_open('organisator/voegTaakToe', $attributes);
     ?>
     <table>
         <tr>
