@@ -164,7 +164,8 @@ class Organisator extends CI_Controller {
     public function verwijdertaak($id) {
         $this->load->model('taak_model');
         $this->taak_model->delete($id);
-        redirect('/organisator/taakBeheren/');
+        $referred_from = $this->session->userdata('referred_from');
+        redirect($referred_from, 'refresh');
     }
 
      /**
@@ -182,9 +183,9 @@ class Organisator extends CI_Controller {
 
         $this->load->model('Taak_model');
         $this->Taak_model->update($info);
-
-
-        $this->takenBeheren();
+        
+        $referred_from = $this->session->userdata('referred_from');
+        redirect($referred_from, 'refresh');
     }
 
      /**
@@ -240,7 +241,8 @@ class Organisator extends CI_Controller {
             $this->load->model('Taak_model');
             $this->Taak_model->insert($taak);
 
-            $this->takenBeheren();
+            $referred_from = $this->session->userdata('referred_from');
+            redirect($referred_from, 'refresh');
     }
      /**
      * Thomas Vansprengel 
@@ -274,7 +276,8 @@ class Organisator extends CI_Controller {
     public function taakBeheren($dagindelingId) {
         $this->load->model('taak_model');
         $data['taken'] = $this->taak_model->getAllWithDagindelingWhereDagindelingId($dagindelingId);
-
+        $data['dagindelingid'] = $dagindelingId;
+        
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "takenBeheren",
             "voetnoot" => "voetnoot");
@@ -284,6 +287,8 @@ class Organisator extends CI_Controller {
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
 
         $this->template->load('main_master', $partials, $data);
+        
+        $this->session->set_userdata('referred_from', current_url());
     }
     
      /**
