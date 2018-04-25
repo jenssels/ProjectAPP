@@ -380,6 +380,10 @@ class Organisator extends CI_Controller {
 
         $this->locatiesBeheren();
     }
+    
+    /**
+     * Jens Sels - Functie die excel bestand gaat uploaden en uitlezen
+     */
     public function ajaxUploadFile() {
         $config['upload_path'] = './assets/files/';
         $config['allowed_types'] = 'xls';
@@ -438,6 +442,24 @@ class Organisator extends CI_Controller {
         }
         $data["deelnemers"] = $deelnemers;
         $this->load->view('ajax_toonDeelnemers', $data);
+    }
+    
+    /**
+     * Jens Sels - Ajax functie die controleerd of het maximum aantal deelnemers overschreden is
+     * @return Volzet of niet
+     */
+    public function ajaxCheckVolzet(){
+        $check = "leeg";
+        $id = $this->input->get('id');
+        $this->load->model('shift_model');
+        $shift = $this->shift_model->getWithCount($id);
+        if ($shift->deelnemers >= $shift->maxAantal){
+            $check = "true";
+        }
+        else{
+            $check = "false";
+        }
+        return $check;
     }
     /*
      * Jens Sels - Uitlezen van excel bestand en terug geven van array met personeelsleden in

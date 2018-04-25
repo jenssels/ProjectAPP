@@ -27,6 +27,20 @@ class Shift_model extends CI_Model {
         $query = $this->db->get('shift');
         return $query->result();
     }
+    /**
+     * Jens Sels - Ophalen van shift en aantal deelnemers van de shift
+     * @param $id Id van shift
+     * @return Shift object
+     */
+    function getWithCount($id){
+        $this->db->where('id', $id);
+        $query = $this->db->get('shift');
+        $shift = $query->row();
+        $this->load->model('taakDeelname_model');
+        $shift->deelnemers = $this->taakDeelname_model->getCountWhereShift($shift->id);
+        return $shift;
+        
+    }
     
     /**
      * Jens Sels - Ophalen van alle shiften van een taak en hoeveel personen eraan deelnemen
@@ -59,7 +73,7 @@ class Shift_model extends CI_Model {
         $this->db->delete('shift');
     }
              /**
-     * Thomas Vansprengel 
+     * Thomas Vansprengel & Jens Sels
      * Ophalen van alle shiften aan de hand van bepaalde taak
      * @param $id Id van de taak 
      */
@@ -69,9 +83,11 @@ class Shift_model extends CI_Model {
         $shiften = $query->result();
         
         $this->load->model('taak_model');
+        $this->load->model('taakdeelname_model');
     
             foreach ($shiften as $shift) {
                 $shift->taak = $this->taak_model->getByShift($shift->taakId);
+                $shift->deelnemers = $this->taakdeelname_model->getCountWhereShift($shift->id);
             }
         
             return $shiften;
@@ -93,8 +109,10 @@ class Shift_model extends CI_Model {
         $shiften = $query->result();
         
         $this->load->model('taak_model');
+        $this->load->model('taakdeelname_model');
             foreach ($shiften as $shift) {
                 $shift->taak = $this->taak_model->getByShift($shift->taakId);
+                $shift->deelnemers = $this->taakdeelname_model->getCountWhereShift($shift->id);
             }
             return $shiften;
         }       
