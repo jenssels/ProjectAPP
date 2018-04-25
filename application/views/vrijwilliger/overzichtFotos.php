@@ -36,5 +36,6 @@
     }
     echo '</div>';
     echo anchor('personeel/overzichtAlbums', 'Terug naar overzicht albums', array('role' => 'button' , 'class' => 'btn btn-primary'));
+    
     ?>
 </div>
