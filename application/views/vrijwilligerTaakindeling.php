@@ -10,18 +10,24 @@
         <p>Vul te taken aan die jij wilt uitvoeren.</p>
     </div>
     <div class="col-md-12">
-        <form method="post" action="inschrijven">
-            <table>
-             <?php
-                //Thomas Vansprengel
+                     <?php
+                $attributes = array('name' => 'formulierInschrijven');
+            echo form_open('vrijwilliger/bevestigTaakindeling', $attributes);
+            echo"<table>";
             echo "<tr><th>Taak</th><th>Shift</th><th>Tijd</th><th>Aantal inschrijvingen</th><th>Locatie</th><th>Ik wil helpen!</th></tr>";
-                foreach($shiften as $shift){
-                    echo "<tr><td>" . $shift->taak->naam .  "</td><td>" .  $shift->naam .  "</td><td>" .  $shift->beginuur . " - " .  $shift->einduur .  "</td><td>" . anchor("vrijwilliger/overzicht/".$shift->id, "x/" . $shift->maxAantal)  .  "</td><td>" .  $shift->taak->locatie->naam .  "</td><td>" . form_checkbox($shift->id, "taak") .  "</td></tr>"; 
+            $teller = 0;
+                foreach($shiften as $shift){     
+                    $teller++;
+                    echo "<tr><td>" . $shift->taak->naam .  "</td><td>" .  $shift->naam .  "</td>"
+                            . "<td>" .  $shift->beginuur . " - " .  $shift->einduur .  "</td>"
+                            . "<td>" . anchor("vrijwilliger/overzicht/".$shift->id, "x/" . $shift->maxAantal)  .  "</td>"
+                            . "<td>" .  $shift->taak->locatie->naam .  "</td>"
+                            . "<td>" . form_checkbox(array('name' => 'shift[]', 'value' => $shift->id)) .  "</td></tr>";                     
                 }
-                echo "<tr><td>" . form_submit('verzenden', 'Bevestigen!') . "</td></tr>";
-            ?>
-            </table>
-        </form>
+                echo form_hidden("hashcode", $hashcode);
+           echo "<tr><td>" . form_submit('verzenden', 'Bevestigen!') . "</td></tr>";
+           echo" </table>";
+                            ?>
     </div>
     <div class="col-md-12">
         <?php

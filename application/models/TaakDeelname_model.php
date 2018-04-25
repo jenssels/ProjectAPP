@@ -30,13 +30,20 @@ class TaakDeelname_model extends CI_Model {
         
         $this->load->model('Persoon_model');
         foreach ($deelnames as $deelname){
-            $deelname->persoon = $this->persoon_model->getByPersoonid($deelname->persoonId);    
-            
-            
+            $deelname->persoon = $this->persoon_model->getByPersoonid($deelname->persoonId);     
         }    
-        
         return $deelnames;
     }
+    
+             /**
+     * Thomas Vansprengel 
+     * Taakdeelname toevoegen
+     * @return Id van insert
+     */
+    function insert($taak) {
+            $this->db->insert('taak', $taak);
+            return $this->db->insert_id();
+        }
     /**
      * Jens Sels - Ophalen van alle deelnemers van een shift
      * @param $shiftId Id van shift

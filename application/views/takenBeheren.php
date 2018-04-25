@@ -14,7 +14,7 @@
             }
             
             
-                        echo "<tr><td>" . anchor("organisator/locatieToevoegen/","Locatie toevoegen"). "</tr></td>";
+                        echo "<tr><td>" . anchor("organisator/taakToevoegen/","Taak toevoegen"). "</tr></td>";
             echo "<tr><td>" . anchor("organisator/personeelsFeestOverzicht/","Terug naar homepagina"). "</tr></td>";
         ?>
         </table>
