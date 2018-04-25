@@ -45,15 +45,15 @@ class Optie_model extends CI_Model {
      */
     function getAllWherePersoneelsfeest($feestId) {
         $opties = array();
-        $this->load->model('optie_model');
         //Haal alle dagindelingen op
         $this->load->model('dagindeling_model');
         $data['dagindelingen'] = $this->dagindeling_model->getAllWherePersoneelsfeest($feestId);
         $dagindelingen = $data['dagindelingen'];
         
+        $this->load->model('optie_model');
         //Haal voor elke dagindeling de opties op
         foreach ($dagindelingen as $dagindeling) {
-            $opties += getAllWhereDagindeling($dagindeling->id);
+            $opties[] = $this->optie_model->getAllWhereDagindeling($dagindeling->id);
         }
 
         return $opties;
