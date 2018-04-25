@@ -57,6 +57,7 @@ class Organisator extends CI_Controller {
         $this->load->model('Personeelsfeest_model');
         $data["personeelsfeest"] = $this->Personeelsfeest_model->getWithInschrijvingenWherePersoneelsfeest($feestId);
         $partials = array("hoofding" => "hoofding", "inhoud" => "personeelsInschrijvingen", "voetnoot" => "voetnoot");
+        $partials = array("hoofding" => "hoofding","inhoud" => "personeelsFeestInschrijvingen","voetnoot" => "voetnoot");
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
@@ -161,8 +162,9 @@ class Organisator extends CI_Controller {
      */
     public function verwijdertaak($id) {
         $this->load->model('taak_model');
-        $data['taken'] = $this->taak_model->delete($id);
-        $this->taakbeheren($taak->dagindelingid);
+        $this->taak_model->delete($id);
+        $referred_from = $this->session->userdata('referred_from');
+        redirect($referred_from, 'refresh');
     }
 
     /**
@@ -180,9 +182,9 @@ class Organisator extends CI_Controller {
 
         $this->load->model('Taak_model');
         $this->Taak_model->update($info);
-
-
-        $this->takenBeheren();
+        
+        $referred_from = $this->session->userdata('referred_from');
+        redirect($referred_from, 'refresh');
     }
 
     /**
@@ -241,6 +243,8 @@ class Organisator extends CI_Controller {
         $this->Taak_model->insert($taak);
 
         $this->taakbeheren($taak->dagindelingid);
+            $referred_from = $this->session->userdata('referred_from');
+            redirect($referred_from, 'refresh');
     }
 
     /**
@@ -294,7 +298,8 @@ class Organisator extends CI_Controller {
     public function taakBeheren($dagindelingId) {
         $this->load->model('taak_model');
         $data['taken'] = $this->taak_model->getAllWithDagindelingWhereDagindelingId($dagindelingId);
-
+        $data['dagindelingid'] = $dagindelingId;
+        
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "takenBeheren",
             "voetnoot" => "voetnoot");
@@ -304,6 +309,8 @@ class Organisator extends CI_Controller {
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
 
         $this->template->load('main_master', $partials, $data);
+        
+        $this->session->set_userdata('referred_from', current_url());
     }
 
     /**
@@ -446,6 +453,24 @@ class Organisator extends CI_Controller {
         $this->load->view('ajax_uploadStatus', $data);
     }
 
+    /**
+     * Jens Sels - Ajax functie die lijst toont met deelnemers van een optie of shift
+     */
+    public function ajaxToonDeelnemers(){
+        $this->load->model('optiedeelname_model');
+        $this->load->model('taakdeelname_model');
+        $id = $this->input->get('id');
+        $type = $this->input->get('type');
+        $deelnemers = "";
+        if($type == 'optie'){
+            $deelnemers = $this->optiedeelname_model->getAllWithDeelnemersWhereOptie($id);
+        }
+        else{
+            $deelnemers = $this->taakdeelname_model->getAllWithDeelnemersWhereShift($id);;
+        }
+        $data["deelnemers"] = $deelnemers;
+        $this->load->view('ajax_toonDeelnemers', $data);
+    }
     /*
      * Jens Sels - Uitlezen van excel bestand en terug geven van array met personeelsleden in
      * @param data Object met gegevens van het excel bestand

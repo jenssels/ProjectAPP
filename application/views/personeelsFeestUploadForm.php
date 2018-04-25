@@ -69,7 +69,7 @@
     <div class="col-md-6">
             <p>Zorg ervoor dat uw excel deze 3 kolommen heeft: Voornaam, Naam, Email</p>
             <p>Download hier een voorbeeld excel: </p>
-            <p> <?php echo anchor('assets/files/Voorbeeld.xls', 'Download', "class='btn btn-primary'") ?></p>
+            <p> <?php echo anchor('home/downloadBestand/Voorbeeld.xls', 'Download', "class='btn btn-primary'") ?></p>
     </div>
 </div>
 <hr>

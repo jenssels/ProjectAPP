@@ -22,6 +22,7 @@ and open the template in the editor.
         <!-- Load js -->
         <?php echo haalJavascriptOp("jquery-3.1.0.min.js"); ?>
         <?php echo haalJavascriptOp("bootstrap.js"); ?>
+        <?php echo haalJavascriptOp("bootstrap.bundle.min.js"); ?>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.css"/>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.nl-BE.min.js"></script>

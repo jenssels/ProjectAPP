@@ -107,7 +107,6 @@ class Dagindeling_model extends CI_Model {
     }
 
     function getByTaak($id) {
-        // Thomas Vansprengel - ophalen van alle dagindelingen
         $this->db->where('id', $id);
         $query = $this->db->get('dagindeling');
         return $query->row();

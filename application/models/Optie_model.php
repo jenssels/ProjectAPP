@@ -73,7 +73,7 @@ class Optie_model extends CI_Model {
         }
         return $opties;   
     }
-    
+
     
     /**
      * Jens Sels - Verwijder optie en al zijn deelnames 

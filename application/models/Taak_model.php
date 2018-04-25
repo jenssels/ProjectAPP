@@ -106,7 +106,7 @@ class Taak_model extends CI_Model {
 
         return $taken;
         }
-             /**
+     /**
      * Thomas Vansprengel 
      * Toon een bepaalde taak met dagindeling aan de hand van een dagindeling Id
      * @param $dagindelingId dagindeling ID waar je de taak van haalt
@@ -123,7 +123,6 @@ class Taak_model extends CI_Model {
                 $taak->dagindeling = $this->dagindeling_model->getByTaak($taak->dagindelingId);
                 $taak->locatie = $this->locatie_model->getByTaak($taak->dagindelingId);
             }
-
         return $taken;
         }
              /**
