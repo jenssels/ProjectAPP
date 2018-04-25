@@ -106,5 +106,13 @@ class Home extends CI_Controller {
             'voetnoot' => 'voetnoot');
         $this->template->load('main_master', $partials, $data);
     }
+    
+    /**
+     * Joren Synaeve - Functie om een bestand te downloaden
+     * @param $bestandsnaam De naam van het te downloaden bestand
+     */
+    public function downloadBestand($bestandsnaam) {
+        force_download('assets/files/' . $bestandsnaam, NULL);
+    }
 }
 
