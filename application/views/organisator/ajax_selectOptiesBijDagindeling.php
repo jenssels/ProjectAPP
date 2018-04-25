@@ -15,6 +15,7 @@
         echo "<div class='form-group'>";
         echo form_dropdown('optieSelect', $options3, '', $attributes3);
         echo "</div>";
+        print_r($opties);
         ?>
     </p>
 </fieldset>

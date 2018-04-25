@@ -749,7 +749,7 @@ class Organisator extends CI_Controller {
      */
     public function overzichtAlbums() {
         $data['titel'] = 'Overzicht Albums';
-        $data['paginaverantwoordelijke'] = 'Jorene Lambrechts';
+        $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
         $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
 
         $this->load->model('album_model');
@@ -868,5 +868,135 @@ class Organisator extends CI_Controller {
             'voetnoot' => 'voetnoot');
         $this->template->load('main_master', $partials, $data);
     }
+    
+    public function maakAlbum() {
+        $data['titel'] = 'Album aanmaken';
+        $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
+        
+        $this->load->model('personeelsfeest_model');
+        $data['personeelsfeesten'] = $this->personeelsfeest_model->getAll();
+        
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'organisator/albumAanmaken',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    /**
+     * Jorne Lambrechts
+     * maakt nieuw album aan als er op aanmaken werd geklikt
+     * gaat terug naar het overzicht van albums als er op annuleren werd geklikt
+     */
+    public function registreerAlbum(){
+        $knop = $this->input->post('knop');
+        
+        if ($knop == 'Annuleren') {
+            redirect ('organisator/overzichtAlbums');
+        } else {
+            $album = new stdClass();
+            
+            $album->naam = $this->input->post('naam');
+            $album->personeelsfeestId = $this->input->post('personeelsfeest');
+            
+            $this->load->model('album_model');
+            $albumId =$this->album_model->insert($album);
+            $this->session->set_userdata('albumId', $albumId);
+            
+            redirect('organisator/toevoegenFotos');
+        }
+    }
+    
+    public function toevoegenFotos(){
+        $data['titel'] = 'Foto\'s toevoegen';
+        $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
+        $data['albumId'] = $this->session->userdata('albumId');
+        
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'organisator/uploadFotos',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    /*
+     * Jorne Lambrechts - Upload de gekozen foto's naar de server en zet 
+     * de nodige gegevens in database
+     */
+    public function uploadFeestFotos() {
+        if($this->input->post('doorgaan') && !empty($_FILES['fotos']['name'])){
+            $aantal = count($_FILES['fotos']['name']);
+            for($i = 0; $i < $aantal; $i++){
+                $_FILES['foto']['name'] = $_FILES['fotos']['name'][$i];
+                $_FILES['foto']['type'] = $_FILES['fotos']['type'][$i];
+                $_FILES['foto']['tmp_name'] = $_FILES['fotos']['tmp_name'][$i];
+ 
+                $config['upload_path'] = './assets/fotos';
+                $config['allowed_types'] = 'gif|jpg|png'; 
+                
+                $this->upload->initialize($config);
+                
+                if($this->upload->do_upload('foto')){
+                    $fotoData = $this->upload->data();
+                    $foto = new stdClass();
+                    $foto->naam = $fotoData['file_name'];
+                    $foto->albumId = $this->input->post('albumId');
+                    
+                    $this->load->model('foto_model');
+                    $this->foto_model->insert($foto);
+                }
+            }
+          redirect('organisator/overzichtAlbums');    
+        }
+    }
+    
+    /*
+     * Jorne Lambrechts - Toon de foto's van een album (zonder bewerkingsknoppen)
+     */
+    public function toonAlbum($albumId){
+        $data['titel'] = 'Album bekijken';
+        $data['paginaverantwoordelijke'] = 'Stef Goor';
 
+        /*$this->load->model('persoon_model');
+        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');*/
+
+        $this->load->model('album_model');
+        $data['album'] = $this->album_model->getAlbum($albumId);
+        $this->load->model('foto_model');
+        $data['fotos'] = $this->foto_model->getAllByAlbum($albumId);
+
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'organisator/overzichtFotos',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    /*
+     * Jorne Lambrechts - Toon foto's van een album (met bewerkingsknoppen)
+     */
+    public function albumBewerken($albumId){
+        $data['titel'] = 'Album bewerken';
+        $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
+        $data['albumId'] = $albumId;
+
+        /*$this->load->model('persoon_model');
+        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');*/
+
+        $this->load->model('album_model');
+        $data['album'] = $this->album_model->getAlbum($albumId);
+        $this->load->model('foto_model');
+        $data['fotos'] = $this->foto_model->getAllByAlbum($albumId);
+
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'organisator/overzichtFotos',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+        public function verwijderAjaxFoto(){
+        $fotoId = $this->input->get('fotoId');
+        
+        $this->load->model('foto_model');
+        $this->foto_model->delete($fotoId);
+        
+        redirect('organisator/albumBewerken');
+    }
 }
