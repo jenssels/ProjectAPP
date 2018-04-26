@@ -4,7 +4,7 @@
         $('#overlay').show();
         // Weghalen overlay bij click
         $('#overlay').click(function () {
-            $('#overlay').hide();
+            $('#overlay').fadeOut();
         });
 
     });
