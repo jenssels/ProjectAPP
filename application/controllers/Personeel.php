@@ -49,6 +49,7 @@ class Personeel extends CI_Controller {
         $data['deelnemer'] = $personeelslid;
         $data['titel'] = 'Dagindeling invullen';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+        
         // Toon alle dagindeling met opties het voor het personeelslid
         $this->load->model('dagindeling_model');
         $data['dagindelingenMetOpties'] = $this->dagindeling_model->getAllDagindelingenWherePersoneelsfeestWithOpties($personeelslid->personeelsfeestId);
@@ -117,6 +118,10 @@ class Personeel extends CI_Controller {
         // Gegevens van persoon ophalen
         $this->load->model('persoon_model');
         $persoon = $this->persoon_model->getWhereHashcode($hashcode);
+        
+        $this->load->model('optiedeelname_model');
+        $optieDeelnames = $this->optiedeelname_model->getAllWherePersoon($persoon->id);
+        
         // Gekozen opties ophalen en wegschrijven in database
         $aantalSelects = $this->input->post('aantalSelects');
         $this->load->model('optiedeelname_model');
@@ -143,6 +148,7 @@ class Personeel extends CI_Controller {
         $this->load->model('persoon_model');
         $personeelslid = $this->persoon_model->getWhereHashcode($hashcode);
         $data['deelnemer'] = $personeelslid;
+        
         // Standaardvariabelen
         $data['titel'] = 'Overzicht ingevulde dagindeling';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
@@ -162,5 +168,56 @@ class Personeel extends CI_Controller {
 
         $this->template->load('main_master', $partials, $data);
     }
+    
+   /**
+    * Jorne Lambrechts
+    * @param id De id van de optiedeelname die bewerkt moet worden
+    */ 
+    public function bewerkDagindeling($id){
+        //models laden
+        $this->load->model('optiedeelname_model');
+        $this->load->model('optie_model');
+        $this->load->model('dagindeling_model');
+        $this->load->model('persoon_model');
+        
+        //variabelen
+        $optiedeelname = $this->optiedeelname_model->getWhereId($id);
+        $optie = $this->optie_model->get($optiedeelname->optieId);
+        $deelnemer = $this->persoon_model->getByPersoonId($optiedeelname->persoonId);
+        $data['opties'] = $this->optie_model->getAllWhereDagindeling($optie->dagindelingId);
+        $data['dagindeling'] = $this->dagindeling_model->get($optie->dagindelingId);
+        $data['optieDeelnameId'] = $id;
+        $data['deelnemer'] = $deelnemer;
+        
+        //standaardvariabelen
+        $data['titel'] = 'Dagindeling bewerken';
+        $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
+        $this->session->set_userdata('emailgebruiker', $deelnemer->email);
+        
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'personeel/dagindelingBewerken',
+            'voetnoot' => 'voetnoot');
 
+        $this->template->load('main_master', $partials, $data);
+    }
+    
+    /**
+     * Jorne Lambrechts - de optiedeelname updaten
+     * @param id De id van de optiedeelname die gewijzigd wordt
+     */
+    public function bewerkIngevuldeDagindeling($id){
+        //models laden
+        $this->load->model('optiedeelname_model');
+        $this->load->model('persoon_model');
+        
+        //variabelen
+        $optieId = $this->input->post('optie');
+        $optieDeelname = $this->optiedeelname_model->getWhereId($id);
+        $persoon = $this->persoon_model->getByPersoonId($optieDeelname->persoonId);
+        $hashcode = $persoon->hashcode;
+        
+        $this->optiedeelname_model->update($id, $optieId);
+        $this->toonOverzichtIngevuldeDagindeling($hashcode);
+        
+    }
 }

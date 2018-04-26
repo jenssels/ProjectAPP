@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'projectappteam17.ddns.net',
-	'username' => 'projectappteam17',
-	'password' => 'OYLptjUOmi983o0C',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => 'usbw',
 	'database' => 'team_17',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
