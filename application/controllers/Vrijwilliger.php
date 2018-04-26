@@ -12,7 +12,7 @@ class Vrijwilliger extends CI_Controller {
      * Thomas Vansprengel
      * Laat vrijwilligers taakindeling invullen
      */
-    public function taakindeling() {
+    public function taakindeling($hashcode) {
         $this->load->model('shift_model');
         $this->load->model('locatie_model');
         $this->load->helper('form');
@@ -21,9 +21,10 @@ class Vrijwilliger extends CI_Controller {
             $shift->taak->locatie = $this->locatie_model->getById($shift->taak->locatieId);
         }
         $data['shiften'] = $shiften;
-
+        $data['hashcode'] = $hashcode;
+        
         $partials = array("hoofding" => "hoofding",
-            "inhoud" => "vrijwilligerTaakindeling",
+            "inhoud" => "vrijwilliger/vrijwilligerTaakindeling",
             "voetnoot" => "voetnoot");
         $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
         $data['titel'] = 'Taakindeling invullen';
@@ -96,6 +97,25 @@ class Vrijwilliger extends CI_Controller {
             'inhoud' => 'vrijwilliger/overzichtFotos',
             'voetnoot' => 'voetnoot');
         $this->template->load('main_master', $partials, $data);
+    }
+    
+    public function bevestigTaakindeling(){
+        $hashcode = $this->input->post('hashcode');
+        $shiften = $this->input->post('shift');
+        $this->load->model('persoon_model');
+        $persoon = $this->persoon_model->getWhereHashcode($hashcode);
+        
+
+        foreach ($shiften as $shift) {
+            $taakdeelname = new stdClass();
+            $taakdeelname->persoonId = $persoon->id;
+            $taakdeelname->shiftId = $shift;
+            
+            $this->load->model('taakdeelname_model');
+            $this->taakdeelname_model->insert($taakdeelname);
+        }
+
+        redirect('vrijwilliger/vrijwilligerBevestig');
     }
 
 }

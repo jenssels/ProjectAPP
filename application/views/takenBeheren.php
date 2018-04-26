@@ -10,13 +10,26 @@
         <?php
             //Thomas Vansprengel - Overzicht van taken
             foreach($taken as $taak){
-                echo "<tr><td>" .  $taak->naam . "</td><td>" .  $taak->beschrijving . "</td><td>" .  $taak->dagindeling->naam . "</td><td>" .  $taak->locatie->naam . "</td><td>" . anchor("organisator/verwijdertaak/".$taak->id,"Verwijderen") . "</td><td>" . anchor("organisator/edittaak/".$taak->id,"Bewerk") . "</td><td>" . anchor("organisator/shifttaak/".$taak->id,"Shiften") . "</td></tr>"; 
+                echo "<tr><td>" .  $taak->naam . "</td>"
+                        . "<td>" .  $taak->beschrijving . "</td>"
+                        . "<td>" .  $taak->dagindeling->naam . "</td>"
+                        . "<td>" .  $taak->locatie->naam . "</td>"
+                        . "<td>" . anchor("organisator/verwijdertaak/".$taak->id,"Verwijderen") . "</td>"
+                        . "<td>" . anchor("organisator/edittaak/".$taak->id,"Bewerk") . "</td><td>" . anchor("organisator/shifttaak/".$taak->id,"Shiften") . "</td></tr>"; 
+                
             }
             
+            echo "<tr><td>" . anchor("organisator/taakToevoegen/","Taak toevoegen"). "</tr></td>";
+            echo "<tr><td>" . anchor("organisator/personeelsFeestOverzicht/","Terug naar overzicht"). "</tr></td>";
+        
+            echo form_open();
+            echo form_hidden("dagindelingid", $dagindelingid);
+            echo form_close();
             
-                        echo "<tr><td>" . anchor("organisator/locatieToevoegen/","Locatie toevoegen"). "</tr></td>";
-            echo "<tr><td>" . anchor("organisator/personeelsFeestOverzicht/","Terug naar homepagina"). "</tr></td>";
-        ?>
+            
+            
+            
+            ?>
         </table>
     </div>
 </div>

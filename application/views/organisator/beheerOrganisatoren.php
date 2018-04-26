@@ -21,7 +21,7 @@
                 echo "<tr>";
                 echo "<td>" . $organisator->voornaam . " " . $organisator->naam . "</td>";
                 echo "<td>" . $organisator->email . "</td>";
-                echo "<td>" . anchor('#', 'Verwijderen') . "</td>";
+                echo "<td>" . anchor('organisator/verwijderOrganisator/' . $organisator->hashcode, 'Verwijderen') . "</td>";
                 echo "</tr>";
             }
             ?>

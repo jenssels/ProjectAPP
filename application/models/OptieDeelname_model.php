@@ -47,6 +47,23 @@ class OptieDeelname_model extends CI_Model {
     }
     
     /**
+     * Jens Sels - Opvragen van deelnemers van een optie
+     * @param $optieId Id van een optie
+     * @return Lijst met personen
+     */    
+    function getAllWithDeelnemersWhereOptie($optieId){
+        $personen = array();
+        $this->load->model('persoon_model');
+        $this->db->where('optieId', $optieId);
+        $query = $this->db->get('optiedeelname');
+        $optiedeelnamens = $query->result();
+        foreach($optiedeelnamens as $optiedeelname){
+            array_push ($personen, $this->persoon_model->getByPersoonid($optiedeelname->persoonId));
+        }
+        return $personen;
+    }
+    
+    /**
      * Jens Sels - Ophalen van aantal optiedeelnames van een persoon
      * @param $persoonId Id van een persoon
      * @return Aantal optiedeelnames

@@ -30,12 +30,35 @@ class TaakDeelname_model extends CI_Model {
         
         $this->load->model('Persoon_model');
         foreach ($deelnames as $deelname){
-            $deelname->persoon = $this->persoon_model->getByPersoonid($deelname->persoonId);    
-            
-            
+            $deelname->persoon = $this->persoon_model->getByPersoonid($deelname->persoonId);     
         }    
-        
         return $deelnames;
+    }
+    
+             /**
+     * Thomas Vansprengel 
+     * Taakdeelname toevoegen
+     * @return Id van insert
+     */
+    function insert($taakdeelname) {
+            $this->db->insert('taakdeelname', $taakdeelname);
+            return $this->db->insert_id();
+        }
+    /**
+     * Jens Sels - Ophalen van alle deelnemers van een shift
+     * @param $shiftId Id van shift
+     * @return Lijst met deelnemers
+     */
+    function getAllWithDeelnemersWhereShift($shiftId){
+        $personen = array();
+        $this->load->model('persoon_model');
+        $this->db->where('shiftId', $shiftId);
+        $query = $this->db->get('taakdeelname');
+        $taakdeelnamens = $query->result();
+        foreach($taakdeelnamens as $taakdeelname){
+            array_push($personen, $this->persoon_model->getByPersoonid($taakdeelname->persoonId));
+        }
+        return $personen;
     }
     /**
      * Jens Sels - Opvragen aantal taakdeelnames van een persoon
