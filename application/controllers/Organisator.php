@@ -58,7 +58,7 @@ class Organisator extends CI_Controller {
         $data["personeelsfeest"] = $this->Personeelsfeest_model->getWithInschrijvingenWherePersoneelsfeest($feestId);
         $partials = array("hoofding" => "hoofding", "inhoud" => "personeelsInschrijvingen", "voetnoot" => "voetnoot");
         $partials = array("hoofding" => "hoofding","inhoud" => "personeelsFeestInschrijvingen","voetnoot" => "voetnoot");
-        $data['titel'] = 'Personeelsfeest overzicht';
+        $data['titel'] = 'Inschrijvingen ' . strtolower($data['personeelsfeest']->naam);
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
         $this->template->load('main_master', $partials, $data);
