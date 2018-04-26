@@ -100,7 +100,7 @@ class Persoon_model extends CI_Model {
         $this->load->model('OptieDeelname_model');
         $this->load->model('TaakDeelname_model');
 
-        $optieDeelnames = $this->OptieDeelname_model->getAllWherePersoon();
+        $optieDeelnames = $this->OptieDeelname_model->getAllWherePersoon($persoonId);
         // Alle keuzes van opties doorlopen en ze verwijderen
         foreach ($optieDeelnames as $optieDeelname) {
             $this->OptieDeelname_model->delete($optieDeelname->id);

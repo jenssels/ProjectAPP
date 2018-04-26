@@ -1030,5 +1030,17 @@ class Organisator extends CI_Controller {
 
         redirect('organisator/albumBewerken');
     }
+    
+    /**
+     * Joren Synaeve - Verwijdert een organisator
+     * @param $hashcode de hashcode van de te verwijderen organisator
+     */
+    public function verwijderOrganisator($hashcode) {
+        $this->load->model('persoon_model');
+        $persoon = $this->persoon_model->getWhereHashcode($hashcode);
+        $this->persoon_model->delete($persoon->id);
+        
+        redirect('organisator/beheerOrganisatoren');
+    }
 
 }

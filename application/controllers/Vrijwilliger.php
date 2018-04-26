@@ -24,7 +24,7 @@ class Vrijwilliger extends CI_Controller {
         $data['hashcode'] = $hashcode;
         
         $partials = array("hoofding" => "hoofding",
-            "inhoud" => "vrijwilligerTaakindeling",
+            "inhoud" => "vrijwilliger/vrijwilligerTaakindeling",
             "voetnoot" => "voetnoot");
         $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
         $data['titel'] = 'Taakindeling invullen';
