@@ -1,6 +1,6 @@
 <fieldset>
-    <p>
-        <label>Optie:</label>
+    <div class="form-group">
+        <label for="optieSelect">Optie:</label>
         <?php
         //select voor opties
         $options3 = array();
@@ -30,5 +30,5 @@
         echo form_dropdown('optieSelect', $options3, '', $attributes3);
         echo "</div>";
         ?>
-    </p>
+    </div>
 </fieldset>

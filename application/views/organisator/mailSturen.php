@@ -87,8 +87,8 @@
         <div class="row">
             <div class="col">
                 <fieldset>
-                    <p>
-                        <label>Soort:</label>
+                    <div class="form-group">
+                        <label for="soortSelect">Soort:</label>
                         <?php
                         //select voor soort
                         $options1 = array();
@@ -103,11 +103,11 @@
                         echo form_dropdown('soortSelect', $options1, '', $attributes1);
                         echo "</div>";
                         ?>
-                    </p>
+                    </div>
                 </fieldset>
                 <fieldset>
-                    <p>
-                        <label>Dagindeling:</label>
+                    <div class="form-group">
+                        <label for="dagindelingSelect">Dagindeling:</label>
                         <?php
                         //select voor dagindeling
                         $options2 = array();
@@ -124,7 +124,7 @@
                         echo form_dropdown('dagindelingSelect', $options2, '', $attributes2);
                         echo "</div>";
                         ?>
-                    </p>
+                    </div>
                 </fieldset>
                 <div id="optieResultaat"></div>
             </div>
@@ -134,23 +134,18 @@
                 <div class="form-group">
                     <label for="onderwerp">Onderwerp:</label>
                     <input type="text" class="form-control" id="inputOnderwerp" aria-describedby="onderwerpHelp" placeholder="Onderwerp">
-                    <small id="onderwerpHelp" class="form-text text-muted">Vul hier het onderwerp van de mail in.</small>
                 </div>
                 <div class="form-group">
                     <label for="ontvangers">Ontvangers:</label>
                     <select multiple="true" disabled="true" class="form-control" id="inputInhoud" aria-describedby="ontvangersHelp" size="6">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
+                        <option>Joren</option>
+                        <option>Jens</option>
+                        <option>Stef</option>
+                        <option>Jorne</option>
+                        <option>Florian</option>
+                        <option>Henk</option>
+                        <option>Lise</option>
+                        <option>Jolien</option>
                     </select>
                     <small id="ontvangersHelp" class="form-text text-muted">Een lijst van alle personen die de mail zullen ontvangen.</small>
                 </div>
@@ -161,12 +156,15 @@
                 <div class="form-group">
                     <label for="inhoud">Inhoud:</label>
                     <textarea class="form-control" rows="8" id="inputInhoud" aria-describedby="inhoudHelp" placeholder="Geef hier de inhoud van de mail op."></textarea>
-                    <small id="inhoudHelp" class="form-text text-muted">Vul hier het onderwerp van de mail in.</small>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="checkboxUitnodiging" name="checkboxUitnodiging" value="">Uitnodogingslink genereren.</label>
                 </div>
             </div>
         </div>
     </form>
     <?php
     echo anchor('organisator/personeelsFeestOverzicht', 'Terug naar overzicht', array('role' => 'button', 'class' => 'btn btn-primary'));
+    echo anchor('', 'Stuur mail!', array('role' => 'button', 'class' => 'btn btn-primary float-right'));
     ?>
 </div>
