@@ -14,32 +14,34 @@
             $('#overlay').fadeOut();
         });
 
-        function ajaxCheckVolzet(id, max) {            
+        function ajaxCheckVolzet(id, max) {
             $.ajax({type: "GET",
                 url: site_url + "/Organisator/ajaxCheckVolzet",
                 data: {id: id},
                 success: function (result) {
-                    var selector = 'shift' + id;
-                    if (result === "true") {
-                        $(this).prev().prev().val(max + '/' + max);
-                        $(this).prop('disabled', true);
-                        $(this).next().children().html('Volzet');
-                    } else {
-                        $(this).prop('disabled', false);
-                    }
+                    $('.check').each(function () {
+                        if (id === $(this).data('id')) {
+                            if (result === "true") {
+                                $(this).parent().prev().prev().html(max + '/' + max);
+                                $(this).prop('disabled', true);
+                                $(this).prop('checked', false);
+                                $(this).parent().next().children().html('Volzet');
+                            } else {
+                                $(this).prop('disabled', false);
+                            }
+                        }
+                    });
                 },
                 error: function (xhr, status, error) {
                     alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
                 }
             });
-        };
+        }
+        ;
         $('.check').change(function () {
-            console.log('pipo' + $(this).prop('id'));
-
-                console.log('clown' + $(this).prop('id'));
-                var max = $(this).data('max');
-                var id = $(this).data('id');
-                ajaxCheckVolzet(id, max);
+            var max = $(this).data('max');
+            var id = $(this).data('id');
+            ajaxCheckVolzet(id, max);
         });
         $('.check').each(function () {
             var count = $(this).data('count');
@@ -89,8 +91,8 @@
             . "<td>" . $shift->beginuur . " - " . $shift->einduur . "</td>"
             . "<td>" . $shift->deelnemers . '/' . $shift->maxAantal . "</td>"
             . "<td>" . $shift->taak->locatie->naam . "</td>"
-            . "<td>" . form_checkbox(array('name' => 'shift[]', 'class' => 'check', 'value' => $shift->id, 'id' => 'shift' . $shift->id, 'data-max' => $shift->maxAantal, 'data-id' => $shift->id)) . "</td></tr>"
-            . "<td><div class='volzet'></div></td>";
+            . "<td>" . form_checkbox(array('name' => 'shift[]', 'class' => 'check', 'value' => $shift->id, 'id' => 'shift' . $shift->id, 'data-count' => $shift->deelnemers , 'data-max' => $shift->maxAantal, 'data-id' => $shift->id)) . "</td>"
+            . "<td><div class='volzet'></div></td></tr>";
         }
         echo form_hidden("hashcode", $hashcode);
         echo "<tr><td>" . form_submit('verzenden', 'Bevestigen!') . "</td></tr>";
@@ -99,9 +101,8 @@
     </div>
     <div class="col-md-12">
         <?php
-
-            //Thomas Vansprengel
-            echo anchor('Vrijwilliger/overzichtAlbums', 'Naar albums');
+        //Thomas Vansprengel
+        echo anchor('Vrijwilliger/overzichtAlbums', 'Naar albums');
         ?>
     </div>
 </div>
