@@ -178,7 +178,12 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h2>Op deze pagina kunt u een mail sturen.</h2>
+                    <h6>Filteren</h6>
+                    <p>Om te beginnen kunt u filteren op het soort gebruiker.</p>
+                    <ul>
+                    <p>* Iedereen: u stuurt een mail naar zowel de personeelsleden als de vrijwilligers.</p>
+                    <p>* Personeelsleden:</p>
+                    </ul>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
