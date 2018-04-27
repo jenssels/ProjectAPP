@@ -115,4 +115,25 @@ class OptieDeelname_model extends CI_Model {
         $this->db->insert('optiedeelname', $optieDeelname);
         return $this->db->insert_id();
     }
+    
+    /**
+     * Jorne Lambrechts - een optiedeelname uit de database halen
+     * @param $id het ID van de optiedeelname die nodig is
+     */
+    function getWhereId($id){
+        $this->db->where('id', $id);
+        $query = $this->db->get('optiedeelname');
+        return $query->row();
+    }
+    
+    /**
+     * Jorne Lambrechts - optiedeelname bewerken a.d.h.v. de meegegeven Id
+     * @param Id De id van de optiedeelname die bewerkt moet worden.
+     * @param optieId is het de nieuwe optieId die in de database moet komen.
+     */
+    function update($id, $optieId){
+        $this->db->set('optieId', $optieId);
+        $this->db->where('id', $id);
+        $this->db->update('optiedeelname');
+    }
 }
