@@ -13,7 +13,8 @@
     <?php
     $attributenFormulier = array('id' => 'mijnFormulier',
         'role' => 'form');
-    echo form_open('personeel/bevestigIngevuldeDagindeling/' . $deelnemer->hashcode, $attributenFormulier)
+    echo form_open('personeel/bevestigIngevuldeDagindeling/'. $deelnemer->hashcode, $attributenFormulier);
+    
     ?>
 
     <?php

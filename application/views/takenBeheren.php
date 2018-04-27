@@ -15,7 +15,7 @@
                         . "<td>" .  $taak->dagindeling->naam . "</td>"
                         . "<td>" .  $taak->locatie->naam . "</td>"
                         . "<td>" . anchor("organisator/verwijdertaak/".$taak->id,"Verwijderen") . "</td>"
-                        . "<td>" . anchor("organisator/edittaak/".$taak->id,"Bewerk") . "</td><td>" . anchor("organisator/shifttaak/".$taak->id,"Shiften") . "</td></tr>"; 
+                        . "<td>" . anchor("organisator/edittaak/".$taak->id,"Bewerk") . "</td></tr>"; 
                 
             }
             

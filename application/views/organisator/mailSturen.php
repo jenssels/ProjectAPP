@@ -14,7 +14,7 @@
         var soortSelect = document.getElementById("soortSelect");
         var dagindelingSelect = document.getElementById("dagindelingSelect");
         var optieSelect = document.getElementById("optieSelect");
-        
+
         if (soortSelect.value !== 'niks') {
             var soortId = soortSelect.value;
             if (soortId !== 'niks') {
@@ -31,7 +31,7 @@
 
     function dagindelingSelectFunctie() {
         var dagindelingSelect = document.getElementById("dagindelingSelect");
-        
+
         if (dagindelingSelect.value !== 'niks') {
             var dagindelingId = dagindelingSelect.value;
             if (dagindelingId === 'alles') {
@@ -60,7 +60,7 @@
                 }
             });
         }
-        
+
         var optieSelect = document.getElementById("optieSelect");
         if (optieSelect.value !== 'niks') {
             var optieId = optieSelect.value;
@@ -72,9 +72,9 @@
             optieSelect.disabled = true;
         }
     }
-    
+
     function optieSelectFunctie() {
-        
+
     }
 </script>
 
@@ -135,6 +135,33 @@
                     <label for="onderwerp">Onderwerp:</label>
                     <input type="text" class="form-control" id="inputOnderwerp" aria-describedby="onderwerpHelp" placeholder="Onderwerp">
                     <small id="onderwerpHelp" class="form-text text-muted">Vul hier het onderwerp van de mail in.</small>
+                </div>
+                <div class="form-group">
+                    <label for="ontvangers">Ontvangers:</label>
+                    <select multiple="true" disabled="true" class="form-control" id="inputInhoud" aria-describedby="ontvangersHelp" size="6">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                    <small id="ontvangersHelp" class="form-text text-muted">Een lijst van alle personen die de mail zullen ontvangen.</small>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="inhoud">Inhoud:</label>
+                    <textarea class="form-control" rows="8" id="inputInhoud" aria-describedby="inhoudHelp" placeholder="Geef hier de inhoud van de mail op."></textarea>
+                    <small id="inhoudHelp" class="form-text text-muted">Vul hier het onderwerp van de mail in.</small>
                 </div>
             </div>
         </div>

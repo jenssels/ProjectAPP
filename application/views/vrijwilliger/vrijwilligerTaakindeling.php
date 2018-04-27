@@ -99,8 +99,9 @@
     </div>
     <div class="col-md-12">
         <?php
-        //Thomas Vansprengel
-        echo anchor('Vrijwilliger/?', 'Naar albums');
+
+            //Thomas Vansprengel
+            echo anchor('Vrijwilliger/overzichtAlbums', 'Naar albums');
         ?>
     </div>
 </div>
