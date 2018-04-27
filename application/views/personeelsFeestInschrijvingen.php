@@ -113,7 +113,7 @@
                                 echo "<td>" . $taak->naam . "</td>";
                                 echo "<td>" . $shift->naam . "</td>";
                                 echo "<td>" . $shift->beginuur . " - " . $shift->einduur . "</td>";
-                                echo "<td>" . anchor('#!', $shift->deelnemers . "/" . $shift->maxAantal, 'class="toon" data-type="optie" data-id="' . $shift->id . '"') . "</td>";
+                                echo "<td>" . anchor('#!', $shift->deelnemers . "/" . $shift->maxAantal, 'class="toon" data-type="taak" data-id="' . $shift->id . '"') . "</td>";
                                 echo "</tr>";
                             }
                         }

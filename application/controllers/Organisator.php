@@ -419,6 +419,7 @@ class Organisator extends CI_Controller {
      * Jens Sels - Functie die excel bestand gaat uploaden en uitlezen
      */
     public function ajaxUploadFile() {
+        
         $config['upload_path'] = './assets/files/';
         $config['allowed_types'] = 'xls';
         $config['encrypt_name'] = TRUE;
@@ -492,12 +493,14 @@ class Organisator extends CI_Controller {
         $id = $this->input->get('id');
         $this->load->model('shift_model');
         $shift = $this->shift_model->getWithCount($id);
-        if ($shift->deelnemers >= $shift->maxAantal) {
+        if ((int)$shift->deelnemers >= (int)$shift->maxAantal) {
             $check = "true";
         } else {
             $check = "false";
         }
+        print_r($check);
         return $check;
+        
     }
 
     /*
@@ -533,7 +536,6 @@ class Organisator extends CI_Controller {
         $this->load->model('Persoon_model');
         $hashCodes = $this->persoon_model->getAllHashCodes();
         $mails = $this->persoon_model->getAllMailsWhereFeest($feestId);
-        $personeelsLijst = "";
         for ($i = 1; $i < (count($personeel) + 1); $i++) {
             $hash = random_string('alnum', 16);
             while (in_array($hash, $hashCodes)) {
@@ -553,7 +555,7 @@ class Organisator extends CI_Controller {
                 }
             }
         }
-        return $personeelsLijst;
+        return $data['personeel'];
     }
 
     /**
