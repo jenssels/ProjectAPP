@@ -34,7 +34,6 @@
                 <th>Personeel toevoegen</th>
                 <th>Bewerken</th>
                 <th>Verwijderen</th>
-                <th>Taken beheren</th>
                 <th>Mail sturen</th>
             </tr>
         <?php
@@ -49,7 +48,6 @@
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestUploadForm/' . $feest->id, '<i class="fas fa-user-plus grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestAanmakenForm/' . $feest->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestVerwijderen/' . $feest->id, '<i class="far fa-trash-alt grow"></i>') . "</td>"
-                        . "<td class='text-center'>" . anchor('organisator/taakbeheren', '<i class="fas fa-tasks grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/mailSturen/' . $feest->id, '<i class="far fa-envelope grow"></i>') . "</td>";
 
                 echo "</tr>"; 
