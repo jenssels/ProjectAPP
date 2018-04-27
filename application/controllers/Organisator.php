@@ -493,12 +493,14 @@ class Organisator extends CI_Controller {
         $id = $this->input->get('id');
         $this->load->model('shift_model');
         $shift = $this->shift_model->getWithCount($id);
-        if ($shift->deelnemers >= $shift->maxAantal) {
+        if ((int)$shift->deelnemers >= (int)$shift->maxAantal) {
             $check = "true";
         } else {
             $check = "false";
         }
+        print_r($check);
         return $check;
+        
     }
 
     /*
