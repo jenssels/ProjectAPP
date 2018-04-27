@@ -163,8 +163,40 @@
             </div>
         </div>
     </form>
-    <?php
-    echo anchor('organisator/personeelsFeestOverzicht', 'Terug naar overzicht', array('role' => 'button', 'class' => 'btn btn-primary'));
-    echo anchor('', 'Stuur mail!', array('role' => 'button', 'class' => 'btn btn-primary float-right'));
-    ?>
+
+    <!-- Help Modal -->
+    <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Hulp bij mail sturen</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h2>Op deze pagina kunt u een mail sturen.</h2>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <?php
+        echo '<div class="col-sm-4">';
+        echo anchor('organisator/personeelsFeestOverzicht', 'Terug naar overzicht', array('role' => 'button', 'class' => 'btn btn-primary'));
+        echo '</div>';
+
+        echo '<div class="col-sm-4 text-center">';
+        echo '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#helpModal">Help</button>';
+        echo '</div>';
+
+        echo '<div class="col-sm-4">';
+        echo anchor('', 'Stuur mail!', array('role' => 'button', 'class' => 'btn btn-primary float-right'));
+        echo '</div>';
+        ?>
+    </div>
 </div>
