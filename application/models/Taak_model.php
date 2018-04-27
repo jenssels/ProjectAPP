@@ -37,7 +37,6 @@ class Taak_model extends CI_Model {
         $this->db->where('dagindelingid', $dagindelingId);
         $query = $this->db->get('taak');
         $taken = $query->result();
-        
         foreach($taken as $taak){
             $taak->shiften = $this->Shift_model->getAllWithDeelnamensWhereTaak($taak->id);
         }
@@ -58,7 +57,8 @@ class Taak_model extends CI_Model {
         $this->db->where('id', $taakId);
         $this->db->delete('taak');
         
-    }       
+    }
+    
         function insert($taak) {
             $this->db->insert('taak', $taak);
             return $this->db->insert_id();
