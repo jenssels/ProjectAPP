@@ -63,7 +63,7 @@
             <?php 
             echo anchor('organisator/personeelsFeestAanmakenForm/nieuw', 'Personeelsfeest aanmaken', array('role' => 'button' , 'class' => 'btn btn-primary'));
             echo anchor('organisator/overzichtAlbums', 'Fotoalbums beheren', array('role' => 'button' , 'class' => 'btn btn-primary'));
-            echo anchor('organisator/?', 'Locaties beheren', array('role' => 'button' , 'class' => 'btn btn-primary'));
+            echo anchor('organisator/locatiesBeheren', 'Locaties beheren', array('role' => 'button' , 'class' => 'btn btn-primary'));
             echo anchor('organisator/beheerOrganisatoren', 'Organisatoren beheren', array('role' => 'button' , 'class' => 'btn btn-primary'));
             ?>
         </div>
