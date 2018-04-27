@@ -860,18 +860,11 @@ class Organisator extends CI_Controller {
     public function haalAjaxOp_SelectOptiesBijDagindeling() {
         $dagindelingId = $this->input->get('dagindelingId');
         $feestId = $this->input->get('feestId');
-
-
-        if ($dagindelingId == 'alles') {
-            //Alle dagindelingen zijn gekozen
-            $this->load->model('optie_model');
-            $data['opties'] = $this->optie_model->getAllWherePersoneelsfeest($feestId);
-        } else {
-            //1 bepaalde dagindeling is geselecteerd
-            $this->load->model('optie_model');
-            $data['opties'] = $this->optie_model->getAllWhereDagindeling($dagindelingId);
-        }
-
+        $data['dagindelingId'] = $dagindelingId;
+        
+        $this->load->model('optie_model');
+        $data['dagindelingen'] = $this->optie_model->getAllWherePersoneelsfeest($feestId);
+        
         $this->load->view('organisator/ajax_selectOptiesBijDagindeling', $data);
     }
 
