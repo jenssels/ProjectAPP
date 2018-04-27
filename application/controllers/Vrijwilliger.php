@@ -26,6 +26,8 @@ class Vrijwilliger extends CI_Controller {
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
 
         $this->template->load('main_master', $partials, $data);
+        
+        $this->session->set_userdata('referred_from', current_url());
     }
 
   
@@ -72,6 +74,15 @@ class Vrijwilliger extends CI_Controller {
             'inhoud' => 'vrijwilliger/overzichtAlbums',
             'voetnoot' => 'voetnoot');
         $this->template->load('main_master', $partials, $data);
+        
+
+        
+
+    }
+    
+        public function terugNaarIndex() {
+        $referred_from = $this->session->userdata('referred_from');
+        redirect($referred_from, 'refresh');
     }
 
     /**

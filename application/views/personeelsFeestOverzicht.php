@@ -32,9 +32,9 @@
                 <th>Uitgenodigen</th>
                 <th>Inschrijvingen</th>
                 <th>Personeel toevoegen</th>
+                <th>Beheer dagindeling</th>
                 <th>Bewerken</th>
                 <th>Verwijderen</th>
-                <th>Taken beheren</th>
                 <th>Mail sturen</th>
             </tr>
         <?php
@@ -47,9 +47,9 @@
                         . "<td class='text-center'> <a href=#! class='overzicht' data-id='" . $feest->id . "'><i class='fas fa-list-ul grow'></i></a></td>"
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestInschrijvingen/' . $feest->id, '<i class="fas fa-list-ul grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestUploadForm/' . $feest->id, '<i class="fas fa-user-plus grow"></i>') . "</td>"
+                        . "<td class='text-center'>" . anchor('Organisator/beheerDagindeling/' . $feest->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestAanmakenForm/' . $feest->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestVerwijderen/' . $feest->id, '<i class="far fa-trash-alt grow"></i>') . "</td>"
-                        . "<td class='text-center'>" . anchor('organisator/taakbeheren', '<i class="fas fa-tasks grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/mailSturen/' . $feest->id, '<i class="far fa-envelope grow"></i>') . "</td>";
 
                 echo "</tr>"; 
