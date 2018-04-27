@@ -15,6 +15,7 @@ class Personeel extends CI_Controller {
         $this->load->model('persoon_model');
         $personeelslid = $this->persoon_model->getWhereHashcode($hashcode);
         $this->session->set_userdata('emailgebruiker', $personeelslid->email);
+        $this->session->set_userdata('gebruikerTypeId', $personeelslid->typeId);
         $this->controleerDagindelingIsIngevuld($hashcode);
     }
 
