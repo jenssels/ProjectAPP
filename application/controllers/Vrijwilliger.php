@@ -112,8 +112,17 @@ class Vrijwilliger extends CI_Controller {
             $this->load->model('taakdeelname_model');
             $this->taakdeelname_model->insert($taakdeelname);
         }
-
         redirect('vrijwilliger/vrijwilligerBevestig');
+    }
+    
+        public function vrijwilligerBevestig() {
+        $data['titel'] = 'Bevestigd';
+        $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
+
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'vrijwilliger/vrijwilligerBevestig',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
     }
 
 }
