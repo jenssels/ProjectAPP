@@ -163,7 +163,7 @@ class Organisator extends CI_Controller {
     public function verwijdertaak($id) {
         $this->load->model('taak_model');
         $this->taak_model->delete($id);
-        $referred_from = $this->session->userdata('referred_from');
+        $referred_from = $this->session->userdata('referred_from_taak');
         redirect($referred_from, 'refresh');
     }
 
@@ -183,7 +183,7 @@ class Organisator extends CI_Controller {
         $this->load->model('Taak_model');
         $this->Taak_model->update($info);
         
-        $referred_from = $this->session->userdata('referred_from');
+        $referred_from = $this->session->userdata('referred_from_taak');
         redirect($referred_from, 'refresh');
     }
 
@@ -243,9 +243,8 @@ class Organisator extends CI_Controller {
         $this->Taak_model->insert($taak);
 
 
-        $this->taakbeheren($taak->dagindelingid);
-            $referred_from = $this->session->userdata('referred_from');
-            redirect($referred_from, 'refresh');
+        $referred_from = $this->session->userdata('referred_from_taak');
+        redirect($referred_from, 'refresh');
     }
 
     /**
@@ -314,7 +313,7 @@ class Organisator extends CI_Controller {
 
         $this->template->load('main_master', $partials, $data);
         
-        $this->session->set_userdata('referred_from', current_url());
+        $this->session->set_userdata('referred_from_taak', current_url());
     }
 
     /**
