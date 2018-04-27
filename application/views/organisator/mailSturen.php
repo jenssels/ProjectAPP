@@ -130,14 +130,9 @@
             </div>
             <div class="col">
                 <div id="lijstResultaat"></div>
-
-                <div class="form-group">
-                    <label for="onderwerp">Onderwerp:</label>
-                    <input type="text" class="form-control" id="inputOnderwerp" aria-describedby="onderwerpHelp" placeholder="Onderwerp">
-                </div>
                 <div class="form-group">
                     <label for="ontvangers">Ontvangers:</label>
-                    <select multiple="true" disabled="true" class="form-control" id="inputInhoud" aria-describedby="ontvangersHelp" size="6">
+                    <select multiple="true" disabled="true" class="form-control" id="inputInhoud" aria-describedby="ontvangersHelp" size="9">
                         <option>Joren</option>
                         <option>Jens</option>
                         <option>Stef</option>
@@ -148,6 +143,14 @@
                         <option>Jolien</option>
                     </select>
                     <small id="ontvangersHelp" class="form-text text-muted">Een lijst van alle personen die de mail zullen ontvangen.</small>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="onderwerp">Onderwerp:</label>
+                    <input type="text" class="form-control" id="inputOnderwerp" aria-describedby="onderwerpHelp" placeholder="Onderwerp">
                 </div>
             </div>
         </div>
