@@ -6,6 +6,7 @@
                 data : { id: id },
                 success : function(result){
                     $('#resultaat').html(result);
+                    $('#modalInschrijvingen').modal('show');
                 },
                 error: function (xhr, status, error) {
                     alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
@@ -19,7 +20,6 @@
             console.log('klik');
             var id = $(this).data('id');
             haalDeelnemersOp(id);
-            $('#modalInschrijvingen').modal('show');
         });
     });
 </script>

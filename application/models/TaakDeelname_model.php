@@ -36,10 +36,11 @@ class TaakDeelname_model extends CI_Model {
     }
     
              /**
-     * Thomas Vansprengel 
+     * Thomas Vansprengel & Jens Sels
      * Taakdeelname toevoegen
      * @return Id van insert
      */
+
     function insert($taakdeelname) {
             $this->db->insert('taakdeelname', $taakdeelname);
             return $this->db->insert_id();
@@ -67,7 +68,8 @@ class TaakDeelname_model extends CI_Model {
      */
     function getCountWherePersoon($persoonId){
         $this->db->where('persoonId', $persoonId);
-        return $this->db->count_all_results('taakdeelname');
+        $aantal = $this->db->get('taakdeelname');
+        return $aantal->num_rows();
 
     }
      /**
@@ -77,7 +79,8 @@ class TaakDeelname_model extends CI_Model {
      */
     function getCountWhereShift($shiftId){
         $this->db->where('shiftid', $shiftId);
-        return $this->db->count_all_results('taakdeelname');
+        $aantal =  $this->db->get('taakdeelname');
+        return $aantal->num_rows();
 
     }
     /**
@@ -93,7 +96,7 @@ class TaakDeelname_model extends CI_Model {
     
     /**
      * Jens Sels - Ophalen van alle keuzes van taken van een taak
-     * @param $taakId Id van een taak
+     * @param $shiftId Id van een taak
      * @return Alle keuzes van taken van een taak
      */
     function getAllWhereShift($shiftid){

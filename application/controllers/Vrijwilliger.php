@@ -3,16 +3,11 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Vrijwilliger extends CI_Controller {
-
-    public function index() {
-        
-    }
-
-    /**
+      /**
      * Thomas Vansprengel
      * Laat vrijwilligers taakindeling invullen
      */
-    public function taakindeling($hashcode) {
+    public function index($hashcode) {
         $this->load->model('shift_model');
         $this->load->model('locatie_model');
         $this->load->helper('form');
@@ -32,6 +27,8 @@ class Vrijwilliger extends CI_Controller {
 
         $this->template->load('main_master', $partials, $data);
     }
+
+  
     /**
      * Thomas Vansprengel
      * Toont overzicht van vrijwilligers
@@ -102,6 +99,7 @@ class Vrijwilliger extends CI_Controller {
     public function bevestigTaakindeling(){
         $hashcode = $this->input->post('hashcode');
         $shiften = $this->input->post('shift');
+        var_dump($shiften);
         $this->load->model('persoon_model');
         $persoon = $this->persoon_model->getWhereHashcode($hashcode);
         

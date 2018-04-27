@@ -65,23 +65,28 @@
     </div>
     <div class="tab-pane fade" id="nav-deelnemers" role="tabpanel" aria-labelledby="nav-deelnemers-tab">
         <div class="row">
-            <div clas="col-md-12">
+            <div class="col-md-12">
                 <table class="table">
                     <tr>
                         <th>Optie</th>
                         <th>Uur</th>
                         <th>Aantal inschrijvingen</th>
-                        <th>Aantal inschrijvingen</th>
-                        <th>Minimum aantal</th>
+                        <th>Minimumaantal nodig</th>
                     </tr>
                     <?php
                     foreach ($personeelsfeest->dagindelingen as $dagindeling) {
                         foreach ($dagindeling->opties as $optie) {
+                            if ($optie->minAantal == 0) {
+                                $minimumaantal = 'N.v.t.';
+                            } else {
+                                $minimumaantal = $optie->minAantal . ' deelnemers';
+                            }
+                            
                             echo "<tr>";
                             echo "<td>" . $optie->naam . "</td>";
-                            echo "<td>" . $dagindeling->beginuur . " - " . $dagindeling->einduur . "</td>";
-                            echo "<td>" . anchor('#!', $optie->deelnemers . "/" . $optie->maxAantal, 'class="toon" data-type="optie" data-id="' . $optie->id . '"') . "</td>";
-                            echo "<td>" . $optie->minAantal . "</td>";
+                            echo "<td>" . substr($dagindeling->beginuur, 0, 5) . "u - " . substr($dagindeling->einduur, 0, 5) . "u</td>";
+                            echo "<td>" . anchor('#!', $optie->deelnemers . "/" . $optie->maxAantal . " deelnemers", 'class="toon" data-type="optie" data-id="' . $optie->id . '"') . "</td>";
+                            echo "<td>" . $minimumaantal . "</td>";
                             echo "</tr>";
                         }
                     }
@@ -92,7 +97,7 @@
     </div>
     <div class="tab-pane fade" id="nav-vrijwilligers" role="tabpanel" aria-labelledby="nav-vrijwilligers-tab">
         <div class="row">
-            <div clas="col-md-12">
+            <div class="col-md-12">
                 <table class="table">
                     <tr>
                         <th>Taak</th>

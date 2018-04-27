@@ -56,9 +56,8 @@ class Organisator extends CI_Controller {
     public function personeelsFeestInschrijvingen($feestId) {
         $this->load->model('Personeelsfeest_model');
         $data["personeelsfeest"] = $this->Personeelsfeest_model->getWithInschrijvingenWherePersoneelsfeest($feestId);
-        $partials = array("hoofding" => "hoofding", "inhoud" => "personeelsInschrijvingen", "voetnoot" => "voetnoot");
         $partials = array("hoofding" => "hoofding","inhoud" => "personeelsFeestInschrijvingen","voetnoot" => "voetnoot");
-        $data['titel'] = 'Personeelsfeest overzicht';
+        $data['titel'] = 'Inschrijvingen ' . strtolower($data['personeelsfeest']->naam);
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
         $this->template->load('main_master', $partials, $data);
@@ -77,9 +76,10 @@ class Organisator extends CI_Controller {
         $config = Array('protocol' => 'smtp', 'smtp_host' => 'ssl://smtp.gmail.com', 'smtp_port' => 465, 'smtp_user' => 'team17project@gmail.com', 'smtp_pass' => 'team17project', 'mailtype' => 'html', 'charset' => 'utf-8');
         if ($isInschrijfLink) {
             if ($type === 'personeel') {
-                $link = 'http://localhost/index.php/personeel/index/' . $hash;
+                $link = base_url('index.php/personeel/index/' . $hash);
+
             } else {
-                $link = 'http://localhost/index.php/vrijwilliger/index/' . $hash;
+                $link = base_url('index.php/vrijwilliger/index/' . $hash);
             }
             $message .= '\n Gebruik onderstaande link om u keuzes voor het personeelsfeest door te geven: \n ' . $link;
         }
@@ -242,6 +242,7 @@ class Organisator extends CI_Controller {
         $this->load->model('Taak_model');
         $this->Taak_model->insert($taak);
 
+
         $this->taakbeheren($taak->dagindelingid);
             $referred_from = $this->session->userdata('referred_from');
             redirect($referred_from, 'refresh');
@@ -273,6 +274,8 @@ class Organisator extends CI_Controller {
     }
 
     /**
+<<<<<<< HEAD
+=======
      * Thomas Vansprengel 
      * Toon het overzicht om de taken te beheren
      */
@@ -291,6 +294,7 @@ class Organisator extends CI_Controller {
     }
 
     /**
+>>>>>>> dc32fe06c01a52d4aeced78300d025bb9b06c978
      * Thomas Vansprengel 
      * Toon het overzicht om een individuele taak te beheren aan de hand van een dagindeling
      * @param $dagindelingId Taak aanpassen aan de hand van deze dagindeling
@@ -412,6 +416,9 @@ class Organisator extends CI_Controller {
         $this->locatiesBeheren();
     }
 
+    /**
+     * Jens Sels - Functie die excel bestand gaat uploaden en uitlezen
+     */
     public function ajaxUploadFile() {
         $config['upload_path'] = './assets/files/';
         $config['allowed_types'] = 'xls';
@@ -431,12 +438,13 @@ class Organisator extends CI_Controller {
     }
 
     /**
-     * Jens Sels - Ajax die de excel file gaat uploaden
+     * Jens Sels - Ajax die persoon gaar toevoegen aan personeelsfeest
      */
     public function ajaxAddPersoon() {
         $this->load->model('Persoon_model');
         $hashCodes = $this->persoon_model->getAllHashCodes();
         $feestId = $this->session->userdata('feestId');
+        $mails = $this->persoon_model->getAllMailsWhereFeest($feestId);
         $voornaam = $this->input->get('voornaam');
         $naam = $this->input->get('naam');
         $email = strval($this->input->get('email'));
@@ -444,11 +452,15 @@ class Organisator extends CI_Controller {
         while (in_array($hash, $hashCodes)) {
             $hash = random_string('alnum', 16);
         }
-        $check = $this->insertPersoon($feestId, $voornaam, $naam, $email, $hash);
-        if ($check) {
-            $data['personeel'] = 'Toegevoegd - ' . $voornaam . ' ' . $naam . '</br>';
+        if (in_array($email, $mails)) {
+            $data['personeel'] = 'Mail adres al aanwezig - ' . $voornaam . ' ' . $naam . '</br>';
         } else {
-            $data['personeel'] = 'Al aanwezig in de database - ' . $voornaam . ' ' . $naam . '</br>';
+            $check = $this->insertPersoon($feestId, $voornaam, $naam, $email, $hash);
+            if ($check) {
+                $data['personeel'] = 'Toegevoegd - ' . $voornaam . ' ' . $naam . '</br>';
+            } else {
+                $data['personeel'] = 'Al aanwezig in de database - ' . $voornaam . ' ' . $naam . '</br>';
+            }
         }
         $this->load->view('ajax_uploadStatus', $data);
     }
@@ -456,21 +468,39 @@ class Organisator extends CI_Controller {
     /**
      * Jens Sels - Ajax functie die lijst toont met deelnemers van een optie of shift
      */
-    public function ajaxToonDeelnemers(){
+    public function ajaxToonDeelnemers() {
         $this->load->model('optiedeelname_model');
         $this->load->model('taakdeelname_model');
         $id = $this->input->get('id');
         $type = $this->input->get('type');
         $deelnemers = "";
-        if($type == 'optie'){
+        if ($type == 'optie') {
             $deelnemers = $this->optiedeelname_model->getAllWithDeelnemersWhereOptie($id);
-        }
-        else{
-            $deelnemers = $this->taakdeelname_model->getAllWithDeelnemersWhereShift($id);;
+        } else {
+            $deelnemers = $this->taakdeelname_model->getAllWithDeelnemersWhereShift($id);
+            ;
         }
         $data["deelnemers"] = $deelnemers;
         $this->load->view('ajax_toonDeelnemers', $data);
     }
+
+    /**
+     * Jens Sels - Ajax functie die controleerd of het maximum aantal deelnemers overschreden is
+     * @return Volzet of niet
+     */
+    public function ajaxCheckVolzet() {
+        $check = "leeg";
+        $id = $this->input->get('id');
+        $this->load->model('shift_model');
+        $shift = $this->shift_model->getWithCount($id);
+        if ($shift->deelnemers >= $shift->maxAantal) {
+            $check = "true";
+        } else {
+            $check = "false";
+        }
+        return $check;
+    }
+
     /*
      * Jens Sels - Uitlezen van excel bestand en terug geven van array met personeelsleden in
      * @param data Object met gegevens van het excel bestand
@@ -500,9 +530,10 @@ class Organisator extends CI_Controller {
      * @return Lijst met alle personeelsleden en of ze toegevoegd zijn of niet
      */
     public function uploadPersoneel($personeel) {
+        $feestId = $this->session->userdata('feestId');
         $this->load->model('Persoon_model');
         $hashCodes = $this->persoon_model->getAllHashCodes();
-        $feestId = $this->session->userdata('feestId');
+        $mails = $this->persoon_model->getAllMailsWhereFeest($feestId);
         $personeelsLijst = "";
         for ($i = 1; $i < (count($personeel) + 1); $i++) {
             $hash = random_string('alnum', 16);
@@ -512,11 +543,15 @@ class Organisator extends CI_Controller {
             $voornaam = $personeel[$i]["Voornaam"];
             $naam = $personeel[$i]["Naam"];
             $email = strval($personeel[$i]["Email"]);
-            $check = $this->insertPersoon($feestId, $voornaam, $naam, $email, $hash);
-            if ($check) {
-                $personeelsLijst .= 'Toegevoegd - ' . $voornaam . ' ' . $naam . '</br>';
+            if (in_array($email, $mails)) {
+                $data['personeel'] = 'Mail adres al aanwezig - ' . $voornaam . ' ' . $naam . '</br>';
             } else {
-                $personeelsLijst .= 'Al aanwezig in de database - ' . $voornaam . ' ' . $naam . '</br>';
+                $check = $this->insertPersoon($feestId, $voornaam, $naam, $email, $hash);
+                if ($check) {
+                    $data['personeel'] = 'Toegevoegd - ' . $voornaam . ' ' . $naam . '</br>';
+                } else {
+                    $data['personeel'] = 'Al aanwezig in de database - ' . $voornaam . ' ' . $naam . '</br>';
+                }
             }
         }
         return $personeelsLijst;
@@ -542,7 +577,7 @@ class Organisator extends CI_Controller {
             $persoonObject->hashcode = $hash;
             $persoonObject->typeId = 3;
             $persoonObject->personeelsfeestId = $feestId;
-            $this->Persoon_model->insert($persoonObject);
+            $id = $this->Persoon_model->insert($persoonObject);
             return true;
         }
         return false;
@@ -826,10 +861,16 @@ class Organisator extends CI_Controller {
         $dagindelingId = $this->input->get('dagindelingId');
         $feestId = $this->input->get('feestId');
 
-        $data['dagindelingId'] = $dagindelingId;
 
-        $this->load->model('optie_model');
-        $data['dagindelingen'] = $this->optie_model->getAllWherePersoneelsfeest($feestId);
+        if ($dagindelingId == 'alles') {
+            //Alle dagindelingen zijn gekozen
+            $this->load->model('optie_model');
+            $data['opties'] = $this->optie_model->getAllWherePersoneelsfeest($feestId);
+        } else {
+            //1 bepaalde dagindeling is geselecteerd
+            $this->load->model('optie_model');
+            $data['opties'] = $this->optie_model->getAllWhereDagindeling($dagindelingId);
+        }
 
         $this->load->view('organisator/ajax_selectOptiesBijDagindeling', $data);
     }
@@ -1030,7 +1071,7 @@ class Organisator extends CI_Controller {
 
         redirect('organisator/albumBewerken');
     }
-    
+
     /**
      * Joren Synaeve - Verwijdert een organisator
      * @param $hashcode de hashcode van de te verwijderen organisator

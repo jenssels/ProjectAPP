@@ -54,7 +54,7 @@ class OptieDeelname_model extends CI_Model {
     function getAllWithDeelnemersWhereOptie($optieId){
         $personen = array();
         $this->load->model('persoon_model');
-        $this->db->where('optieId', $optieId);
+        $this->db->where('optieid', $optieId);
         $query = $this->db->get('optiedeelname');
         $optiedeelnamens = $query->result();
         foreach($optiedeelnamens as $optiedeelname){
@@ -70,9 +70,9 @@ class OptieDeelname_model extends CI_Model {
      */
     function getCountWherePersoon($persoonId){
         
-        $this->db->where('persoonId', $persoonId);
-        $aantal = $this->db->count_all_results('optiedeelname');
-        return $aantal;
+        $this->db->where('persoonid', $persoonId);
+        $aantal = $this->db->get('optiedeelname');
+        return $aantal->num_rows();
     }
     
     /**
@@ -83,8 +83,8 @@ class OptieDeelname_model extends CI_Model {
     function getCountWhereOptie($optieId){
         
         $this->db->where('optieid', $optieId);
-        $aantal = $this->db->count_all_results('optiedeelname');
-        return $aantal;
+        $aantal = $this->db->get('optiedeelname');
+        return $aantal->num_rows();
     }
     /**
      * Jens Sels - Ophalen van alle keuzes van opties van een optie
