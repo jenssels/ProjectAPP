@@ -178,12 +178,92 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h6>Filteren</h6>
-                    <p>Om te beginnen kunt u filteren op het soort gebruiker.</p>
-                    <ul>
-                    <p>* Iedereen: u stuurt een mail naar zowel de personeelsleden als de vrijwilligers.</p>
-                    <p>* Personeelsleden:</p>
-                    </ul>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6>Filteren</h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo toonAfbeelding('../img/help1.png', 'width=100%'); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Om te beginnen kunt u filteren op het soort gebruiker.</p>
+                            <ul>
+                                <li>Iedereen: u stuurt een mail naar zowel de personeelsleden als de vrijwilligers.</li>
+                                <li>Personeelsleden: u stuurt een mail met enkel de personeelsleden als ontvangers.</li>
+                                <li>Vrijwilligers: u stuurt een mail met enkel de vrijwilligers als ontvangers.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>Als tweede kunt u filteren op dagindeling.</p>
+                            <ul>
+                                <li>Alle dagindelingen: u stuurt een mail naar alle personen die zijn ingeschreven zijn voor eender welke dagindeling.</li>
+                                <li>U selecteerd een dagindeling: u stuurt een mail naar de personen die ingeschreven voor deze dagindeling.</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">                            
+                            <?php echo toonAfbeelding('../img/help2.png', 'width=100%'); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo toonAfbeelding('../img/help3.png', 'width=100%'); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Als laatste kunt u filteren op optie.</p>
+                            <ul>
+                                <li>Alle opties: u stuurt een mail naar alle personen die ingeschreven zijn voor eender welke optie.</li>
+                                <li>U selecteert een optie: u stuurt een mail naar de personen die ingeschreven zijn voor deze optie.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6>Lijst van ontvangers</h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo toonAfbeelding('../img/help4.png', 'width=100%'); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Dit is de lijst van alle ontvangers.</p>
+                            <p>Deze lijst past zich automatisch aan wanneer u filtert. Op deze manier kunt u controleren of u de mail naar de juiste
+                            personen stuurt.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6>Mailinhoud</h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">                            
+                            <?php echo toonAfbeelding('../img/help5.png', 'width=100%'); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Bij onderwerp vult u het onderwerp van de mail in.</p>
+                            <p>De inhoud kunt u zelf kiezen. Je kan hier bijvoorbeeld contactgegevens zetten. Daarnaast kan je ook een persoonlijke
+                            boodschap aan de ontvangers meegeven.</p>                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6>Uitnodigingslink</h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">                            
+                            <?php echo toonAfbeelding('../img/help6.png', 'width=100%'); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Deze optie is optioneel. Wanneer u ze aanvinkt zal er op het einde van de mail een persoonlijke link
+                            gegenereerd worden waarmee de gebruikers zich kunnen inschrijven. Deze link wordt automatisch door het systeem gegenereerd.</p>                           
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
