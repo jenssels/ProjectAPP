@@ -19,7 +19,7 @@ class Vrijwilliger extends CI_Controller {
         $data['hashcode'] = $hashcode;
         
         $partials = array("hoofding" => "hoofding",
-            "inhoud" => "vrijwilligerTaakindeling",
+            "inhoud" => "vrijwilliger/vrijwilligerTaakindeling",
             "voetnoot" => "voetnoot");
         $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
         $data['titel'] = 'Taakindeling invullen';
@@ -113,7 +113,7 @@ class Vrijwilliger extends CI_Controller {
             $this->taakdeelname_model->insert($taakdeelname);
         }
 
-        redirect('vrijwilliger/bevestigInschrijving');
+        redirect('vrijwilliger/vrijwilligerBevestig');
     }
 
 }

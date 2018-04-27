@@ -56,8 +56,8 @@ class Organisator extends CI_Controller {
     public function personeelsFeestInschrijvingen($feestId) {
         $this->load->model('Personeelsfeest_model');
         $data["personeelsfeest"] = $this->Personeelsfeest_model->getWithInschrijvingenWherePersoneelsfeest($feestId);
-        $partials = array("hoofding" => "hoofding", "inhoud" => "personeelsFeestInschrijvingen", "voetnoot" => "voetnoot");
-        $data['titel'] = 'Personeelsfeest overzicht';
+        $partials = array("hoofding" => "hoofding","inhoud" => "personeelsFeestInschrijvingen","voetnoot" => "voetnoot");
+        $data['titel'] = 'Inschrijvingen ' . strtolower($data['personeelsfeest']->naam);
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
         $this->template->load('main_master', $partials, $data);
@@ -77,6 +77,7 @@ class Organisator extends CI_Controller {
         if ($isInschrijfLink) {
             if ($type === 'personeel') {
                 $link = base_url('index.php/personeel/index/' . $hash);
+
             } else {
                 $link = base_url('index.php/vrijwilliger/index/' . $hash);
             }
@@ -162,7 +163,8 @@ class Organisator extends CI_Controller {
     public function verwijdertaak($id) {
         $this->load->model('taak_model');
         $this->taak_model->delete($id);
-        redirect('/organisator/taakBeheren/');
+        $referred_from = $this->session->userdata('referred_from');
+        redirect($referred_from, 'refresh');
     }
 
     /**
@@ -180,9 +182,9 @@ class Organisator extends CI_Controller {
 
         $this->load->model('Taak_model');
         $this->Taak_model->update($info);
-
-
-        $this->takenBeheren();
+        
+        $referred_from = $this->session->userdata('referred_from');
+        redirect($referred_from, 'refresh');
     }
 
     /**
@@ -240,7 +242,10 @@ class Organisator extends CI_Controller {
         $this->load->model('Taak_model');
         $this->Taak_model->insert($taak);
 
-        $this->takenBeheren();
+
+        $this->taakbeheren($taak->dagindelingid);
+            $referred_from = $this->session->userdata('referred_from');
+            redirect($referred_from, 'refresh');
     }
 
     /**
@@ -269,6 +274,27 @@ class Organisator extends CI_Controller {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Thomas Vansprengel 
+     * Toon het overzicht om de taken te beheren
+     */
+    public function takenBeheren() {
+        $this->load->model('taak_model');
+        $data['taken'] = $this->taak_model->getAllWithDagindeling();
+
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "takenBeheren",
+            "voetnoot" => "voetnoot");
+        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
+        $data['titel'] = "Taken beheren";
+        $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
+
+        $this->template->load('main_master', $partials, $data);
+    }
+
+    /**
+>>>>>>> dc32fe06c01a52d4aeced78300d025bb9b06c978
      * Thomas Vansprengel 
      * Toon het overzicht om een individuele taak te beheren aan de hand van een dagindeling
      * @param $dagindelingId Taak aanpassen aan de hand van deze dagindeling
@@ -276,7 +302,8 @@ class Organisator extends CI_Controller {
     public function taakBeheren($dagindelingId) {
         $this->load->model('taak_model');
         $data['taken'] = $this->taak_model->getAllWithDagindelingWhereDagindelingId($dagindelingId);
-
+        $data['dagindelingid'] = $dagindelingId;
+        
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "takenBeheren",
             "voetnoot" => "voetnoot");
@@ -286,6 +313,8 @@ class Organisator extends CI_Controller {
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
 
         $this->template->load('main_master', $partials, $data);
+        
+        $this->session->set_userdata('referred_from', current_url());
     }
 
     /**
@@ -832,6 +861,7 @@ class Organisator extends CI_Controller {
         $dagindelingId = $this->input->get('dagindelingId');
         $feestId = $this->input->get('feestId');
 
+
         if ($dagindelingId == 'alles') {
             //Alle dagindelingen zijn gekozen
             $this->load->model('optie_model');
@@ -1040,6 +1070,18 @@ class Organisator extends CI_Controller {
         $this->foto_model->delete($fotoId);
 
         redirect('organisator/albumBewerken');
+    }
+
+    /**
+     * Joren Synaeve - Verwijdert een organisator
+     * @param $hashcode de hashcode van de te verwijderen organisator
+     */
+    public function verwijderOrganisator($hashcode) {
+        $this->load->model('persoon_model');
+        $persoon = $this->persoon_model->getWhereHashcode($hashcode);
+        $this->persoon_model->delete($persoon->id);
+        
+        redirect('organisator/beheerOrganisatoren');
     }
 
 }

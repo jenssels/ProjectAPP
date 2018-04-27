@@ -40,8 +40,9 @@ class TaakDeelname_model extends CI_Model {
      * Taakdeelname toevoegen
      * @return Id van insert
      */
-    function insert($taakDeelname) {
-            $this->db->insert('taakdeelname', $taakDeelname);
+
+    function insert($taakdeelname) {
+            $this->db->insert('taakdeelname', $taakdeelname);
             return $this->db->insert_id();
         }
     /**
@@ -95,7 +96,7 @@ class TaakDeelname_model extends CI_Model {
     
     /**
      * Jens Sels - Ophalen van alle keuzes van taken van een taak
-     * @param $taakId Id van een taak
+     * @param $shiftId Id van een taak
      * @return Alle keuzes van taken van een taak
      */
     function getAllWhereShift($shiftid){
