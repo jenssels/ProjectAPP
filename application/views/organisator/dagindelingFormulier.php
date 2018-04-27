@@ -7,10 +7,6 @@
  */
 ?>
 
-<div class="page-header">
-    <h1><?php echo $titel; ?></h1>
-</div>
-
 <div>
     <?php echo haalJavascriptOp("validator.js"); ?>
 
