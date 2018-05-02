@@ -17,12 +17,12 @@ class MyMail{
         $config = Array('protocol' => 'smtp', 'smtp_host' => 'ssl://smtp.gmail.com', 'smtp_port' => 465, 'smtp_user' => 'team17project@gmail.com', 'smtp_pass' => 'team17project', 'mailtype' => 'html', 'charset' => 'utf-8');
         if ($isInschrijfLink) {
             if ($type === 'personeel') {
-                $link = base_url('index.php/personeel/index/' . $hash);
+                $link = '<a href="' . base_url('index.php/personeel/index/' . $hash) . "'>Uitnodigings mail voor personeelsfeest Thomas More</a>";
 
             } else {
-                $link = base_url('index.php/vrijwilliger/index/' . $hash);
+                $link = '<a href="' . base_url('index.php/vrijwilliger/index/' . $hash) . "'>Uitnodigings mail voor personeelsfeest Thomas More</a>";
             }
-            $message .= '\n Gebruik onderstaande link om u keuzes voor het personeelsfeest door te geven: \n ' . $link;
+            $message .= '\n Gebruik onderstaande link om uw keuzes voor het personeelsfeest door te geven: \n \n ' . $link;
         }
         $CI->load->library('email');
         $CI->load->library('encrypt');
