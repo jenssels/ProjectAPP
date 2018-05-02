@@ -17,6 +17,21 @@
 
         if (soortSelect.value !== 'niks') {
             var soortId = soortSelect.value;
+            if (soortId === 'iedereen') {
+                //Alle personen zijn geselecteerd
+                var feestId = document.getElementById("feestId").value;
+                //Lijst met ontvangers updaten
+                $.ajax({type: "GET",
+                    url: site_url + "/organisator/haalAjaxOp_SelectOntvangers",
+                    data: {feestId: feestId},
+                    success: function (result) {
+                        $("#ontvangersResultaat").html(result);
+                    },
+                    error: function (xhr, status, error) {
+                        alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+                    }
+                });
+            }
             if (soortId !== 'niks') {
                 dagindelingSelect.disabled = false;
                 optieSelect.disabled = false;
@@ -59,17 +74,15 @@
                     alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
                 }
             });
-        }
-
-        var optieSelect = document.getElementById("optieSelect");
-        if (optieSelect.value !== 'niks') {
+        } else {
+            var optieSelect = document.getElementById("optieSelect");
             var optieId = optieSelect.value;
             if (optieId !== 'niks') {
-                optieSelect.disabled = false;
+                optieSelect.disabled = true;
+                optieSelect.value = 'niks';
+            } else {
+                optieSelect.disabled = true;
             }
-        } else {
-            optieSelect.value = 'niks';
-            optieSelect.disabled = true;
         }
     }
 
@@ -81,7 +94,7 @@
 <div class="container">
     <form>
         <?php
-        //Verborgen veld om Id van personeelsfest me te kunnen geven
+        //Verborgen veld om Id van personeelsfeest mee te kunnen geven
         echo '<input type="hidden" id="feestId" name="feestId" value="' . $feestId . '">';
         ?>
         <div class="row">
@@ -126,23 +139,26 @@
                         ?>
                     </div>
                 </fieldset>
+                <!--Lijst met opties-->
                 <div id="optieResultaat"></div>
             </div>
             <div class="col">
-                <div id="lijstResultaat"></div>
-                <div class="form-group">
-                    <label for="ontvangers">Ontvangers:</label>
-                    <select multiple="true" disabled="true" class="form-control" id="inputInhoud" aria-describedby="ontvangersHelp" size="9">
-                        <option>Joren</option>
-                        <option>Jens</option>
-                        <option>Stef</option>
-                        <option>Jorne</option>
-                        <option>Florian</option>
-                        <option>Henk</option>
-                        <option>Lise</option>
-                        <option>Jolien</option>
-                    </select>
-                    <small id="ontvangersHelp" class="form-text text-muted">Een lijst van alle personen die de mail zullen ontvangen.</small>
+                <!--Lijst met ontvangers-->
+                <div id="ontvangersResultaat">
+                    <?php
+                    $ontvangers = array();
+                    $attributes = array('id' => 'selectOntvangers',
+                        'class' => 'form-control',
+                        'disabled' => 'true',
+                        'multiple' => 'true',
+                        'aria-describedby' => 'ontvangersHelp',
+                        'size' => '9');
+
+                    echo "<div class='form-group'>";
+                    echo form_dropdown('selectOntvangers', $ontvangers, '', $attributes);
+                    echo '<small id="ontvangersHelp" class="form-text text-muted">Een lijst van alle personen die de mail zullen ontvangen.</small>';
+                    echo "</div>";
+                    ?>
                 </div>
             </div>
         </div>
@@ -161,7 +177,7 @@
                     <textarea class="form-control" rows="8" id="inputInhoud" aria-describedby="inhoudHelp" placeholder="Geef hier de inhoud van de mail op."></textarea>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" id="checkboxUitnodiging" name="checkboxUitnodiging" value="">Uitnodogingslink genereren.</label>
+                    <label><input type="checkbox" id="checkboxUitnodiging" name="checkboxUitnodiging" value="">Uitnodigingslink genereren.</label>
                 </div>
             </div>
         </div>
@@ -180,7 +196,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <h6>Filteren</h6>
+                            <h5>Filteren</h5>
                         </div>
                     </div>
                     <div class="row">
@@ -222,7 +238,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <h6>Lijst van ontvangers</h6>
+                            <h5>Lijst van ontvangers</h5>
                         </div>
                     </div>
                     <div class="row">
@@ -232,12 +248,12 @@
                         <div class="col-md-6">
                             <p>Dit is de lijst van alle ontvangers.</p>
                             <p>Deze lijst past zich automatisch aan wanneer u filtert. Op deze manier kunt u controleren of u de mail naar de juiste
-                            personen stuurt.</p>
+                                personen stuurt.</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <h6>Mailinhoud</h6>
+                            <h5>Mailinhoud</h5>
                         </div>
                     </div>
                     <div class="row">
@@ -247,12 +263,12 @@
                         <div class="col-md-6">
                             <p>Bij onderwerp vult u het onderwerp van de mail in.</p>
                             <p>De inhoud kunt u zelf kiezen. Je kan hier bijvoorbeeld contactgegevens zetten. Daarnaast kan je ook een persoonlijke
-                            boodschap aan de ontvangers meegeven.</p>                            
+                                boodschap aan de ontvangers meegeven.</p>                            
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <h6>Uitnodigingslink</h6>
+                            <h5>Uitnodigingslink</h5>
                         </div>
                     </div>
                     <div class="row">
@@ -261,7 +277,7 @@
                         </div>
                         <div class="col-md-6">
                             <p>Deze optie is optioneel. Wanneer u ze aanvinkt zal er op het einde van de mail een persoonlijke link
-                            gegenereerd worden waarmee de gebruikers zich kunnen inschrijven. Deze link wordt automatisch door het systeem gegenereerd.</p>                           
+                                gegenereerd worden waarmee de gebruikers zich kunnen inschrijven. Deze link wordt automatisch door het systeem gegenereerd.</p>                           
                         </div>
                     </div>
                 </div>

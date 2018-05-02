@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('email', 'template', 'database', 'session', 'authex', 'upload', 'Spreadsheet_Excel_Reader');
+$autoload['libraries'] = array('email', 'template', 'database', 'session', 'authex', 'upload', 'Spreadsheet_Excel_Reader', 'MyMail');
 
 
 /*

@@ -14,8 +14,12 @@ class Personeel extends CI_Controller {
         // Gegevens ophalen van persoon
         $this->load->model('persoon_model');
         $personeelslid = $this->persoon_model->getWhereHashcode($hashcode);
+        $this->session->unset_userdata();
         $this->session->set_userdata('emailgebruiker', $personeelslid->email);
+        $this->session->set_userdata('huidigPersoneelsfeest', (int)$personeelslid->personeelsfeestId);
         $this->session->set_userdata('gebruikerTypeId', $personeelslid->typeId);
+        $this->session->set_userdata('gebruikerHashcode', $personeelslid->hashcode);
+
         $this->controleerDagindelingIsIngevuld($hashcode);
     }
 
@@ -220,5 +224,41 @@ class Personeel extends CI_Controller {
         $this->optiedeelname_model->update($id, $optieId);
         $this->toonOverzichtIngevuldeDagindeling($hashcode);
         
+    }
+    /**
+     * Jens Sels - openen van pagina zodat personeelslid een vrijwilliger kan uitnodigen
+     */
+    public function vrijwilligerUitnodigenForm(){
+        $data['titel'] = 'Vrijwilliger uitnodigen';
+        $data['paginaverantwoordelijke'] = 'Jens Sels';
+        
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'personeel/vrijwilligerUitnodigenForm',
+            'voetnoot' => 'voetnoot');
+
+        $this->template->load('main_master', $partials, $data);
+    }
+    /**
+     * Jens Sels - ajax die vrijwilliger gaat uitnodigen
+     */
+    public function ajaxNodigVrijwilligerUit(){
+        $persoon = new stdClass();
+        $this->load->model('Persoon_model');
+        $hashCodes = $this->Persoon_model->getAllHashCodes();
+        $persoon->hashcode = random_string('alnum', 16);
+        while (in_array($persoon->hashcode, $hashCodes)) {
+            $persoon->hashcode = random_string('alnum', 16);
+        }
+        $persoon->voornaam = $this->input->get('voornaam');
+        $persoon->naam = $this->input->get('naam');
+        $persoon->email = strval($this->input->get('mail'));
+        $persoon->typeId = 2;
+        $persoon->personeelsfeestId = $this->session->userdata('huidigPersoneelsfeest');
+        $data['message'] = $this->Persoon_model->insertWithCheck($persoon);
+        if($data['message']['stuur'] == true){
+            $this->MyMail = new MyMail();
+            $this->MyMail->stuurMail("Uitnodiging Personeelsfeest Thomas More", "", $persoon->email, $persoon->typeId, $persoon->hashcode, $isInschrijfLink = true);
+        }
+        $this->load->view('personeel/ajax_vrijwilligerUitgenodigd', $data);
     }
 }
