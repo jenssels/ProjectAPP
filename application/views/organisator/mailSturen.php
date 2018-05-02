@@ -59,17 +59,15 @@
                     alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
                 }
             });
-        }
-
-        var optieSelect = document.getElementById("optieSelect");
-        if (optieSelect.value !== 'niks') {
+        } else {
+            var optieSelect = document.getElementById("optieSelect");
             var optieId = optieSelect.value;
             if (optieId !== 'niks') {
+                optieSelect.disabled = true;
+                optieSelect.value = 'niks';
+            } else {
                 optieSelect.disabled = false;
             }
-        } else {
-            optieSelect.value = 'niks';
-            optieSelect.disabled = true;
         }
     }
 
@@ -133,7 +131,7 @@
                 <div class="form-group">
                     <label for="ontvangers">Ontvangers:</label>
                     <select multiple="true" disabled="true" class="form-control" id="inputInhoud" aria-describedby="ontvangersHelp" size="9">
-                        <option>Joren</option>
+                        <option value="1">Joren</option>
                         <option>Jens</option>
                         <option>Stef</option>
                         <option>Jorne</option>
@@ -180,7 +178,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <h6>Filteren</h6>
+                            <h5>Filteren</h5>
                         </div>
                     </div>
                     <div class="row">
@@ -222,7 +220,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <h6>Lijst van ontvangers</h6>
+                            <h5>Lijst van ontvangers</h5>
                         </div>
                     </div>
                     <div class="row">
@@ -232,12 +230,12 @@
                         <div class="col-md-6">
                             <p>Dit is de lijst van alle ontvangers.</p>
                             <p>Deze lijst past zich automatisch aan wanneer u filtert. Op deze manier kunt u controleren of u de mail naar de juiste
-                            personen stuurt.</p>
+                                personen stuurt.</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <h6>Mailinhoud</h6>
+                            <h5>Mailinhoud</h5>
                         </div>
                     </div>
                     <div class="row">
@@ -247,12 +245,12 @@
                         <div class="col-md-6">
                             <p>Bij onderwerp vult u het onderwerp van de mail in.</p>
                             <p>De inhoud kunt u zelf kiezen. Je kan hier bijvoorbeeld contactgegevens zetten. Daarnaast kan je ook een persoonlijke
-                            boodschap aan de ontvangers meegeven.</p>                            
+                                boodschap aan de ontvangers meegeven.</p>                            
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <h6>Uitnodigingslink</h6>
+                            <h5>Uitnodigingslink</h5>
                         </div>
                     </div>
                     <div class="row">
@@ -261,7 +259,7 @@
                         </div>
                         <div class="col-md-6">
                             <p>Deze optie is optioneel. Wanneer u ze aanvinkt zal er op het einde van de mail een persoonlijke link
-                            gegenereerd worden waarmee de gebruikers zich kunnen inschrijven. Deze link wordt automatisch door het systeem gegenereerd.</p>                           
+                                gegenereerd worden waarmee de gebruikers zich kunnen inschrijven. Deze link wordt automatisch door het systeem gegenereerd.</p>                           
                         </div>
                     </div>
                 </div>
