@@ -44,7 +44,7 @@ class Authex {
         // gebruiker is aangemeld als sessievariabele organisator_id bestaat
         $CI = & get_instance();
 
-        if ($CI->session->has_userdata('organisator_id')) {
+        if ($CI->session->has_userdata('organisator_id') && $CI->session->userdata('gebruikerTypeId')== 1) {
             return true;
         } else {
             return false;
