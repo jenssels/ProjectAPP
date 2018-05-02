@@ -31,6 +31,8 @@
         echo '<a href="'. base_url() . 'index.php/vrijwilliger/toonAlbum/' . $album->id .'" class="btn btn-primary">Bekijk de fotos!</a>';
         echo '</div></div></div><br>';
     }
+    echo anchor('vrijwilliger/terugNaarIndex', 'Terug naar inschrijving');
+    
     echo '</div>';
     ?>
 </div>

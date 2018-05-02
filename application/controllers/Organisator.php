@@ -163,7 +163,7 @@ class Organisator extends CI_Controller {
     public function verwijdertaak($id) {
         $this->load->model('taak_model');
         $this->taak_model->delete($id);
-        $referred_from = $this->session->userdata('referred_from');
+        $referred_from = $this->session->userdata('referred_from_taak');
         redirect($referred_from, 'refresh');
     }
 
@@ -183,7 +183,7 @@ class Organisator extends CI_Controller {
         $this->load->model('Taak_model');
         $this->Taak_model->update($info);
         
-        $referred_from = $this->session->userdata('referred_from');
+        $referred_from = $this->session->userdata('referred_from_taak');
         redirect($referred_from, 'refresh');
     }
 
@@ -243,9 +243,8 @@ class Organisator extends CI_Controller {
         $this->Taak_model->insert($taak);
 
 
-        $this->taakbeheren($taak->dagindelingid);
-            $referred_from = $this->session->userdata('referred_from');
-            redirect($referred_from, 'refresh');
+        $referred_from = $this->session->userdata('referred_from_taak');
+        redirect($referred_from, 'refresh');
     }
 
     /**
@@ -314,7 +313,7 @@ class Organisator extends CI_Controller {
 
         $this->template->load('main_master', $partials, $data);
         
-        $this->session->set_userdata('referred_from', current_url());
+        $this->session->set_userdata('referred_from_taak', current_url());
     }
 
     /**
@@ -420,6 +419,7 @@ class Organisator extends CI_Controller {
      * Jens Sels - Functie die excel bestand gaat uploaden en uitlezen
      */
     public function ajaxUploadFile() {
+        
         $config['upload_path'] = './assets/files/';
         $config['allowed_types'] = 'xls';
         $config['encrypt_name'] = TRUE;
@@ -493,12 +493,14 @@ class Organisator extends CI_Controller {
         $id = $this->input->get('id');
         $this->load->model('shift_model');
         $shift = $this->shift_model->getWithCount($id);
-        if ($shift->deelnemers >= $shift->maxAantal) {
+        if ((int)$shift->deelnemers >= (int)$shift->maxAantal) {
             $check = "true";
         } else {
             $check = "false";
         }
+        print_r($check);
         return $check;
+        
     }
 
     /*
@@ -534,7 +536,6 @@ class Organisator extends CI_Controller {
         $this->load->model('Persoon_model');
         $hashCodes = $this->persoon_model->getAllHashCodes();
         $mails = $this->persoon_model->getAllMailsWhereFeest($feestId);
-        $personeelsLijst = "";
         for ($i = 1; $i < (count($personeel) + 1); $i++) {
             $hash = random_string('alnum', 16);
             while (in_array($hash, $hashCodes)) {
@@ -554,7 +555,7 @@ class Organisator extends CI_Controller {
                 }
             }
         }
-        return $personeelsLijst;
+        return $data['personeel'];
     }
 
     /**
@@ -860,18 +861,11 @@ class Organisator extends CI_Controller {
     public function haalAjaxOp_SelectOptiesBijDagindeling() {
         $dagindelingId = $this->input->get('dagindelingId');
         $feestId = $this->input->get('feestId');
-
-
-        if ($dagindelingId == 'alles') {
-            //Alle dagindelingen zijn gekozen
-            $this->load->model('optie_model');
-            $data['opties'] = $this->optie_model->getAllWherePersoneelsfeest($feestId);
-        } else {
-            //1 bepaalde dagindeling is geselecteerd
-            $this->load->model('optie_model');
-            $data['opties'] = $this->optie_model->getAllWhereDagindeling($dagindelingId);
-        }
-
+        $data['dagindelingId'] = $dagindelingId;
+        
+        $this->load->model('optie_model');
+        $data['dagindelingen'] = $this->optie_model->getAllWherePersoneelsfeest($feestId);
+        
         $this->load->view('organisator/ajax_selectOptiesBijDagindeling', $data);
     }
 
