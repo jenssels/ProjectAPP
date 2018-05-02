@@ -47,7 +47,7 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-8">
         <table class="table">
             <tr>
                 <th>Naam</th>
@@ -71,8 +71,8 @@
                         . "<td>" . $beginuur . "u - " . $einduur . "u</td>"
                         . "<td>" . $voorVrijwilliger . "</td>"
                         . "<td>" . anchor('organisator/taakBeheren/' . $dagindeling->id, 'Beheer taken') . "</td>"
-                        . "<td>" . anchor('organisator/wijzigDagindeling/' . $personeelsfeest->id . '/' . $dagindeling->id, 'Bewerken') . "</td>"
-                        . "<td>" . anchor('organisator/verwijderDagindeling/' . $personeelsfeest->id . '/' . $dagindeling->id, 'Verwijder') . "</td></tr>";
+                        . "<td>" . anchor('organisator/wijzigDagindeling/' . $personeelsfeest->id . '/' . $dagindeling->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
+                        . "<td>" . anchor('organisator/verwijderDagindeling/' . $personeelsfeest->id . '/' . $dagindeling->id, '<i class="far fa-trash-alt grow"></i>') . "</td></tr>";
             }
             ?>
             <tr>
