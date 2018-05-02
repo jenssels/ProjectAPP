@@ -79,7 +79,7 @@
 <div class="container">
     <form>
         <?php
-        //Verborgen veld om Id van personeelsfest me te kunnen geven
+        //Verborgen veld om Id van personeelsfeest mee te kunnen geven
         echo '<input type="hidden" id="feestId" name="feestId" value="' . $feestId . '">';
         ?>
         <div class="row">
@@ -124,24 +124,12 @@
                         ?>
                     </div>
                 </fieldset>
+                <!--Lijst met opties-->
                 <div id="optieResultaat"></div>
             </div>
             <div class="col">
-                <div id="lijstResultaat"></div>
-                <div class="form-group">
-                    <label for="ontvangers">Ontvangers:</label>
-                    <select multiple="true" disabled="true" class="form-control" id="inputInhoud" aria-describedby="ontvangersHelp" size="9">
-                        <option value="1">Joren</option>
-                        <option>Jens</option>
-                        <option>Stef</option>
-                        <option>Jorne</option>
-                        <option>Florian</option>
-                        <option>Henk</option>
-                        <option>Lise</option>
-                        <option>Jolien</option>
-                    </select>
-                    <small id="ontvangersHelp" class="form-text text-muted">Een lijst van alle personen die de mail zullen ontvangen.</small>
-                </div>
+                <!--Lijst met ontvangers-->
+                <div id="selectOntvangers"></div>
             </div>
         </div>
         <div class="row">
