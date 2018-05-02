@@ -28,6 +28,7 @@ class MyMail{
         $CI->load->library('encrypt');
         $CI->email->initialize($config);
         $CI->email->set_newline("\r\n");
+        $CI->email->set_mailtype("html");
         $CI->email->from('team17project@gmail.com', 'Personeelsfeest Thomas More');
         $CI->email->to($mail);
         $CI->email->subject($titel);
