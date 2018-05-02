@@ -17,6 +17,21 @@
 
         if (soortSelect.value !== 'niks') {
             var soortId = soortSelect.value;
+            if (soortId === 'iedereen') {
+                //Alle personen zijn geselecteerd
+                var feestId = document.getElementById("feestId").value;
+                //Lijst met ontvangers updaten
+                $.ajax({type: "GET",
+                    url: site_url + "/organisator/haalAjaxOp_SelectOntvangers",
+                    data: {feestId: feestId},
+                    success: function (result) {
+                        $("#ontvangersResultaat").html(result);
+                    },
+                    error: function (xhr, status, error) {
+                        alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+                    }
+                });
+            }
             if (soortId !== 'niks') {
                 dagindelingSelect.disabled = false;
                 optieSelect.disabled = false;
@@ -59,17 +74,15 @@
                     alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
                 }
             });
-        }
-
-        var optieSelect = document.getElementById("optieSelect");
-        if (optieSelect.value !== 'niks') {
+        } else {
+            var optieSelect = document.getElementById("optieSelect");
             var optieId = optieSelect.value;
             if (optieId !== 'niks') {
-                optieSelect.disabled = false;
+                optieSelect.disabled = true;
+                optieSelect.value = 'niks';
+            } else {
+                optieSelect.disabled = true;
             }
-        } else {
-            optieSelect.value = 'niks';
-            optieSelect.disabled = true;
         }
     }
 
@@ -81,7 +94,7 @@
 <div class="container">
     <form>
         <?php
-        //Verborgen veld om Id van personeelsfest me te kunnen geven
+        //Verborgen veld om Id van personeelsfeest mee te kunnen geven
         echo '<input type="hidden" id="feestId" name="feestId" value="' . $feestId . '">';
         ?>
         <div class="row">
@@ -126,28 +139,34 @@
                         ?>
                     </div>
                 </fieldset>
+                <!--Lijst met opties-->
                 <div id="optieResultaat"></div>
             </div>
             <div class="col">
-                <div id="lijstResultaat"></div>
+                <!--Lijst met ontvangers-->
+                <div id="ontvangersResultaat">
+                    <?php
+                    $ontvangers = array();
+                    $attributes = array('id' => 'selectOntvangers',
+                        'class' => 'form-control',
+                        'disabled' => 'true',
+                        'multiple' => 'true',
+                        'aria-describedby' => 'ontvangersHelp',
+                        'size' => '9');
 
+                    echo "<div class='form-group'>";
+                    echo form_dropdown('selectOntvangers', $ontvangers, '', $attributes);
+                    echo '<small id="ontvangersHelp" class="form-text text-muted">Een lijst van alle personen die de mail zullen ontvangen.</small>';
+                    echo "</div>";
+                    ?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
                 <div class="form-group">
                     <label for="onderwerp">Onderwerp:</label>
                     <input type="text" class="form-control" id="inputOnderwerp" aria-describedby="onderwerpHelp" placeholder="Onderwerp">
-                </div>
-                <div class="form-group">
-                    <label for="ontvangers">Ontvangers:</label>
-                    <select multiple="true" disabled="true" class="form-control" id="inputInhoud" aria-describedby="ontvangersHelp" size="6">
-                        <option>Joren</option>
-                        <option>Jens</option>
-                        <option>Stef</option>
-                        <option>Jorne</option>
-                        <option>Florian</option>
-                        <option>Henk</option>
-                        <option>Lise</option>
-                        <option>Jolien</option>
-                    </select>
-                    <small id="ontvangersHelp" class="form-text text-muted">Een lijst van alle personen die de mail zullen ontvangen.</small>
                 </div>
             </div>
         </div>
@@ -158,13 +177,130 @@
                     <textarea class="form-control" rows="8" id="inputInhoud" aria-describedby="inhoudHelp" placeholder="Geef hier de inhoud van de mail op."></textarea>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" id="checkboxUitnodiging" name="checkboxUitnodiging" value="">Uitnodogingslink genereren.</label>
+                    <label><input type="checkbox" id="checkboxUitnodiging" name="checkboxUitnodiging" value="">Uitnodigingslink genereren.</label>
                 </div>
             </div>
         </div>
     </form>
-    <?php
-    echo anchor('organisator/personeelsFeestOverzicht', 'Terug naar overzicht', array('role' => 'button', 'class' => 'btn btn-primary'));
-    echo anchor('', 'Stuur mail!', array('role' => 'button', 'class' => 'btn btn-primary float-right'));
-    ?>
+
+    <!-- Help Modal -->
+    <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Hulp bij mail sturen</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5>Filteren</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo toonAfbeelding('../img/help1.png', 'width=100%'); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Om te beginnen kunt u filteren op het soort gebruiker.</p>
+                            <ul>
+                                <li>Iedereen: u stuurt een mail naar zowel de personeelsleden als de vrijwilligers.</li>
+                                <li>Personeelsleden: u stuurt een mail met enkel de personeelsleden als ontvangers.</li>
+                                <li>Vrijwilligers: u stuurt een mail met enkel de vrijwilligers als ontvangers.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>Als tweede kunt u filteren op dagindeling.</p>
+                            <ul>
+                                <li>Alle dagindelingen: u stuurt een mail naar alle personen die zijn ingeschreven zijn voor eender welke dagindeling.</li>
+                                <li>U selecteerd een dagindeling: u stuurt een mail naar de personen die ingeschreven voor deze dagindeling.</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">                            
+                            <?php echo toonAfbeelding('../img/help2.png', 'width=100%'); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo toonAfbeelding('../img/help3.png', 'width=100%'); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Als laatste kunt u filteren op optie.</p>
+                            <ul>
+                                <li>Alle opties: u stuurt een mail naar alle personen die ingeschreven zijn voor eender welke optie.</li>
+                                <li>U selecteert een optie: u stuurt een mail naar de personen die ingeschreven zijn voor deze optie.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5>Lijst van ontvangers</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo toonAfbeelding('../img/help4.png', 'width=100%'); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Dit is de lijst van alle ontvangers.</p>
+                            <p>Deze lijst past zich automatisch aan wanneer u filtert. Op deze manier kunt u controleren of u de mail naar de juiste
+                                personen stuurt.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5>Mailinhoud</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">                            
+                            <?php echo toonAfbeelding('../img/help5.png', 'width=100%'); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Bij onderwerp vult u het onderwerp van de mail in.</p>
+                            <p>De inhoud kunt u zelf kiezen. Je kan hier bijvoorbeeld contactgegevens zetten. Daarnaast kan je ook een persoonlijke
+                                boodschap aan de ontvangers meegeven.</p>                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5>Uitnodigingslink</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">                            
+                            <?php echo toonAfbeelding('../img/help6.png', 'width=100%'); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Deze optie is optioneel. Wanneer u ze aanvinkt zal er op het einde van de mail een persoonlijke link
+                                gegenereerd worden waarmee de gebruikers zich kunnen inschrijven. Deze link wordt automatisch door het systeem gegenereerd.</p>                           
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <?php
+        echo '<div class="col-sm-4">';
+        echo anchor('organisator/personeelsFeestOverzicht', 'Terug naar overzicht', array('role' => 'button', 'class' => 'btn btn-primary'));
+        echo '</div>';
+
+        echo '<div class="col-sm-4 text-center">';
+        echo '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#helpModal">Help</button>';
+        echo '</div>';
+
+        echo '<div class="col-sm-4">';
+        echo anchor('', 'Stuur mail!', array('role' => 'button', 'class' => 'btn btn-primary float-right'));
+        echo '</div>';
+        ?>
+    </div>
 </div>

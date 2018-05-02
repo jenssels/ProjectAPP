@@ -37,7 +37,7 @@
 
         $('#knopVerwijder').click(function() {
           verwijderAlbum(albumId); 
-          location.reload();
+          //location.reload();
         });
 
     });
@@ -65,8 +65,8 @@
         }
         echo '<div class="card-body">';
         echo '<h5 class="card-title">' . $album->naam . '</h5>';
-        echo '<p class="card-text">Bekijk hier alle fotos van dit album!</p>';
-        echo anchor('organisator/toonAlbum/' . $album->id, '<button type="button" class="btn btn-primary">Bekijk de fotos!</button>');
+        echo '<p class="card-text">Bekijk hier alle foto\'s van dit album!</p>';
+        echo anchor('organisator/toonAlbum/' . $album->id, '<button type="button" class="btn btn-primary">Bekijk de foto\'s!</button>');
         echo '</div>';
         //Jorne Lambrechts - knoppen om album te bewerken of te verwijderen
         echo '<div>';

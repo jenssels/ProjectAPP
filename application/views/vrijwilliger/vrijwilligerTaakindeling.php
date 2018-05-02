@@ -14,6 +14,7 @@
             $('#overlay').fadeOut();
         });
 
+        // Checken op volzet
         function ajaxCheckVolzet(id, max) {
             $.ajax({type: "GET",
                 url: site_url + "/Organisator/ajaxCheckVolzet",
@@ -82,27 +83,33 @@
         <?php
         $attributes = array('name' => 'formulierInschrijven');
         echo form_open('vrijwilliger/bevestigTaakindeling', $attributes);
-        echo"<table>";
-        echo "<tr><th>Taak</th><th>Shift</th><th>Tijd</th><th>Aantal inschrijvingen</th><th>Locatie</th><th>Ik wil helpen!</th></tr>";
-        $teller = 0;
-        foreach ($shiften as $shift) {
-            $teller++;
-            echo "<tr><td>" . $shift->taak->naam . "</td><td>" . $shift->naam . "</td>"
-            . "<td>" . $shift->beginuur . " - " . $shift->einduur . "</td>"
-            . "<td>" . $shift->deelnemers . '/' . $shift->maxAantal . "</td>"
-            . "<td>" . $shift->taak->locatie->naam . "</td>"
-            . "<td>" . form_checkbox(array('name' => 'shift[]', 'class' => 'check', 'value' => $shift->id, 'id' => 'shift' . $shift->id, 'data-count' => $shift->deelnemers , 'data-max' => $shift->maxAantal, 'data-id' => $shift->id)) . "</td>"
-            . "<td><div class='volzet'></div></td></tr>";
-        }
-        echo form_hidden("hashcode", $hashcode);
-        echo "<tr><td>" . form_submit('verzenden', 'Bevestigen!') . "</td></tr>";
-        echo" </table>";
         ?>
-    </div>
-    <div class="col-md-12">
+        <table class="table">
+            <tr>
+                <th>Taak</th>
+                <th>Shift</th>
+                <th>Uur</th>
+                <th>Locatie</th>
+                <th>Inschrijvingen</th>
+                <th>Ik wil helpen!</th>
+            </tr>    
+            <?php
+            $teller = 0;
+            foreach ($shiften as $shift) {
+                $teller++;
+                echo "<tr><td>" . $shift->taak->naam . "</td><td>" . $shift->naam . "</td>"
+                . "<td>" . substr($shift->beginuur, 0, 5) . "u - " . substr($shift->einduur, 0, 5) . "u</td>"
+                . "<td>" . $shift->taak->locatie->naam . "</td>"
+                . "<td>" . $shift->deelnemers . '/' . $shift->maxAantal . "</td>"
+                . "<td>" . form_checkbox(array('name' => 'shift[]', 'class' => 'check', 'value' => $shift->id, 'id' => 'shift' . $shift->id, 'data-count' => $shift->deelnemers, 'data-max' => $shift->maxAantal, 'data-id' => $shift->id)) . "</td>"
+                . "<td><div class='volzet'></div></td></tr>";
+            }
+            ?>
+        </table>        
+
         <?php
-        //Thomas Vansprengel
-        echo anchor('Vrijwilliger/overzichtAlbums', 'Naar albums');
+        echo form_hidden("hashcode", $hashcode);
+        echo form_submit('verzenden', 'Bevestigen', 'class="btn btn-primary"');
         ?>
     </div>
 </div>

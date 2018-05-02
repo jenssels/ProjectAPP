@@ -1,26 +1,22 @@
 
 <div class="col-md-12">
     <h2>Vrijwilligers</h2>
-    <ul>
+    <table class="table table-sm">
         <?php
-            foreach ($vrijwilligers as $vrijwilliger){
-                echo '<li>' . $vrijwilliger->voornaam . ' ' . $vrijwilliger->naam . ' - ' . $vrijwilliger->email . '</li>';
-            }
+        foreach ($vrijwilligers as $vrijwilliger) {
+            echo '<tr><td>' . $vrijwilliger->voornaam . ' ' . $vrijwilliger->naam . '</td><td>' . $vrijwilliger->email . '</td></tr>';
+        }
         ?>
-    </ul>
+    </table>
 </div>
 
 <div class="col-md-12">
     <h2>Personeelsleden</h2>
-    <ul>
+    <table class="table table-sm">
         <?php
-            foreach ($personeelsLeden as $personeelsLid){
-                echo '<li>' . $personeelsLid->voornaam . ' ' . $personeelsLid->naam . ' - ' . $personeelsLid->email .  '</li>';
-            }
+        foreach ($personeelsLeden as $personeelslid) {
+            echo '<tr><td>' . $personeelslid->voornaam . ' ' . $personeelslid->naam . '</td><td>' . $personeelslid->email . '</td></tr>';
+        }
         ?>
-    </ul>
+    </table>
 </div>
-
-<?php
-
-?>

@@ -17,6 +17,9 @@ class Personeel extends CI_Controller {
         $this->session->unset_userdata();
         $this->session->set_userdata('emailgebruiker', $personeelslid->email);
         $this->session->set_userdata('huidigPersoneelsfeest', (int)$personeelslid->personeelsfeestId);
+        $this->session->set_userdata('gebruikerTypeId', $personeelslid->typeId);
+        $this->session->set_userdata('gebruikerHashcode', $personeelslid->hashcode);
+
         $this->controleerDagindelingIsIngevuld($hashcode);
     }
 

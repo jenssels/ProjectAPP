@@ -53,7 +53,7 @@ class Organisator extends CI_Controller {
     public function personeelsFeestInschrijvingen($feestId) {
         $this->load->model('Personeelsfeest_model');
         $data["personeelsfeest"] = $this->Personeelsfeest_model->getWithInschrijvingenWherePersoneelsfeest($feestId);
-        $partials = array("hoofding" => "hoofding","inhoud" => "personeelsFeestInschrijvingen","voetnoot" => "voetnoot");
+        $partials = array("hoofding" => "hoofding", "inhoud" => "personeelsFeestInschrijvingen", "voetnoot" => "voetnoot");
         $data['titel'] = 'Inschrijvingen ' . strtolower($data['personeelsfeest']->naam);
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
@@ -148,7 +148,7 @@ class Organisator extends CI_Controller {
 
         $this->load->model('Taak_model');
         $this->Taak_model->update($info);
-        
+
         $referred_from = $this->session->userdata('referred_from_taak');
         redirect($referred_from, 'refresh');
     }
@@ -239,8 +239,8 @@ class Organisator extends CI_Controller {
     }
 
     /**
-<<<<<<< HEAD
-=======
+      <<<<<<< HEAD
+      =======
      * Thomas Vansprengel 
      * Toon het overzicht om de taken te beheren
      */
@@ -259,7 +259,7 @@ class Organisator extends CI_Controller {
     }
 
     /**
->>>>>>> dc32fe06c01a52d4aeced78300d025bb9b06c978
+      >>>>>>> dc32fe06c01a52d4aeced78300d025bb9b06c978
      * Thomas Vansprengel 
      * Toon het overzicht om een individuele taak te beheren aan de hand van een dagindeling
      * @param $dagindelingId Taak aanpassen aan de hand van deze dagindeling
@@ -268,7 +268,7 @@ class Organisator extends CI_Controller {
         $this->load->model('taak_model');
         $data['taken'] = $this->taak_model->getAllWithDagindelingWhereDagindelingId($dagindelingId);
         $data['dagindelingid'] = $dagindelingId;
-        
+
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "takenBeheren",
             "voetnoot" => "voetnoot");
@@ -278,7 +278,7 @@ class Organisator extends CI_Controller {
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
 
         $this->template->load('main_master', $partials, $data);
-        
+
         $this->session->set_userdata('referred_from_taak', current_url());
     }
 
@@ -385,7 +385,7 @@ class Organisator extends CI_Controller {
      * Jens Sels - Functie die excel bestand gaat uploaden en uitlezen
      */
     public function ajaxUploadFile() {
-        
+
         $config['upload_path'] = './assets/files/';
         $config['allowed_types'] = 'xls';
         $config['encrypt_name'] = TRUE;
@@ -459,13 +459,12 @@ class Organisator extends CI_Controller {
         $id = $this->input->get('id');
         $this->load->model('shift_model');
         $shift = $this->shift_model->getWithCount($id);
-        if ((int)$shift->deelnemers >= (int)$shift->maxAantal) {
+        if ((int) $shift->deelnemers >= (int) $shift->maxAantal) {
             $check = "true";
         } else {
             $check = "false";
         }
         return $check;
-        
     }
 
     /*
@@ -827,11 +826,24 @@ class Organisator extends CI_Controller {
         $dagindelingId = $this->input->get('dagindelingId');
         $feestId = $this->input->get('feestId');
         $data['dagindelingId'] = $dagindelingId;
-        
+
         $this->load->model('optie_model');
         $data['dagindelingen'] = $this->optie_model->getAllWherePersoneelsfeest($feestId);
-        
+
         $this->load->view('organisator/ajax_selectOptiesBijDagindeling', $data);
+    }
+
+    /**
+     * Stef Goor
+     * Haalt ajax op met lijst van ontvangers
+     */
+    public function haalAjaxOp_SelectOntvangers() {
+        $feestId = $this->input->get('feestId');
+
+        $this->load->model('persoon_model');
+        $data['personen'] = $this->persoon_model->getAllWherePersoneelsfeest($feestId);
+
+        $this->load->view('organisator/ajax_selectOntvangers', $data);
     }
 
     /**
@@ -1039,7 +1051,7 @@ class Organisator extends CI_Controller {
         $this->load->model('persoon_model');
         $persoon = $this->persoon_model->getWhereHashcode($hashcode);
         $this->persoon_model->delete($persoon->id);
-        
+
         redirect('organisator/beheerOrganisatoren');
     }
 
