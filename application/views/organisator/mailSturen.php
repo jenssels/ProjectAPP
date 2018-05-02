@@ -17,6 +17,21 @@
 
         if (soortSelect.value !== 'niks') {
             var soortId = soortSelect.value;
+            if (soortId === 'iedereen') {
+                //Alle personen zijn geselecteerd
+                var feestId = document.getElementById("feestId").value;
+                //Lijst met ontvangers updaten
+                $.ajax({type: "GET",
+                    url: site_url + "/organisator/haalAjaxOp_SelectOntvangers",
+                    data: {feestId: feestId},
+                    success: function (result) {
+                        $("#ontvangersResultaat").html(result);
+                    },
+                    error: function (xhr, status, error) {
+                        alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+                    }
+                });
+            }
             if (soortId !== 'niks') {
                 dagindelingSelect.disabled = false;
                 optieSelect.disabled = false;
@@ -66,7 +81,7 @@
                 optieSelect.disabled = true;
                 optieSelect.value = 'niks';
             } else {
-                optieSelect.disabled = false;
+                optieSelect.disabled = true;
             }
         }
     }
@@ -129,7 +144,22 @@
             </div>
             <div class="col">
                 <!--Lijst met ontvangers-->
-                <div id="selectOntvangers"></div>
+                <div id="ontvangersResultaat">
+                    <?php
+                    $ontvangers = array();
+                    $attributes = array('id' => 'selectOntvangers',
+                        'class' => 'form-control',
+                        'disabled' => 'true',
+                        'multiple' => 'true',
+                        'aria-describedby' => 'ontvangersHelp',
+                        'size' => '9');
+
+                    echo "<div class='form-group'>";
+                    echo form_dropdown('selectOntvangers', $ontvangers, '', $attributes);
+                    echo '<small id="ontvangersHelp" class="form-text text-muted">Een lijst van alle personen die de mail zullen ontvangen.</small>';
+                    echo "</div>";
+                    ?>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -147,7 +177,7 @@
                     <textarea class="form-control" rows="8" id="inputInhoud" aria-describedby="inhoudHelp" placeholder="Geef hier de inhoud van de mail op."></textarea>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" id="checkboxUitnodiging" name="checkboxUitnodiging" value="">Uitnodogingslink genereren.</label>
+                    <label><input type="checkbox" id="checkboxUitnodiging" name="checkboxUitnodiging" value="">Uitnodigingslink genereren.</label>
                 </div>
             </div>
         </div>
