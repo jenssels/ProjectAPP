@@ -45,9 +45,6 @@ class Organisator extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 
-    public function stuurTestMail() {
-        $this->stuurMail('Test mail met link', 'Dit is een test bericht \n nieuwe lijn', 'jenssels1998@gmail.com', 'personeel', '6xkY28eLg9ho1tfu', true);
-    }
 
     /**
      * Jens Sels - Tonen van inschrijvingen van een personeelsfeest
@@ -61,37 +58,6 @@ class Organisator extends CI_Controller {
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
         $this->template->load('main_master', $partials, $data);
-    }
-
-    /**
-     * Jens Sels - Functie die mail gaat versturen via gmail
-     * @param $titel Titel van de mail 
-     * @param $message Inhoud die via de mail word verstuurd
-     * @param $mail Mail adres naar wie de mail verstuurd word
-     * @param $type Type persoon naar wie de mail word verstuurd
-     * @param $hash Code die aan link word toegevoegd zodat ze op de site kunnen inloggen
-     * @param $isInschrijfLink Moet er een inschrijflink meegestuurd worden ? 
-     */
-    public function stuurMail($titel, $message, $mail, $type, $hash, $isInschrijfLink = false) {
-        $config = Array('protocol' => 'smtp', 'smtp_host' => 'ssl://smtp.gmail.com', 'smtp_port' => 465, 'smtp_user' => 'team17project@gmail.com', 'smtp_pass' => 'team17project', 'mailtype' => 'html', 'charset' => 'utf-8');
-        if ($isInschrijfLink) {
-            if ($type === 'personeel') {
-                $link = base_url('index.php/personeel/index/' . $hash);
-
-            } else {
-                $link = base_url('index.php/vrijwilliger/index/' . $hash);
-            }
-            $message .= '\n Gebruik onderstaande link om u keuzes voor het personeelsfeest door te geven: \n ' . $link;
-        }
-        $this->load->library('email');
-        $this->load->library('encrypt');
-        $this->email->initialize($config);
-        $this->email->set_newline("\r\n");
-        $this->email->from('team17project@gmail.com', 'Personeelsfeest Thomas More');
-        $this->email->to($mail);
-        $this->email->subject($titel);
-        $this->email->message(str_replace('\n', '<br />', $message));
-        $this->email->send();
     }
 
     /**
@@ -498,7 +464,6 @@ class Organisator extends CI_Controller {
         } else {
             $check = "false";
         }
-        print_r($check);
         return $check;
         
     }
