@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'projectappteam17.ddns.net',
+	'hostname' => 'projectappteam17.ddns.net:3306',
 	'username' => 'projectappteam17',
 	'password' => 'OYLptjUOmi983o0C',
 	'database' => 'team_17',
