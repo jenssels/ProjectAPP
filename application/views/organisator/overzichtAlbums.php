@@ -35,8 +35,14 @@
           // modal wordt automatisch opgeroepen door data-toggle in knop
         });
 
-        $('#knopVerwijder').click(function() {
-          verwijderAlbum(albumId); 
+        $('#knopVerwijder').click(function(e) {
+           if (confirm("Ben je zeker dat je dit album wilt verwijderen")){
+               verwijderAlbum(albumId); 
+           }
+           else {
+               e.preventDefault();
+           }
+          
           //location.reload();
         });
 
@@ -71,7 +77,8 @@
         //Jorne Lambrechts - knoppen om album te bewerken of te verwijderen
         echo '<div>';
         echo anchor('organisator/albumBewerken/' . $album->id,'<button type="button" class="btn"><i class="fas fa-edit"></i></button>');
-        echo '<button type="button" class="btn verwijderen" data-id="' . $album->id . '" data-toggle="modal" data-target="#bevestigVerwijderen"><i class="fas fa-times"></i></button>';
+        //echo '<button type="button" class="btn verwijderen" data-id="' . $album->id . '" data-toggle="modal" data-target="#bevestigVerwijderen"><i class="fas fa-times"></i></button>';
+        
         echo '</div>';
         echo'</div></div><br>';
     }
@@ -80,7 +87,7 @@
     echo '<div>'. anchor ('organisator/maakAlbum', 'Album aanmaken', 'class="btn btn-primary"') . '</div>';
     ?>
     
-    <!--Modal dialog om het verwijderen van een album te bevestigen-->
+    <!--Modal dialog om het verwijderen van een album te bevestigen
     <div class="modal fade" id="bevestigVerwijderen" role="dialog" tabindex="-1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -96,6 +103,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 </div>
 </div>

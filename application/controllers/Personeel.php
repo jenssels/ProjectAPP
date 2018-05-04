@@ -45,19 +45,30 @@ class Personeel extends CI_Controller {
      */
     public function dagindelingInvullen($hashcode) {
         // Gegevens ophalen van persoon
-        $this->load->model('persoon_model');
+        $this->load->model('persoon_model'); 
         $personeelslid = $this->persoon_model->getWhereHashcode($hashcode);
-        $data['deelnemer'] = $personeelslid;
-        $data['titel'] = 'Dagindeling invullen';
-        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
         
-        // Toon alle dagindeling met opties het voor het personeelslid
-        $this->load->model('dagindeling_model');
-        $data['dagindelingenMetOpties'] = $this->dagindeling_model->getAllDagindelingenWherePersoneelsfeestWithOpties($personeelslid->personeelsfeestId);
+        if ($personeelslid != null) {
+            $data['deelnemer'] = $personeelslid;
+            $data['titel'] = 'Dagindeling invullen';
+            $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+        
+            // Toon alle dagindeling met opties het voor het personeelslid
+            $this->load->model('dagindeling_model');
+            $data['dagindelingenMetOpties'] = $this->dagindeling_model->getAllDagindelingenWherePersoneelsfeestWithOpties($personeelslid->personeelsfeestId);
 
-        $partials = array('hoofding' => 'hoofding',
+            $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'personeel/dagindelingInvullen',
             'voetnoot' => 'voetnoot');
+        } else {
+            $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
+            $data['foutmelding'] = 'Deze hashcode hoort bij geen personeelslid, controleer uw hashcode';
+            $data['titel'] = 'Dagindeling invullen: foutmelding';
+            $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'errors/error.php',
+            'voetnoot' => 'voetnoot');
+        }
+        
 
         $this->template->load('main_master', $partials, $data);
     }
