@@ -11,6 +11,7 @@
 <script>
 
     function haalOptiesBijDagindelingOp ( dagindelingId ) {
+        console.log(dagindelingId);
         $.ajax({type : "GET",
                 url : site_url + "/organisator/haalAjaxOp_OptiesBijDagindeling",
                 data : { dagindelingId : dagindelingId },
@@ -28,6 +29,7 @@
         $( ".dagindelingLink" ).click(function(e) {
             e.preventDefault();
             var id = $(this).data('id');
+            console.log(id);
             haalOptiesBijDagindelingOp ( id );
         });
         

@@ -244,7 +244,6 @@ class Persoon_model extends CI_Model {
     function getAllWhereTypeId($id) {
         $this->db->where('typeId', $id);
         $query = $this->db->get('persoon');
-
         return $query->result();
     }
 

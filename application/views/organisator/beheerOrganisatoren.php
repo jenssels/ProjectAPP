@@ -8,6 +8,18 @@
  */
 ?>
 
+<script>
+    $(document).ready(function () {
+        $('.verwijderOrganisator').click(function (e) {
+            var aantalOrganisatoren = $('.verwijderOrganisator').length;
+            if (aantalOrganisatoren <= 1) {
+                e.preventDefault();
+                $('#modal').modal('show');
+            }
+        });
+    });
+</script>
+
 <div class="row">
     <div class="col-sm-12">
         <table class="table">
@@ -21,7 +33,7 @@
                 echo "<tr>";
                 echo "<td>" . $organisator->voornaam . " " . $organisator->naam . "</td>";
                 echo "<td>" . $organisator->email . "</td>";
-                echo "<td>" . anchor('organisator/verwijderOrganisator/' . $organisator->hashcode, 'Verwijderen') . "</td>";
+                echo "<td>" . anchor('organisator/verwijderOrganisator/' . $organisator->hashcode, 'Verwijderen', 'class="verwijderOrganisator"') . "</td>";
                 echo "</tr>";
             }
             ?>
@@ -29,5 +41,25 @@
             <td></td>
             <td></td>
         </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Fout!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Dit is de laatste organisator. Je kan deze niet verwijderen.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+            </div>
+        </div>
     </div>
 </div>
