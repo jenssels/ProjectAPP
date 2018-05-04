@@ -59,6 +59,32 @@ class Persoon_model extends CI_Model {
 
         return $query->result();
     }
+    
+    /**
+     * Stef Goor - Ophalen van alle personeelsleden van een personeelsfeest
+     * @param $feestId Id van een personeelsfeest
+     * @return Alle personeelsleden van een personeelsfeest
+     */
+    function getAllPersoneelWherePersoneelsFeest($feestId) {
+        $this->db->where('personeelsfeestId', $feestId);
+        $this->db->where('typeId', '3');
+        $query = $this->db->get('persoon');
+
+        return $query->result();
+    }
+    
+    /**
+     * Stef Goor - Ophalen van alle personeelsleden van een personeelsfeest
+     * @param $feestId Id van een personeelsfeest
+     * @return Alle personeelsleden van een personeelsfeest
+     */
+    function getAllVrijwilligersWherePersoneelsFeest($feestId) {
+        $this->db->where('personeelsfeestId', $feestId);
+        $this->db->where('typeId', '2');
+        $query = $this->db->get('persoon');
+
+        return $query->result();
+    }
 
     /**
      * Jens Sels - ophalen van alle hashcodes
@@ -108,8 +134,8 @@ class Persoon_model extends CI_Model {
      * @return Alle personen met een email van een bepaald personeelsfeest
      */
     function getAllWherePersoneelsFeestAndEmail($feestId, $email) {
-        $this->db->where('personeelsfeestid', $feestId);
-        $this->db->where('email', $email);
+        $where = array('personeelsfeestId' => $feestId, 'email' => $email);
+        $this->db->where($where);
         $query = $this->db->get('persoon');
 
         return $query->result();
@@ -146,20 +172,6 @@ class Persoon_model extends CI_Model {
     function getAllPersoneelsLedenWherePersoneelsFeest($feestId) {
         $this->db->where('personeelsfeestId', $feestId);
         $this->db->where('typeId', '3');
-        $query = $this->db->get('persoon');
-
-        return $query->result();
-    }
-
-    /**
-     *  Jens Sels - Ophalen van alle gebruikers van geselecteerde personeelsfeest
-     * @param $feestId Id van personeelsfeest
-     * @return Alle vrijwilligers van het personeelsfeest 
-     */
-    function getAllVrijwilligersWherePersoneelsFeest($feestId) {
-
-        $this->db->where('personeelsfeestId', $feestId);
-        $this->db->where('typeId', '2');
         $query = $this->db->get('persoon');
 
         return $query->result();
@@ -232,8 +244,30 @@ class Persoon_model extends CI_Model {
     function getAllWhereTypeId($id) {
         $this->db->where('typeId', $id);
         $query = $this->db->get('persoon');
-
         return $query->result();
     }
 
+    /**
+     * Jens Sels - Persoon toevoegen indien email nog niet gebruikt is
+     * @param $persoon Object met gegevens van een persoon
+     * @return String met info of de persoon is toegevoegd of niet
+     */
+    function insertWithCheck($persoon){
+        $message = "";
+        $message['stuur'] = false;
+        $feestId = $persoon->personeelsfeestId;
+        $mails = $this->getAllMailsWhereFeest($feestId);
+        if (in_array($persoon->email, $mails)) {
+            $message['inhoud'] = 'Mail adres al aanwezig - ' . $persoon->voornaam . ' ' . $persoon->naam . '</br>';
+        } else {
+            if (count($this->getAllWherePersoneelsFeestAndEmail($feestId, $persoon->email)) == 0) {
+                $this->insert($persoon);
+                $message['inhoud'] = 'De persoon is uitgenodigd en een mail is verstuurd - ' . $persoon->voornaam . ' ' . $persoon->naam . '</br>';
+                $message['stuur'] = true;
+            } else {
+                $message['inhoud'] = 'Al aanwezig in de database - ' . $persoon->voornaam . ' ' . $persoon->naam . '</br>';
+            }
+        }
+        return $message;
+    }
 }

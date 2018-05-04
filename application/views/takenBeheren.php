@@ -5,8 +5,8 @@
  * 
  */?>
 <div class="row">
-    <div class="col-md-12">
-        <table>
+    <div class="col-md-8">
+        <table class="table">
         <?php
             //Thomas Vansprengel - Overzicht van taken
             foreach($taken as $taak){
@@ -14,8 +14,8 @@
                         . "<td>" .  $taak->beschrijving . "</td>"
                         . "<td>" .  $taak->dagindeling->naam . "</td>"
                         . "<td>" .  $taak->locatie->naam . "</td>"
-                        . "<td>" . anchor("organisator/verwijdertaak/".$taak->id,"Verwijderen") . "</td>"
-                        . "<td>" . anchor("organisator/edittaak/".$taak->id,"Bewerk") . "</td></tr>"; 
+                        . "<td>" . anchor("organisator/verwijdertaak/".$taak->id,'<i class="far fa-trash-alt grow"></i>') . "</td>"
+                        . "<td>" . anchor("organisator/edittaak/".$taak->id,'<i class="fas fa-pencil-alt grow"></i>') . "</td></tr>"; 
                 
             }
             

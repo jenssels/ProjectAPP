@@ -25,21 +25,21 @@
 
 	
     <?php
-    $attributes = array('name' => 'mijnFormulier');
+    $attributes = array('name' => 'mijnFormulier', 'class' => "table");
     echo form_open('organisator/pasTaakAan', $attributes);
     ?>
     <table>
         <tr>
             <td><?php echo form_label('Naam:', 'naam'); ?></td>
             <td><?php
-            $data = array('value' => $taak->naam,'name' => 'naam', 'id' => 'naam', 'size' => '30');
+            $data = array('class' => 'form-control','value' => $taak->naam,'name' => 'naam', 'id' => 'naam', 'size' => '30');
             echo form_input($data);
             ?>
             </td>
         </tr>
         <tr>
             <td><?php echo form_label('Beschrijving:', 'beschrijving'); ?></td>
-            <td><?php echo form_input(array('value' => $taak->beschrijving,'name' => 'beschrijving', 'id' => 'beschrijving', 'size' => '50')); ?></td>
+            <td><?php echo form_input(array('class' => 'form-control','value' => $taak->beschrijving,'name' => 'beschrijving', 'id' => 'beschrijving', 'size' => '50')); ?></td>
         </tr>
         <tr>
             <td><?php echo form_label('Locatie:', 'locatie'); ?></td>
@@ -57,13 +57,13 @@
         </tr>
         <tr>
             <td><?php echo form_hidden('id', $taak->id); ?></td></td>
-            <td><?php echo form_submit('knop', 'Submit'); ?></td>
+<td><?php echo form_submit('knop', 'Submit',"class='btn btn-primary'"); ?>
+<?php echo "<a class='btn btn-primary' href=\"javascript:history.go(-1)\">Terug</a>"; ?></td>
         </tr>
     </table>
 
     <?php echo form_close(); ?>
 
-    <?php echo "<a href=\"javascript:history.go(-1)\">Terug</a>"; ?>
 
 </body>
 </html>

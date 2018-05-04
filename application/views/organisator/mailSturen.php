@@ -17,6 +17,51 @@
 
         if (soortSelect.value !== 'niks') {
             var soortId = soortSelect.value;
+            if (soortId === 'iedereen') {
+                //Alle personen zijn geselecteerd
+                var feestId = document.getElementById("feestId").value;
+                //Lijst met ontvangers updaten
+                $.ajax({type: "GET",
+                    url: site_url + "/organisator/haalAjaxOp_SelectOntvangers",
+                    data: {feestId: feestId, persoon: 'iedereen'},
+                    success: function (result) {
+                        $("#ontvangersResultaat").html(result);
+                    },
+                    error: function (xhr, status, error) {
+                        alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+                    }
+                });
+            }
+            if (soortId === '3') {
+                //Personeelsleden zijn geselecteerd
+                var feestId = document.getElementById("feestId").value;
+                //Lijst met ontvangers updaten
+                $.ajax({type: "GET",
+                    url: site_url + "/organisator/haalAjaxOp_SelectOntvangers",
+                    data: {feestId: feestId, persoon: '3'},
+                    success: function (result) {
+                        $("#ontvangersResultaat").html(result);
+                    },
+                    error: function (xhr, status, error) {
+                        alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+                    }
+                });
+            }
+            if (soortId === '2') {
+                //Personeelsleden zijn geselecteerd
+                var feestId = document.getElementById("feestId").value;
+                //Lijst met ontvangers updaten
+                $.ajax({type: "GET",
+                    url: site_url + "/organisator/haalAjaxOp_SelectOntvangers",
+                    data: {feestId: feestId, persoon: '2'},
+                    success: function (result) {
+                        $("#ontvangersResultaat").html(result);
+                    },
+                    error: function (xhr, status, error) {
+                        alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+                    }
+                });
+            }
             if (soortId !== 'niks') {
                 dagindelingSelect.disabled = false;
                 optieSelect.disabled = false;
@@ -66,7 +111,7 @@
                 optieSelect.disabled = true;
                 optieSelect.value = 'niks';
             } else {
-                optieSelect.disabled = false;
+                optieSelect.disabled = true;
             }
         }
     }
@@ -79,7 +124,7 @@
 <div class="container">
     <form>
         <?php
-        //Verborgen veld om Id van personeelsfest me te kunnen geven
+        //Verborgen veld om Id van personeelsfeest mee te kunnen geven
         echo '<input type="hidden" id="feestId" name="feestId" value="' . $feestId . '">';
         ?>
         <div class="row">
@@ -124,23 +169,26 @@
                         ?>
                     </div>
                 </fieldset>
+                <!--Lijst met opties-->
                 <div id="optieResultaat"></div>
             </div>
             <div class="col">
-                <div id="lijstResultaat"></div>
-                <div class="form-group">
-                    <label for="ontvangers">Ontvangers:</label>
-                    <select multiple="true" disabled="true" class="form-control" id="inputInhoud" aria-describedby="ontvangersHelp" size="9">
-                        <option value="1">Joren</option>
-                        <option>Jens</option>
-                        <option>Stef</option>
-                        <option>Jorne</option>
-                        <option>Florian</option>
-                        <option>Henk</option>
-                        <option>Lise</option>
-                        <option>Jolien</option>
-                    </select>
-                    <small id="ontvangersHelp" class="form-text text-muted">Een lijst van alle personen die de mail zullen ontvangen.</small>
+                <!--Lijst met ontvangers-->
+                <div id="ontvangersResultaat">
+                    <?php
+                    $ontvangers = array();
+                    $attributes = array('id' => 'selectOntvangers',
+                        'class' => 'form-control',
+                        'disabled' => 'true',
+                        'multiple' => 'true',
+                        'aria-describedby' => 'ontvangersHelp',
+                        'size' => '9');
+
+                    echo "<div class='form-group'>";
+                    echo form_dropdown('selectOntvangers', $ontvangers, '', $attributes);
+                    echo '<small id="ontvangersHelp" class="form-text text-muted">Een lijst van alle personen die de mail zullen ontvangen.</small>';
+                    echo "</div>";
+                    ?>
                 </div>
             </div>
         </div>
@@ -159,7 +207,7 @@
                     <textarea class="form-control" rows="8" id="inputInhoud" aria-describedby="inhoudHelp" placeholder="Geef hier de inhoud van de mail op."></textarea>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" id="checkboxUitnodiging" name="checkboxUitnodiging" value="">Uitnodogingslink genereren.</label>
+                    <label><input type="checkbox" id="checkboxUitnodiging" name="checkboxUitnodiging" value="">Uitnodigingslink genereren.</label>
                 </div>
             </div>
         </div>
@@ -218,6 +266,7 @@
                             </ul>
                         </div>
                     </div>
+                    <hr>
                     <div class="row">
                         <div class="col-md-12">
                             <h5>Lijst van ontvangers</h5>
