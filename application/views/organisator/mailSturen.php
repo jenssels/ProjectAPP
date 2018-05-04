@@ -23,7 +23,37 @@
                 //Lijst met ontvangers updaten
                 $.ajax({type: "GET",
                     url: site_url + "/organisator/haalAjaxOp_SelectOntvangers",
-                    data: {feestId: feestId},
+                    data: {feestId: feestId, persoon: 'iedereen'},
+                    success: function (result) {
+                        $("#ontvangersResultaat").html(result);
+                    },
+                    error: function (xhr, status, error) {
+                        alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+                    }
+                });
+            }
+            if (soortId === '3') {
+                //Personeelsleden zijn geselecteerd
+                var feestId = document.getElementById("feestId").value;
+                //Lijst met ontvangers updaten
+                $.ajax({type: "GET",
+                    url: site_url + "/organisator/haalAjaxOp_SelectOntvangers",
+                    data: {feestId: feestId, persoon: '3'},
+                    success: function (result) {
+                        $("#ontvangersResultaat").html(result);
+                    },
+                    error: function (xhr, status, error) {
+                        alert("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+                    }
+                });
+            }
+            if (soortId === '2') {
+                //Personeelsleden zijn geselecteerd
+                var feestId = document.getElementById("feestId").value;
+                //Lijst met ontvangers updaten
+                $.ajax({type: "GET",
+                    url: site_url + "/organisator/haalAjaxOp_SelectOntvangers",
+                    data: {feestId: feestId, persoon: '2'},
                     success: function (result) {
                         $("#ontvangersResultaat").html(result);
                     },

@@ -45,7 +45,6 @@ class Organisator extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 
-
     /**
      * Jens Sels - Tonen van inschrijvingen van een personeelsfeest
      * @param $feestId Id van een personeelsfeest
@@ -839,9 +838,25 @@ class Organisator extends CI_Controller {
      */
     public function haalAjaxOp_SelectOntvangers() {
         $feestId = $this->input->get('feestId');
+        $persoon = $this->input->get('persoon');
+        
+        //Array leegmaken
+        $data['personen'] = NULL;
 
         $this->load->model('persoon_model');
-        $data['personen'] = $this->persoon_model->getAllWherePersoneelsfeest($feestId);
+
+        if ($persoon == 'iedereen'){
+            //Iedereen in lijst met personen steken
+            $data['personen'] = $this->persoon_model->getAllWherePersoneelsfeest($feestId);
+            }
+        elseif ($persoon == '3') {
+            //Enkel personeelsleden in lijst met personen steken
+            $data['personen'] = $this->persoon_model->getAllPersoneelWherePersoneelsfeest($feestId);
+        }
+        elseif ($persoon == '2') {
+            //Enkel vrijwilligers in lijst met personen steken
+            $data['personen'] = $this->persoon_model->getAllVrijwilligersWherePersoneelsfeest($feestId);
+        }
 
         $this->load->view('organisator/ajax_selectOntvangers', $data);
     }

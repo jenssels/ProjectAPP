@@ -59,6 +59,32 @@ class Persoon_model extends CI_Model {
 
         return $query->result();
     }
+    
+    /**
+     * Stef Goor - Ophalen van alle personeelsleden van een personeelsfeest
+     * @param $feestId Id van een personeelsfeest
+     * @return Alle personeelsleden van een personeelsfeest
+     */
+    function getAllPersoneelWherePersoneelsFeest($feestId) {
+        $this->db->where('personeelsfeestId', $feestId);
+        $this->db->where('typeId', '3');
+        $query = $this->db->get('persoon');
+
+        return $query->result();
+    }
+    
+    /**
+     * Stef Goor - Ophalen van alle personeelsleden van een personeelsfeest
+     * @param $feestId Id van een personeelsfeest
+     * @return Alle personeelsleden van een personeelsfeest
+     */
+    function getAllVrijwilligersWherePersoneelsFeest($feestId) {
+        $this->db->where('personeelsfeestId', $feestId);
+        $this->db->where('typeId', '2');
+        $query = $this->db->get('persoon');
+
+        return $query->result();
+    }
 
     /**
      * Jens Sels - ophalen van alle hashcodes
@@ -146,20 +172,6 @@ class Persoon_model extends CI_Model {
     function getAllPersoneelsLedenWherePersoneelsFeest($feestId) {
         $this->db->where('personeelsfeestId', $feestId);
         $this->db->where('typeId', '3');
-        $query = $this->db->get('persoon');
-
-        return $query->result();
-    }
-
-    /**
-     *  Jens Sels - Ophalen van alle gebruikers van geselecteerde personeelsfeest
-     * @param $feestId Id van personeelsfeest
-     * @return Alle vrijwilligers van het personeelsfeest 
-     */
-    function getAllVrijwilligersWherePersoneelsFeest($feestId) {
-
-        $this->db->where('personeelsfeestId', $feestId);
-        $this->db->where('typeId', '2');
         $query = $this->db->get('persoon');
 
         return $query->result();
