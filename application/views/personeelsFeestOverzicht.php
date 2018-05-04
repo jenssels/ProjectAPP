@@ -29,7 +29,7 @@
             <tr>
                 <th>Naam</th>
                 <th>Datum</th>
-                <th>Uitgenodigen</th>
+                <th>Uitgenodigden</th>
                 <th>Inschrijvingen</th>
                 <th>Personeel toevoegen</th>
                 <th>Beheer dagindeling</th>

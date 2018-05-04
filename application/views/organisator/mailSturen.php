@@ -236,6 +236,7 @@
                             </ul>
                         </div>
                     </div>
+                    <hr>
                     <div class="row">
                         <div class="col-md-12">
                             <h5>Lijst van ontvangers</h5>
