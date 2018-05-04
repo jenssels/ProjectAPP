@@ -45,7 +45,6 @@ class Organisator extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 
-
     /**
      * Jens Sels - Tonen van inschrijvingen van een personeelsfeest
      * @param $feestId Id van een personeelsfeest
@@ -1048,10 +1047,16 @@ class Organisator extends CI_Controller {
      * @param $hashcode de hashcode van de te verwijderen organisator
      */
     public function verwijderOrganisator($hashcode) {
+        // Controleren van aantal organisatoren
         $this->load->model('persoon_model');
-        $persoon = $this->persoon_model->getWhereHashcode($hashcode);
-        $this->persoon_model->delete($persoon->id);
-
+        $organisatoren = $this->persoon_model->getAllWhereTypeId(1);
+        if (count($organisatoren) > 1) {
+            // Verwijderen
+            $persoon = $this->persoon_model->getWhereHashcode($hashcode);
+            $this->persoon_model->delete($persoon->id);            
+        } else {
+            
+        }        
         redirect('organisator/beheerOrganisatoren');
     }
 
