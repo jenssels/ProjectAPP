@@ -11,10 +11,17 @@
 <script>
     $(document).ready(function () {
         $('.verwijderOrganisator').click(function (e) {
+            var hashcode = $(this).data('id');
+            console.log(hashcode);
+            var _href = $('#verwijderen').attr('href');
+            $('#verwijderen').attr('href', _href + hashcode);
             var aantalOrganisatoren = $('.verwijderOrganisator').length;
             if (aantalOrganisatoren <= 1) {
                 e.preventDefault();
-                $('#modal').modal('show');
+                $('#modalFout').modal('show');
+            } else {
+                $('#modalBevestig').modal('show');
+                e.preventDefault();
             }
         });
     });
@@ -33,7 +40,7 @@
                 echo "<tr>";
                 echo "<td>" . $organisator->voornaam . " " . $organisator->naam . "</td>";
                 echo "<td>" . $organisator->email . "</td>";
-                echo "<td>" . anchor('organisator/verwijderOrganisator/' . $organisator->hashcode, 'Verwijderen', 'class="verwijderOrganisator"') . "</td>";
+                echo "<td>" . anchor('#!', '<i class="far fa-trash-alt grow"></i>', 'class="verwijderOrganisator" data-id="' . $organisator->hashcode . '"') . "</td>";
                 echo "</tr>";
             }
             ?>
@@ -45,7 +52,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalFout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -59,6 +66,27 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalBevestig" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Wil je doorgaan?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Ben je zeker dat je deze organisator wilt verwijderen?
+            </div>
+            <div class="modal-footer">
+                <a href="<?php echo base_url('index.php/organisator/verwijderOrganisator/');?>" class="btn btn-secondary" id="verwijderen">Doorgaan</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleren</button>
             </div>
         </div>
     </div>

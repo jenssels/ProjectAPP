@@ -7,10 +7,6 @@
  */
 ?>
 
-<div class="page-header">
-  <h1>Organisator toevoegen</h1>
-</div>
-
 <?php echo haalJavascriptOp("validator.js"); ?>
 
 <?php
