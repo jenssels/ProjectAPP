@@ -290,7 +290,7 @@ class Organisator extends CI_Controller {
         $data['locaties'] = $this->locatie_model->getAll();
 
         $partials = array("hoofding" => "hoofding",
-            "inhoud" => "locatiesBeheren",
+            "inhoud" => "organisator/locatiesBeheren",
             "voetnoot" => "voetnoot");
         $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         $data['titel'] = "Locaties beheren";
@@ -569,7 +569,7 @@ class Organisator extends CI_Controller {
         $data['personeelsLeden'] = $this->persoon_model->getAllPersoneelsLedenWherePersoneelsFeest($id);
         $data['vrijwilligers'] = $this->persoon_model->getAllVrijwilligersWherePersoneelsFeest($id);
 
-        $this->load->view('ajax_overzichtGebruikers', $data);
+        $this->load->view('organisator/ajax_overzichtGebruikers', $data);
     }
 
     /**

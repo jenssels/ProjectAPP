@@ -10,10 +10,12 @@
 
 <script>
     $(document).ready(function () {
+        <?php
+            $phpvar = base_url('index.php/organisator/verwijderOrganisator/');
+            echo "var _href = '{$phpvar}'; \n";
+        ?>
         $('.verwijderOrganisator').click(function (e) {
-            var hashcode = $(this).data('id');
-            console.log(hashcode);
-            var _href = $('#verwijderen').attr('href');
+            var hashcode = $(this).data('hashcode');
             $('#verwijderen').attr('href', _href + hashcode);
             var aantalOrganisatoren = $('.verwijderOrganisator').length;
             if (aantalOrganisatoren <= 1) {
@@ -40,7 +42,7 @@
                 echo "<tr>";
                 echo "<td>" . $organisator->voornaam . " " . $organisator->naam . "</td>";
                 echo "<td>" . $organisator->email . "</td>";
-                echo "<td>" . anchor('#!', '<i class="far fa-trash-alt grow"></i>', 'class="verwijderOrganisator" data-id="' . $organisator->hashcode . '"') . "</td>";
+                echo "<td>" . anchor('#!', '<i class="far fa-trash-alt grow"></i>', 'class="verwijderOrganisator" data-hashcode="' . $organisator->hashcode . '"') . "</td>";
                 echo "</tr>";
             }
             ?>
@@ -85,7 +87,7 @@
                 Ben je zeker dat je deze organisator wilt verwijderen?
             </div>
             <div class="modal-footer">
-                <a href="<?php echo base_url('index.php/organisator/verwijderOrganisator/');?>" class="btn btn-secondary" id="verwijderen">Doorgaan</a>
+                <a href="" class="btn btn-secondary" id="verwijderen">Doorgaan</a>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleren</button>
             </div>
         </div>
