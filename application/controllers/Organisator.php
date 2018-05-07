@@ -36,7 +36,7 @@ class Organisator extends CI_Controller {
         $data['personeelsFeesten'] = $this->Personeelsfeest_model->getAll();
 
         $partials = array("hoofding" => "hoofding",
-            "inhoud" => "personeelsFeestOverzicht",
+            "inhoud" => "organisator/personeelsFeestOverzicht",
             "voetnoot" => "voetnoot");
 
         $data['titel'] = 'Personeelsfeest overzicht';
@@ -52,7 +52,7 @@ class Organisator extends CI_Controller {
     public function personeelsFeestInschrijvingen($feestId) {
         $this->load->model('Personeelsfeest_model');
         $data["personeelsfeest"] = $this->Personeelsfeest_model->getWithInschrijvingenWherePersoneelsfeest($feestId);
-        $partials = array("hoofding" => "hoofding", "inhoud" => "personeelsFeestInschrijvingen", "voetnoot" => "voetnoot");
+        $partials = array("hoofding" => "hoofding", "inhoud" => "organisator/personeelsFeestInschrijvingen", "voetnoot" => "voetnoot");
         $data['titel'] = 'Inschrijvingen ' . strtolower($data['personeelsfeest']->naam);
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
@@ -79,7 +79,7 @@ class Organisator extends CI_Controller {
             $data['feest'] = $this->Personeelsfeest_model->get($feestId);
             $data['titel'] = 'Personeelsfeest bewerken';
         }
-        $partials = array("hoofding" => "hoofding", "inhoud" => "personeelsFeestAanmaken", "voetnoot" => "voetnoot");
+        $partials = array("hoofding" => "hoofding", "inhoud" => "organisator/personeelsFeestAanmaken", "voetnoot" => "voetnoot");
         $data['paginaverantwoordelijke'] = 'Jens Sels';
 
         $this->template->load('main_master', $partials, $data);
@@ -162,7 +162,7 @@ class Organisator extends CI_Controller {
         $data['shiften'] = $this->shift_model->getAllWithTaakWhereTaak($id);
 
         $partials = array("hoofding" => "hoofding",
-            "inhoud" => "taakShiften",
+            "inhoud" => "organisator/taakShiften",
             "voetnoot" => "voetnoot");
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
@@ -183,7 +183,7 @@ class Organisator extends CI_Controller {
         $data['dagindelingen'] = $this->Dagindeling_model->getAll();
 
         $partials = array("hoofding" => "hoofding",
-            "inhoud" => "taakToevoegen",
+            "inhoud" => "organisator/taakToevoegen",
             "voetnoot" => "voetnoot");
         $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         $data['titel'] = 'Taak Toevoegen';
@@ -229,7 +229,7 @@ class Organisator extends CI_Controller {
         $data['taak'] = $this->taak_model->getWithDagindeling($id);
 
         $partials = array("hoofding" => "hoofding",
-            "inhoud" => "taakBewerken",
+            "inhoud" => "organisator/taakBewerken",
             "voetnoot" => "voetnoot");
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
@@ -290,7 +290,7 @@ class Organisator extends CI_Controller {
         $data['locaties'] = $this->locatie_model->getAll();
 
         $partials = array("hoofding" => "hoofding",
-            "inhoud" => "locatiesBeheren",
+            "inhoud" => "organisator/locatiesBeheren",
             "voetnoot" => "voetnoot");
         $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         $data['titel'] = "Locaties beheren";
@@ -569,7 +569,7 @@ class Organisator extends CI_Controller {
         $data['personeelsLeden'] = $this->persoon_model->getAllPersoneelsLedenWherePersoneelsFeest($id);
         $data['vrijwilligers'] = $this->persoon_model->getAllVrijwilligersWherePersoneelsFeest($id);
 
-        $this->load->view('ajax_overzichtGebruikers', $data);
+        $this->load->view('organisator/ajax_overzichtGebruikers', $data);
     }
 
     /**
