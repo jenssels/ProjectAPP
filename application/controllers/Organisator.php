@@ -119,7 +119,7 @@ class Organisator extends CI_Controller
     {
         $this->session->set_userdata('feestId', $feestId);
         $partials = array("hoofding" => "hoofding",
-            "inhoud" => "personeelsFeestUploadForm",
+            "inhoud" => "organisator/personeelsFeestUploadForm",
             "voetnoot" => "voetnoot");
         $data['feestId'] = $feestId;
         $data['titel'] = 'Personeelsfeest personeel uploaden';
@@ -262,7 +262,7 @@ class Organisator extends CI_Controller
         $data['taken'] = $this->taak_model->getAllWithDagindeling();
 
         $partials = array("hoofding" => "hoofding",
-            "inhoud" => "takenBeheren",
+            "inhoud" => "organisator/takenBeheren",
             "voetnoot" => "voetnoot");
         $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         $data['titel'] = "Taken beheren";
@@ -284,7 +284,7 @@ class Organisator extends CI_Controller
         $data['dagindelingid'] = $dagindelingId;
 
         $partials = array("hoofding" => "hoofding",
-            "inhoud" => "takenBeheren",
+            "inhoud" => "organisator/takenBeheren",
             "voetnoot" => "voetnoot");
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
@@ -336,7 +336,7 @@ class Organisator extends CI_Controller
         $this->load->model('Locatie_model');
         $data['locaties'] = $this->Locatie_model->getAll();
         $partials = array("hoofding" => "hoofding",
-            "inhoud" => "locatieToevoegen",
+            "inhoud" => "organisator/locatieToevoegen",
             "voetnoot" => "voetnoot");
         $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
         $data['titel'] = 'Locatie Toevoegen';
@@ -413,15 +413,12 @@ class Organisator extends CI_Controller
         $this->upload->initialize($config);
         if (!$this->upload->do_upload('excel')) {
             $data['errors'] = array('error' => $this->upload->display_errors());
-
-            $this->load->view('ajax_uploadStatus', $data);
         } else {
             $uploadData = $this->upload->data();
             $data_excel = $this->readExcel($uploadData);
             $data['personeel'] = $this->uploadPersoneel($data_excel);
-
-            $this->load->view('ajax_uploadStatus', $data);
         }
+        $this->load->view('organisator/ajax_uploadStatus', $data);
     }
 
     /**
