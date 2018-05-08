@@ -47,7 +47,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <?php echo anchor('organisator/personeelsfeestoverzicht', 'Terug') ?>
+        <a id="terug" class='btn btn-primary' href="javascript:history.go(-1);">Terug</a>
     </div>
 </div>
 

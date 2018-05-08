@@ -7,10 +7,15 @@
  * 
  */
 ?>
-<div class="page-header">
-    <h1>Oeps! Er liep iets fout!</h1>
+<div class="row">
+    <div class="col-md12">
+        <p><?php echo $foutmelding ?></p>
+    </div>
 </div>
-<div>
-    <?php echo $foutmelding ?>
+<div class="row">
+    <div class="col-md-12">
+        <a id="terug" class='btn btn-primary' href="javascript:history.go(-1);">Terug</a>
+    </div>
 </div>
+
 

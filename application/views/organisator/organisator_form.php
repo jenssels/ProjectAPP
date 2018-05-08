@@ -76,8 +76,8 @@ echo form_open('organisator/registreerNieuweOrganisator', $attributenFormulier)
 </div>
 
 <div class="form-group">
-    <?php echo form_submit('knop', 'Bevestigen', "class='btn btn-primary'") ?>
-    <?php echo form_submit('knop', 'Annuleren', "class='btn btn-primary'") ?>
+    <?php echo form_submit('knop', 'Bevestigen', "class='btn btn-primary'"); ?>
+    <a id="terug" class='btn btn-primary' href="javascript:history.go(-1);">Annuleren</a>
 </div>
 
 <?php echo form_close(); ?>

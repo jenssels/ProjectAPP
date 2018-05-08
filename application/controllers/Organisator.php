@@ -2,16 +2,17 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Organisator extends CI_Controller {
+class Organisator extends CI_Controller
+{
 
     /**
      * Index Page for this controller.
      *
      * Maps to the following URL
-     * 		http://example.com/index.php/welcome
-     * 	- or -
-     * 		http://example.com/index.php/welcome/index
-     * 	- or -
+     *        http://example.com/index.php/welcome
+     *    - or -
+     *        http://example.com/index.php/welcome/index
+     *    - or -
      * Since this controller is set as the default controller in
      * config/routes.php, it's displayed at http://example.com/
      *
@@ -19,7 +20,8 @@ class Organisator extends CI_Controller {
      * map to /index.php/welcome/<method_name>
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         if (!$this->authex->isAangemeld()) {
@@ -30,7 +32,8 @@ class Organisator extends CI_Controller {
     /**
      * Jens Sels - Tonen van overzicht personeelsfeesten
      */
-    public function personeelsFeestOverzicht() {
+    public function personeelsFeestOverzicht()
+    {
 
         $this->load->model('Personeelsfeest_model');
         $data['personeelsFeesten'] = $this->Personeelsfeest_model->getAll();
@@ -49,7 +52,8 @@ class Organisator extends CI_Controller {
      * Jens Sels - Tonen van inschrijvingen van een personeelsfeest
      * @param $feestId Id van een personeelsfeest
      */
-    public function personeelsFeestInschrijvingen($feestId) {
+    public function personeelsFeestInschrijvingen($feestId)
+    {
         $this->load->model('Personeelsfeest_model');
         $data["personeelsfeest"] = $this->Personeelsfeest_model->getWithInschrijvingenWherePersoneelsfeest($feestId);
         $partials = array("hoofding" => "hoofding", "inhoud" => "organisator/personeelsFeestInschrijvingen", "voetnoot" => "voetnoot");
@@ -63,7 +67,8 @@ class Organisator extends CI_Controller {
      * Jens Sels - Openen van pagina om personeelsfeest aan te maken of wijzigen
      * @param $feestId Id van personeelsfeest of waarde = 'nieuw' als je nieuw personeelsfeest wilt aanmaken
      */
-    public function personeelsFeestAanmakenForm($feestId) {
+    public function personeelsFeestAanmakenForm($feestId)
+    {
         if ($feestId == 'nieuw') {
             $nu = date("Y-m-d");
             $data['titel'] = 'Personeelsfeest aanmaken';
@@ -88,7 +93,8 @@ class Organisator extends CI_Controller {
     /**
      * Jens Sels - Aanmaken of bewerken van personeelsfeesten
      */
-    public function personeelsFeestAanmaken() {
+    public function personeelsFeestAanmaken()
+    {
         $feest = new stdClass();
         $feest->id = $this->input->post('id');
         $feest->naam = $this->input->post('naam');
@@ -109,7 +115,8 @@ class Organisator extends CI_Controller {
      * Jens Sels - Upload pagina openen van personeelsfeest om personeelsleden toe te voegen
      * @param $feestId Id van personeelsfeest
      */
-    public function personeelsFeestUploadForm($feestId) {
+    public function personeelsFeestUploadForm($feestId)
+    {
         $this->session->set_userdata('feestId', $feestId);
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "personeelsFeestUploadForm",
@@ -125,7 +132,8 @@ class Organisator extends CI_Controller {
      * Thomas Vansprengel - Verwijder een taak via de ID
      * @param $id Id van de te verwijderen taak
      */
-    public function verwijdertaak($id) {
+    public function verwijdertaak($id)
+    {
         $this->load->model('taak_model');
         $this->taak_model->delete($id);
         $referred_from = $this->session->userdata('referred_from_taak');
@@ -133,10 +141,11 @@ class Organisator extends CI_Controller {
     }
 
     /**
-     * Thomas Vansprengel 
+     * Thomas Vansprengel
      * Functie om de aangepaste informatie van taak weg te schrijven
      */
-    public function pasTaakAan() {
+    public function pasTaakAan()
+    {
         $info = new stdClass();
 
         $info->id = $this->input->post('id');
@@ -153,11 +162,12 @@ class Organisator extends CI_Controller {
     }
 
     /**
-     * Thomas Vansprengel 
+     * Thomas Vansprengel
      * Functie om shiften van de taak te beheren
      * @param $id Taak id
      */
-    public function shifttaak($id) {
+    public function shifttaak($id)
+    {
         $this->load->model('shift_model');
         $data['shiften'] = $this->shift_model->getAllWithTaakWhereTaak($id);
 
@@ -171,10 +181,11 @@ class Organisator extends CI_Controller {
     }
 
     /**
-     * Thomas Vansprengel 
+     * Thomas Vansprengel
      * Een nieuwe taak maken met lege tekstvakken
      */
-    public function taakToevoegen() {
+    public function taakToevoegen()
+    {
 
         $this->load->model('Locatie_model');
         $data['locaties'] = $this->Locatie_model->getAll();
@@ -193,10 +204,11 @@ class Organisator extends CI_Controller {
     }
 
     /**
-     * Thomas Vansprengel 
+     * Thomas Vansprengel
      * De functie om de ingegeven informatie weg te schrijven in de tabel
      */
-    public function voegTaakToe() {
+    public function voegTaakToe()
+    {
         $taak = new stdClass();
         $taak->id = $this->input->post('id');
         $taak->naam = $this->input->post('naam');
@@ -213,11 +225,12 @@ class Organisator extends CI_Controller {
     }
 
     /**
-     * Thomas Vansprengel 
+     * Thomas Vansprengel
      * Een taak aanpassen met de gegeven informatie in de tekstvakken
      * @param $id Taak id dat aangepast word
      */
-    public function edittaak($id) {
+    public function edittaak($id)
+    {
 
         $this->load->model('Locatie_model');
         $data['locaties'] = $this->Locatie_model->getAll();
@@ -238,12 +251,13 @@ class Organisator extends CI_Controller {
     }
 
     /**
-      <<<<<<< HEAD
-      =======
-     * Thomas Vansprengel 
+     * <<<<<<< HEAD
+     * =======
+     * Thomas Vansprengel
      * Toon het overzicht om de taken te beheren
      */
-    public function takenBeheren() {
+    public function takenBeheren()
+    {
         $this->load->model('taak_model');
         $data['taken'] = $this->taak_model->getAllWithDagindeling();
 
@@ -258,12 +272,13 @@ class Organisator extends CI_Controller {
     }
 
     /**
-      >>>>>>> dc32fe06c01a52d4aeced78300d025bb9b06c978
-     * Thomas Vansprengel 
+     * >>>>>>> dc32fe06c01a52d4aeced78300d025bb9b06c978
+     * Thomas Vansprengel
      * Toon het overzicht om een individuele taak te beheren aan de hand van een dagindeling
      * @param $dagindelingId Taak aanpassen aan de hand van deze dagindeling
      */
-    public function taakBeheren($dagindelingId) {
+    public function taakBeheren($dagindelingId)
+    {
         $this->load->model('taak_model');
         $data['taken'] = $this->taak_model->getAllWithDagindelingWhereDagindelingId($dagindelingId);
         $data['dagindelingid'] = $dagindelingId;
@@ -282,10 +297,11 @@ class Organisator extends CI_Controller {
     }
 
     /**
-     * Thomas Vansprengel 
+     * Thomas Vansprengel
      * Toon overzicht om locaties te beheren
      */
-    public function locatiesBeheren() {
+    public function locatiesBeheren()
+    {
         $this->load->model('locatie_model');
         $data['locaties'] = $this->locatie_model->getAll();
 
@@ -300,21 +316,23 @@ class Organisator extends CI_Controller {
     }
 
     /**
-     * Thomas Vansprengel 
+     * Thomas Vansprengel
      * Functie om een locatie te verwijderen aan de hand van een id
      * @param $id De gegeven locatie ID te verwijderen
      */
-    public function verwijderLocatie($id) {
+    public function verwijderLocatie($id)
+    {
         $this->load->model('locatie_model');
         $this->locatie_model->delete($id);
         $this->locatiesBeheren();
     }
 
     /**
-     * Thomas Vansprengel 
+     * Thomas Vansprengel
      * Overzicht tonen om een nieuwe locatie aan te maken
      */
-    public function locatieToevoegen() {
+    public function locatieToevoegen()
+    {
         $this->load->model('Locatie_model');
         $data['locaties'] = $this->Locatie_model->getAll();
         $partials = array("hoofding" => "hoofding",
@@ -328,10 +346,11 @@ class Organisator extends CI_Controller {
     }
 
     /**
-     * Thomas Vansprengel 
+     * Thomas Vansprengel
      * Functie om de gegevens van een nieuwe locatie weg te schrijven
      */
-    public function voegLocatieToe() {
+    public function voegLocatieToe()
+    {
         $locatie = new stdClass();
         $locatie->id = $this->input->post('id');
         $locatie->naam = $this->input->post('naam');
@@ -345,16 +364,17 @@ class Organisator extends CI_Controller {
     }
 
     /**
-     * Thomas Vansprengel 
+     * Thomas Vansprengel
      * Pas een locatie aan aan de hand van een ID
      * @param $id Locatie id
      */
-    public function editLocatie($id) {
+    public function editLocatie($id)
+    {
         $this->load->model('locatie_model');
         $data['locatie'] = $this->locatie_model->getById($id);
 
         $partials = array("hoofding" => "hoofding",
-            "inhoud" => "locatieBewerken",
+            "inhoud" => "organisator/locatieBewerken",
             "voetnoot" => "voetnoot");
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
@@ -363,10 +383,11 @@ class Organisator extends CI_Controller {
     }
 
     /**
-     * Thomas Vansprengel 
+     * Thomas Vansprengel
      * Functie om locatie aan te passen met nieuwe informatie
      */
-    public function pasLocatieAan() {
+    public function pasLocatieAan()
+    {
         $locatie = new stdClass();
         $locatie->id = $this->input->post('id');
         $locatie->naam = $this->input->post('naam');
@@ -383,7 +404,8 @@ class Organisator extends CI_Controller {
     /**
      * Jens Sels - Functie die excel bestand gaat uploaden en uitlezen
      */
-    public function ajaxUploadFile() {
+    public function ajaxUploadFile()
+    {
 
         $config['upload_path'] = './assets/files/';
         $config['allowed_types'] = 'xls';
@@ -405,7 +427,8 @@ class Organisator extends CI_Controller {
     /**
      * Jens Sels - Ajax die persoon gaar toevoegen aan personeelsfeest
      */
-    public function ajaxAddPersoon() {
+    public function ajaxAddPersoon()
+    {
         $this->load->model('Persoon_model');
         $hashCodes = $this->persoon_model->getAllHashCodes();
         $feestId = $this->session->userdata('feestId');
@@ -433,7 +456,8 @@ class Organisator extends CI_Controller {
     /**
      * Jens Sels - Ajax functie die lijst toont met deelnemers van een optie of shift
      */
-    public function ajaxToonDeelnemers() {
+    public function ajaxToonDeelnemers()
+    {
         $this->load->model('optiedeelname_model');
         $this->load->model('taakdeelname_model');
         $id = $this->input->get('id');
@@ -442,8 +466,7 @@ class Organisator extends CI_Controller {
         if ($type == 'optie') {
             $deelnemers = $this->optiedeelname_model->getAllWithDeelnemersWhereOptie($id);
         } else {
-            $deelnemers = $this->taakdeelname_model->getAllWithDeelnemersWhereShift($id);
-            ;
+            $deelnemers = $this->taakdeelname_model->getAllWithDeelnemersWhereShift($id);;
         }
         $data["deelnemers"] = $deelnemers;
         $this->load->view('ajax_toonDeelnemers', $data);
@@ -453,12 +476,13 @@ class Organisator extends CI_Controller {
      * Jens Sels - Ajax functie die controleerd of het maximum aantal deelnemers overschreden is
      * @return Volzet of niet
      */
-    public function ajaxCheckVolzet() {
+    public function ajaxCheckVolzet()
+    {
         $check = "leeg";
         $id = $this->input->get('id');
         $this->load->model('shift_model');
         $shift = $this->shift_model->getWithCount($id);
-        if ((int) $shift->deelnemers >= (int) $shift->maxAantal) {
+        if ((int)$shift->deelnemers >= (int)$shift->maxAantal) {
             $check = "true";
         } else {
             $check = "false";
@@ -471,7 +495,8 @@ class Organisator extends CI_Controller {
      * @param data Object met gegevens van het excel bestand
      */
 
-    public function readExcel($data) {
+    public function readExcel($data)
+    {
         chmod($data['full_path'], 0775);
         $this->spreadsheet_excel_reader->setOutputEncoding('CP1251');
         $this->spreadsheet_excel_reader->read($data['full_path'], false);
@@ -494,7 +519,8 @@ class Organisator extends CI_Controller {
      * @param personeel Object met gegevens van de personeelsleden
      * @return Lijst met alle personeelsleden en of ze toegevoegd zijn of niet
      */
-    public function uploadPersoneel($personeel) {
+    public function uploadPersoneel($personeel)
+    {
         $feestId = $this->session->userdata('feestId');
         $this->load->model('Persoon_model');
         $hashCodes = $this->persoon_model->getAllHashCodes();
@@ -530,7 +556,8 @@ class Organisator extends CI_Controller {
      * @param $hash Hashcode waarmee het personeelslid naar de webpagina kan surfen
      * @return True als personeelslid is toegevoegd en false als hij al in de databank zit
      */
-    public function insertPersoon($feestId, $voornaam, $naam, $email, $hash) {
+    public function insertPersoon($feestId, $voornaam, $naam, $email, $hash)
+    {
         $this->load->model('Persoon_model');
         $personeelDatabase = $this->Persoon_model->getAllWherePersoneelsFeestAndEmail($feestId, $email);
         if (count($personeelDatabase) == 0) {
@@ -551,7 +578,8 @@ class Organisator extends CI_Controller {
      * Jens Sels - Verwijderen van personeelsfeest en alles wat ermee te maken heeft
      * @param $feestId Id van personeelsfeest
      */
-    public function personeelsFeestVerwijderen($feestId) {
+    public function personeelsFeestVerwijderen($feestId)
+    {
         $this->load->model('Personeelsfeest_model');
 
         $this->Personeelsfeest_model->delete($feestId);
@@ -562,7 +590,8 @@ class Organisator extends CI_Controller {
     /**
      *  Jens Sels - Ophalen vrijwilligers en personeelsleden en tonen in view met ajax
      */
-    public function ajaxHaalDeelnemersOp() {
+    public function ajaxHaalDeelnemersOp()
+    {
         $id = $this->input->get('id');
         $this->load->model('persoon_model');
 
@@ -577,7 +606,8 @@ class Organisator extends CI_Controller {
      * Toont een pagina waar alle organisatoren getoond worden.
      * Van hieruit kan je de organisatoren beheren.
      */
-    public function beheerOrganisatoren() {
+    public function beheerOrganisatoren()
+    {
         // Standaardvariabelen
         $data['titel'] = 'Organisatoren beheren';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
@@ -596,7 +626,8 @@ class Organisator extends CI_Controller {
      * Haalt de details van een organisator op aan de hand van de hashcode van de persoon.
      * Toont hierna de details in de huidige pagina in een tabel.
      */
-    public function ajaxHaalOrganisatorDetailsOp() {
+    public function ajaxHaalOrganisatorDetailsOp()
+    {
         $hashcode = $this->input->get('hashcode');
         $this->load->model('persoon_model');
         $data['organisator'] = $this->persoon_model->getWhereHashcode($hashcode);
@@ -607,7 +638,8 @@ class Organisator extends CI_Controller {
     /**
      * Toont een formulierpagina om een nieuwe organisator toe te voegen.
      */
-    public function maakNieuweOrganisator() {
+    public function maakNieuweOrganisator()
+    {
         $data['titel'] = 'Nieuwe organisator toevoegen';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
         $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
@@ -619,41 +651,57 @@ class Organisator extends CI_Controller {
 
     /**
      * Joren Synaeve
-     * Registreert de nieuwe gebruiker indien er op 'Bevestigen' geklikt werd. 
+     * Registreert de nieuwe gebruiker indien er op 'Bevestigen' geklikt werd.
      * Gaat terug naar de vorige pagina wanneer er op 'Annuleren' geklikt werd.
      */
-    public function registreerNieuweOrganisator() {
+    public function registreerNieuweOrganisator()
+    {
         $hashCodes = $this->persoon_model->getAllHashCodes();
-        $knop = $this->input->post('knop');
-        if ($knop == "Annuleren") {
-            redirect('');
-        } else {
-            $organisator = new stdClass();
+        $organisator = new stdClass();
 
-            $organisator->voornaam = $this->input->post('voornaam');
-            $organisator->naam = $this->input->post('naam');
-            $organisator->email = $this->input->post('email');
-            $organisator->wachtwoord = password_hash($this->input->post('wachtwoord'), PASSWORD_DEFAULT);
+        $organisator->voornaam = $this->input->post('voornaam');
+        $organisator->naam = $this->input->post('naam');
+        $organisator->email = $this->input->post('email');
+        $organisator->wachtwoord = password_hash($this->input->post('wachtwoord'), PASSWORD_DEFAULT);
+        $hash = random_string('alnum', 16);
+        while (in_array($hash, $hashCodes)) {
             $hash = random_string('alnum', 16);
-            while (in_array($hash, $hashCodes)) {
-                $hash = random_string('alnum', 16);
-            }
-            $organisator->hashcode = $hash;
-            $organisator->typeId = 1;
-
-            $this->load->model('persoon_model');
-            $this->persoon_model->insertOrganisator($organisator);
         }
+        $organisator->hashcode = $hash;
+        $organisator->typeId = 1;
 
-        redirect('organisator/beheerOrganisatoren');
+        $this->load->model('persoon_model');
+        if ($this->persoon_model->persoonBestaat($organisator->email, 1) == false) {
+            $this->persoon_model->insertOrganisator($organisator);
+            redirect('organisator/beheerOrganisatoren');
+        } else {
+            $foutmelding = "Er bestaat reeds een organisator met deze email.";
+            $this->toonFoutpagina($foutmelding);
+        }
+    }
+
+    /**
+     * Joren Synaeve
+     * Toont een foutpagina met een foutmelding op.
+     * @param $foutmelding
+     */
+    public function toonFoutpagina ($foutmelding) {
+        $data['titel'] = 'Oeps! Er liep iets fout.';
+        $data['paginaverantwoordelijke'] = 'Joren Synaeve';
+        $data['foutmelding'] = $foutmelding;
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'errors/error',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
     }
 
     //Foutmelding als aanmelden fout loopt
-    public function foutAanmelden() {
+    public function foutAanmelden($foutmelding)
+    {
         $data['titel'] = 'Aanmeld fout!';
         $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
         $data['emailGebruiker'] = anchor('organisator/aanmelden', 'Organisator login');
-        $data['foutmelding'] = "Er bestaat geen organisator met de opgegeven inloggevens";
+        $data['foutmelding'] = "Er bestaat geen organisator met de opgegeven inloggegevens.";
         $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'errors/error',
             'voetnoot' => 'voetnoot');
@@ -665,7 +713,8 @@ class Organisator extends CI_Controller {
      * Toont een pagina met daarop de dagindeling van een specifiek personeelsfeest.
      * @param type $personeelsfeestId
      */
-    public function beheerDagindeling($personeelsfeestId) {
+    public function beheerDagindeling($personeelsfeestId)
+    {
         // Standaardvariabelen
         $data['titel'] = 'Dagindeling beheren';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
@@ -688,7 +737,8 @@ class Organisator extends CI_Controller {
      * Joren Synaeve
      * Gaat naar een pagina met formulier om een nieuwe dagindeling toe te voegen.
      */
-    public function maakNieuweDagindeling($personeelsfeestId) {
+    public function maakNieuweDagindeling($personeelsfeestId)
+    {
         // Standaardvariabelen
         $data['titel'] = 'Dagindeling toevoegen';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
@@ -713,7 +763,8 @@ class Organisator extends CI_Controller {
      * @param $personeelsfeestId Het id van het personeelsfeest waaraan de dagindeling gelinkt is
      * @param $dagindelingId Het id van de gekozen dagindeling
      */
-    public function wijzigDagindeling($personeelsfeestId, $dagindelingId) {
+    public function wijzigDagindeling($personeelsfeestId, $dagindelingId)
+    {
         // Standaardvariabelen
         $data['titel'] = 'Dagindeling bewerken';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
@@ -738,7 +789,8 @@ class Organisator extends CI_Controller {
      * Toont daarna opnieuw het overzicht.
      * Toont opnieuw het overzicht wanneer er op 'Annuleren' wordt geklikt.
      */
-    public function registreerDagindeling() {
+    public function registreerDagindeling()
+    {
         $knop = $this->input->post('knop');
         if ($knop == "Annuleren") {
             redirect('');
@@ -765,10 +817,11 @@ class Organisator extends CI_Controller {
 
     /**
      * Joren Synaeve
-     * @param $dagindelingId Het id van de te verwijderen dagindeling 
+     * @param $dagindelingId Het id van de te verwijderen dagindeling
      * Verwijdert de gekozen dagindeling
      */
-    public function verwijderDagindeling($personeelsfeestId, $dagindelingId) {
+    public function verwijderDagindeling($personeelsfeestId, $dagindelingId)
+    {
         $this->load->model('dagindeling_model');
         $this->dagindeling_model->delete($dagindelingId);
 
@@ -780,7 +833,8 @@ class Organisator extends CI_Controller {
      * naar overzicht van albums gaan voor de organisator
      */
 
-    public function overzichtAlbums() {
+    public function overzichtAlbums()
+    {
         $data['titel'] = 'Overzicht Albums';
         $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
         $data['emailGebruiker'] = $this->session->userdata('organisatorMail');
@@ -803,9 +857,10 @@ class Organisator extends CI_Controller {
 
     /**
      * Jens Sels
-     * 
+     *
      */
-    public function haalAjaxOp_OptiesBijDagindeling() {
+    public function haalAjaxOp_OptiesBijDagindeling()
+    {
         $dagindelingId = $this->input->get('dagindelingId');
 
         $this->load->model('optie_model');
@@ -821,7 +876,8 @@ class Organisator extends CI_Controller {
      * Stef Goor
      * Haalt ajax op met select van de opties bij een dagindeling of personeelsfeest
      */
-    public function haalAjaxOp_SelectOptiesBijDagindeling() {
+    public function haalAjaxOp_SelectOptiesBijDagindeling()
+    {
         $dagindelingId = $this->input->get('dagindelingId');
         $feestId = $this->input->get('feestId');
         $data['dagindelingId'] = $dagindelingId;
@@ -836,24 +892,23 @@ class Organisator extends CI_Controller {
      * Stef Goor
      * Haalt ajax op met lijst van ontvangers
      */
-    public function haalAjaxOp_SelectOntvangers() {
+    public function haalAjaxOp_SelectOntvangers()
+    {
         $feestId = $this->input->get('feestId');
         $persoon = $this->input->get('persoon');
-        
+
         //Array leegmaken
         $data['personen'] = NULL;
 
         $this->load->model('persoon_model');
 
-        if ($persoon == 'iedereen'){
+        if ($persoon == 'iedereen') {
             //Iedereen in lijst met personen steken
             $data['personen'] = $this->persoon_model->getAllWherePersoneelsfeest($feestId);
-            }
-        elseif ($persoon == '3') {
+        } elseif ($persoon == '3') {
             //Enkel personeelsleden in lijst met personen steken
             $data['personen'] = $this->persoon_model->getAllPersoneelWherePersoneelsfeest($feestId);
-        }
-        elseif ($persoon == '2') {
+        } elseif ($persoon == '2') {
             //Enkel vrijwilligers in lijst met personen steken
             $data['personen'] = $this->persoon_model->getAllVrijwilligersWherePersoneelsfeest($feestId);
         }
@@ -866,7 +921,8 @@ class Organisator extends CI_Controller {
      * @param $albumId Het id van het te verwijderen album
      * Verwijdert het gekozen album en de foto's die bij het album horen
      */
-    public function verwijderAjaxAlbum() {
+    public function verwijderAjaxAlbum()
+    {
         $albumId = $this->input->get('albumId');
 
         $this->load->model('album_model');
@@ -879,7 +935,8 @@ class Organisator extends CI_Controller {
      * Stef Goor - Laad de view voor het sturen van mails
      * @param type $personeelsfeestId
      */
-    public function mailSturen($personeelsfeestId) {
+    public function mailSturen($personeelsfeestId)
+    {
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "organisator/mailSturen",
             "voetnoot" => "voetnoot");
@@ -904,7 +961,8 @@ class Organisator extends CI_Controller {
      * Joren Synaeve
      * @param type $dagindelingId
      */
-    public function beheerShiftenBijDagindeling($dagindelingId) {
+    public function beheerShiftenBijDagindeling($dagindelingId)
+    {
         // Standaardvariabelen
         $data['titel'] = 'Shiften beheren';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
@@ -924,7 +982,8 @@ class Organisator extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 
-    public function maakAlbum() {
+    public function maakAlbum()
+    {
         $data['titel'] = 'Album aanmaken';
         $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
 
@@ -942,7 +1001,8 @@ class Organisator extends CI_Controller {
      * maakt nieuw album aan als er op aanmaken werd geklikt
      * gaat terug naar het overzicht van albums als er op annuleren werd geklikt
      */
-    public function registreerAlbum() {
+    public function registreerAlbum()
+    {
         $knop = $this->input->post('knop');
 
         if ($knop == 'Annuleren') {
@@ -961,7 +1021,8 @@ class Organisator extends CI_Controller {
         }
     }
 
-    public function toevoegenFotos() {
+    public function toevoegenFotos()
+    {
         $data['titel'] = 'Foto\'s toevoegen';
         $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
         $data['albumId'] = $this->session->userdata('albumId');
@@ -977,7 +1038,8 @@ class Organisator extends CI_Controller {
      * de nodige gegevens in database
      */
 
-    public function uploadFeestFotos() {
+    public function uploadFeestFotos()
+    {
         if ($this->input->post('doorgaan') && !empty($_FILES['fotos']['name'])) {
             $aantal = count($_FILES['fotos']['name']);
             for ($i = 0; $i < $aantal; $i++) {
@@ -1008,7 +1070,8 @@ class Organisator extends CI_Controller {
      * Jorne Lambrechts - Toon de foto's van een album (zonder bewerkingsknoppen)
      */
 
-    public function toonAlbum($albumId) {
+    public function toonAlbum($albumId)
+    {
         $data['titel'] = 'Album bekijken';
         $data['paginaverantwoordelijke'] = 'Stef Goor';
 
@@ -1030,7 +1093,8 @@ class Organisator extends CI_Controller {
      * Jorne Lambrechts - Toon foto's van een album (met bewerkingsknoppen)
      */
 
-    public function albumBewerken($albumId) {
+    public function albumBewerken($albumId)
+    {
         $data['titel'] = 'Album bewerken';
         $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
         $data['albumId'] = $albumId;
@@ -1049,7 +1113,8 @@ class Organisator extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
 
-    public function verwijderAjaxFoto() {
+    public function verwijderAjaxFoto()
+    {
         $fotoId = $this->input->get('fotoId');
 
         $this->load->model('foto_model');
@@ -1062,17 +1127,18 @@ class Organisator extends CI_Controller {
      * Joren Synaeve - Verwijdert een organisator
      * @param $hashcode de hashcode van de te verwijderen organisator
      */
-    public function verwijderOrganisator($hashcode) {
+    public function verwijderOrganisator($hashcode)
+    {
         // Controleren van aantal organisatoren
         $this->load->model('persoon_model');
         $organisatoren = $this->persoon_model->getAllWhereTypeId(1);
         if (count($organisatoren) > 1) {
             // Verwijderen
             $persoon = $this->persoon_model->getWhereHashcode($hashcode);
-            $this->persoon_model->delete($persoon->id);            
+            $this->persoon_model->delete($persoon->id);
         } else {
-            
-        }        
+
+        }
         redirect('organisator/beheerOrganisatoren');
     }
 
