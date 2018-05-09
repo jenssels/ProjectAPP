@@ -21,6 +21,17 @@
             var id = $(this).data('id');
             haalDeelnemersOp(id);
         });
+
+        <?php
+        $phpvar = base_url('index.php/organisator/personeelsFeestVerwijderen/');
+        echo "var _href = '{$phpvar}'; \n";
+        ?>
+        $('.verwijderPersoneelsfeest').click(function (e) {
+            var id = $(this).data('id');
+            $('#verwijderen').attr('href', _href + id);
+            $('#modalBevestig').modal('show');
+            e.preventDefault();
+        });
     });
 </script>
 <div class="row">
@@ -49,7 +60,7 @@
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestUploadForm/' . $feest->id, '<i class="fas fa-user-plus grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/beheerDagindeling/' . $feest->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestAanmakenForm/' . $feest->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
-                        . "<td class='text-center'>" . anchor('Organisator/personeelsFeestVerwijderen/' . $feest->id, '<i class="far fa-trash-alt grow"></i>') . "</td>"
+                        . "<td class='text-center'>" . anchor('#!', '<i class="far fa-trash-alt grow"></i>', 'class="verwijderPersoneelsfeest" data-id="' . $feest->id . '"') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/mailSturen/' . $feest->id, '<i class="far fa-envelope grow"></i>') . "</td>";
 
                 echo "</tr>"; 
@@ -89,6 +100,27 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- Bevestigdialoogvenster -->
+<div class="modal fade" id="modalBevestig" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Wil je doorgaan?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Ben je zeker dat je <span id="personeelsfeestNaam"></span> wilt verwijderen?
+            </div>
+            <div class="modal-footer">
+                <a href="" class="btn btn-secondary" id="verwijderen">Doorgaan</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleren</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 
