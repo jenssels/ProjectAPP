@@ -29,7 +29,7 @@
 
         $('#knopVerwijder').click(function() {
           verwijderFoto(fotoId); 
-          location.reload();
+          //location.reload();
         });
 
     });
