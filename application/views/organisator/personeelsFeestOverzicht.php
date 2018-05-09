@@ -28,6 +28,8 @@
         ?>
         $('.verwijderPersoneelsfeest').click(function (e) {
             var id = $(this).data('id');
+            var naam = $(this).data('naam');
+            $('#personeelsfeestNaam').html(naam);
             $('#verwijderen').attr('href', _href + id);
             $('#modalBevestig').modal('show');
             e.preventDefault();
@@ -51,36 +53,35 @@
             </tr>
         <?php
             $vandaag = date('Y-m-d');
-            echo $vandaag;
             //Jens Sels - Overzicht van feesten in tabel tonen
             foreach($personeelsFeesten as $feest){
                 $feestDatum = $feest->datum;
                 echo "<tr>";
-                //if ($feestDatum > $vandaag) {
+                if ($feestDatum > $vandaag) {
+
                     echo "<td>" . $feest->naam .  "</td>"
                         . "<td>" . zetOmNaarDDMMYYYY($feest->datum) . "</td>"
-
                         . "<td class='text-center'> <a href=#! class='overzicht' data-id='" . $feest->id . "'><i class='fas fa-list-ul grow'></i></a></td>"
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestInschrijvingen/' . $feest->id, '<i class="fas fa-list-ul grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestUploadForm/' . $feest->id, '<i class="fas fa-user-plus grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/beheerDagindeling/' . $feest->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestAanmakenForm/' . $feest->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
-                        . "<td class='text-center'>" . anchor('#!', '<i class="far fa-trash-alt grow"></i>', 'class="verwijderPersoneelsfeest" data-id="' . $feest->id . '"') . "</td>"
+                        . "<td class='text-center'>" . anchor('#!', '<i class="far fa-trash-alt grow"></i>', 'class="verwijderPersoneelsfeest" data-id="' . $feest->id . '" data-naam="' . $feest->naam . '"') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/mailSturen/' . $feest->id, '<i class="far fa-envelope grow"></i>') . "</td>";
-                /*} else {
+
+                } else {
                     echo "<td>" . $feest->naam .  "</td>"
                         . "<td>" . zetOmNaarDDMMYYYY($feest->datum) . "</td>"
 
                         . "<td class='text-center'> <a href=#! class='overzicht' data-id='" . $feest->id . "'><i class='fas fa-list-ul grow'></i></a></td>"
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestInschrijvingen/' . $feest->id, '<i class="fas fa-list-ul grow"></i>') . "</td>"
-                        . "<td class='text-center'>" . anchor('Organisator/personeelsFeestUploadForm/' . $feest->id, '<i class="fas fa-user-plus grow"></i>') . "</td>"
-                        . "<td class='text-center'> </td>"
-                        . "<td class='text-center'>" . anchor('Organisator/personeelsFeestAanmakenForm/' . $feest->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
-                        . "<td class='text-center'>" . anchor('Organisator/personeelsFeestVerwijderen/' . $feest->id, '<i class="far fa-trash-alt grow"></i>') . "</td>"
+                        . "<td class='text-center'><i class='fas fa-user-plus alt text-secondary'></i></td>"
+                        . "<td class='text-center'><i class='fas fa-pencil-alt text-secondary'></i></td>"
+                        . "<td class='text-center'><i class='fas fa-pencil-alt text-secondary'></i></td>"
+                        . "<td class='text-center'>" . anchor('#!', '<i class="far fa-trash-alt grow"></i>', 'class="verwijderPersoneelsfeest" data-id="' . $feest->id . '" data-naam="' . $feest->naam . '"') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/mailSturen/' . $feest->id, '<i class="far fa-envelope grow"></i>') . "</td>";
-                }*/
+                }
                 
-
                 echo "</tr>"; 
             }
         ?>

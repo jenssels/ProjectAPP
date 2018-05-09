@@ -81,11 +81,20 @@
                             } else {
                                 $minimumaantal = $optie->minAantal . ' deelnemers';
                             }
+                            if ($optie->maxAantal == 0){
+                                $aantalDeelnemers = $optie->deelnemers . " Deelnemers";
+                            }
+                            else{
+                                $aantalDeelnemers =  $optie->deelnemers . "/" . $optie->maxAantal . " Deelnemers";
+                            }
+                            if ($optie->deelnemers != 0){
+                                $aantalDeelnemers = anchor('#!', $aantalDeelnemers , 'class="toon" data-type="optie" data-id="' . $optie->id . '"');
+                            }
                             
                             echo "<tr>";
                             echo "<td>" . $optie->naam . "</td>";
                             echo "<td>" . substr($dagindeling->beginuur, 0, 5) . "u - " . substr($dagindeling->einduur, 0, 5) . "u</td>";
-                            echo "<td>" . anchor('#!', $optie->deelnemers . "/" . $optie->maxAantal . " deelnemers", 'class="toon" data-type="optie" data-id="' . $optie->id . '"') . "</td>";
+                            echo "<td>" .  $aantalDeelnemers . "</td>";
                             echo "<td>" . $minimumaantal . "</td>";
                             echo "</tr>";
                         }
