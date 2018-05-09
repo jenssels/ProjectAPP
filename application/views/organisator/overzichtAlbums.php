@@ -76,9 +76,10 @@
             echo anchor('organisator/toonAlbum/' . $album->id, '<button type="button" class="btn btn-primary">Bekijk de foto\'s!</button>');
             echo '</div>';
             //Jorne Lambrechts - knoppen om album te bewerken of te verwijderen
-            echo '<div>';
-            echo anchor('organisator/albumBewerken/' . $album->id,'<button type="button" class="btn"><i class="fas fa-edit"></i></button>');
-            echo '<button type="button" class="btn verwijderen" data-id="' . $album->id . '" data-toggle="modal" data-target="#bevestigVerwijderen"><i class="fas fa-times"></i></button>';
+            echo '<div class="text-center">';
+            echo anchor('organisator/albumBewerken/' . $album->id,'<button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>');
+            echo "\t";
+            echo '<button type="button" class="btn btn-primary verwijderen" data-id="' . $album->id . '" data-toggle="modal" data-target="#bevestigVerwijderen"><i class="fas fa-times"></i></button>';
         
             echo '</div>';
             echo'</div></div><br>';
