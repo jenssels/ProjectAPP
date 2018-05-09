@@ -1,9 +1,9 @@
 <?php
 
-class OptieDeelname_model extends CI_Model {
+class optiedeelname_model extends CI_Model {
 
     // +----------------------------------------------------------
-    // | Personeelsfeest - OptieDeelname_model.php
+    // | Personeelsfeest - optiedeelname_model.php
     // +----------------------------------------------------------
     // | 2 ITF Project APP/BIT Team 17 - 2017-2018
     // +----------------------------------------------------------

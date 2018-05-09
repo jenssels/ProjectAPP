@@ -29,14 +29,14 @@ class Persoon_model extends CI_Model {
      */
     function getInschrijvingenWherePersoneelsFeest($feestId) {
         $this->load->model('TaakDeelname_model');
-        $this->load->model('OptieDeelname_model');
+        $this->load->model('optiedeelname_model');
         $deelnemers = 0;
         $helpers = 0;
         $this->db->where('personeelsfeestId', $feestId);
         $query = $this->db->get('persoon');
         $personen = $query->result();
         foreach ($personen as $persoon) {
-            $optieCount = $this->OptieDeelname_model->getCountWherePersoon($persoon->id);
+            $optieCount = $this->optiedeelname_model->getCountWherePersoon($persoon->id);
             $taakCount = $this->TaakDeelname_model->getCountWherePersoon($persoon->id);
             if ($optieCount > 0) {
                 $deelnemers++;
@@ -146,13 +146,13 @@ class Persoon_model extends CI_Model {
      * @param $persoonId Id van een persoon
      */
     function delete($persoonId) {
-        $this->load->model('OptieDeelname_model');
+        $this->load->model('optiedeelname_model');
         $this->load->model('TaakDeelname_model');
 
-        $optieDeelnames = $this->OptieDeelname_model->getAllWherePersoon($persoonId);
+        $optieDeelnames = $this->optiedeelname_model->getAllWherePersoon($persoonId);
         // Alle keuzes van opties doorlopen en ze verwijderen
         foreach ($optieDeelnames as $optieDeelname) {
-            $this->OptieDeelname_model->delete($optieDeelname->id);
+            $this->optiedeelname_model->delete($optieDeelname->id);
         }
 
         $taakDeelnames = $this->TaakDeelname_model->getAllWherePersoon();
