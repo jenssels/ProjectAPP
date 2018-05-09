@@ -155,7 +155,7 @@ class Persoon_model extends CI_Model {
             $this->optiedeelname_model->delete($optieDeelname->id);
         }
 
-        $taakDeelnames = $this->TaakDeelname_model->getAllWherePersoon();
+        $taakDeelnames = $this->TaakDeelname_model->getAllWherePersoon($persoonId);
         // Alle keuzes van taken doorlopen en ze verwijderen
         foreach ($taakDeelnames as $taakDeelname) {
             $this->TaakDeelname_model->delete($taakDeelname->id);

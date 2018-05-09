@@ -63,6 +63,7 @@ class Optie_model extends CI_Model {
      * @return Alle opties van een dagindeling
      */
     function getAllWithDeelnamesWhereDagindeling($dagindelingId){
+
         $this->load->model('optiedeelname_model');
         $this->db->where('dagindelingid', $dagindelingId);
         $query = $this->db->get('optie');
