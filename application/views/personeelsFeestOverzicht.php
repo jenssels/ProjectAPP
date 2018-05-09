@@ -21,6 +21,12 @@
             var id = $(this).data('id');
             haalDeelnemersOp(id);
         });
+        $('.delete').click(function(e){
+            if(!confirm('Ben je zeker dat je dit personeelsfeest wilt verwijderen ?')){
+                e.preventDefault(); 
+            }
+            
+        });
     });
 </script>
 <div class="row">
@@ -49,7 +55,7 @@
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestUploadForm/' . $feest->id, '<i class="fas fa-user-plus grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/beheerDagindeling/' . $feest->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestAanmakenForm/' . $feest->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
-                        . "<td class='text-center'>" . anchor('Organisator/personeelsFeestVerwijderen/' . $feest->id, '<i class="far fa-trash-alt grow"></i>') . "</td>"
+                        . "<td class='text-center'>" . anchor('Organisator/personeelsFeestVerwijderen/' . $feest->id, '<i class="far fa-trash-alt grow"></i>',array('class' => 'delete')) . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/mailSturen/' . $feest->id, '<i class="far fa-envelope grow"></i>') . "</td>";
 
                 echo "</tr>"; 
