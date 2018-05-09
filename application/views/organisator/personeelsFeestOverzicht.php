@@ -38,10 +38,14 @@
                 <th>Mail sturen</th>
             </tr>
         <?php
+            $vandaag = date('Y-m-d');
+            echo $vandaag;
             //Jens Sels - Overzicht van feesten in tabel tonen
             foreach($personeelsFeesten as $feest){
+                $feestDatum = $feest->datum;
                 echo "<tr>";
-                echo "<td>" . $feest->naam .  "</td>"
+                //if ($feestDatum > $vandaag) {
+                    echo "<td>" . $feest->naam .  "</td>"
                         . "<td>" . zetOmNaarDDMMYYYY($feest->datum) . "</td>"
 
                         . "<td class='text-center'> <a href=#! class='overzicht' data-id='" . $feest->id . "'><i class='fas fa-list-ul grow'></i></a></td>"
@@ -51,6 +55,19 @@
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestAanmakenForm/' . $feest->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestVerwijderen/' . $feest->id, '<i class="far fa-trash-alt grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/mailSturen/' . $feest->id, '<i class="far fa-envelope grow"></i>') . "</td>";
+                /*} else {
+                    echo "<td>" . $feest->naam .  "</td>"
+                        . "<td>" . zetOmNaarDDMMYYYY($feest->datum) . "</td>"
+
+                        . "<td class='text-center'> <a href=#! class='overzicht' data-id='" . $feest->id . "'><i class='fas fa-list-ul grow'></i></a></td>"
+                        . "<td class='text-center'>" . anchor('Organisator/personeelsFeestInschrijvingen/' . $feest->id, '<i class="fas fa-list-ul grow"></i>') . "</td>"
+                        . "<td class='text-center'>" . anchor('Organisator/personeelsFeestUploadForm/' . $feest->id, '<i class="fas fa-user-plus grow"></i>') . "</td>"
+                        . "<td class='text-center'> </td>"
+                        . "<td class='text-center'>" . anchor('Organisator/personeelsFeestAanmakenForm/' . $feest->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
+                        . "<td class='text-center'>" . anchor('Organisator/personeelsFeestVerwijderen/' . $feest->id, '<i class="far fa-trash-alt grow"></i>') . "</td>"
+                        . "<td class='text-center'>" . anchor('Organisator/mailSturen/' . $feest->id, '<i class="far fa-envelope grow"></i>') . "</td>";
+                }*/
+                
 
                 echo "</tr>"; 
             }
