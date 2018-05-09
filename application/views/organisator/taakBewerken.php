@@ -44,7 +44,7 @@
         <tr>
             <td><?php echo form_label('Locatie:', 'locatie'); ?></td>
             <td><?php
-                echo form_dropdown('locatie', $locatieOpties, $taak->locatie->id);
+                echo form_dropdown('locatie', $locatieOpties, $locatie->id);
                 ?>
             </td>
         </tr>

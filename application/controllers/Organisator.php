@@ -251,27 +251,6 @@ class Organisator extends CI_Controller
     }
 
     /**
-     * <<<<<<< HEAD
-     * =======
-     * Thomas Vansprengel
-     * Toon het overzicht om de taken te beheren
-     */
-    public function takenBeheren()
-    {
-        $this->load->model('taak_model');
-        $data['taken'] = $this->taak_model->getAllWithDagindeling();
-
-        $partials = array("hoofding" => "hoofding",
-            "inhoud" => "organisator/takenBeheren",
-            "voetnoot" => "voetnoot");
-        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
-        $data['titel'] = "Taken beheren";
-        $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
-
-        $this->template->load('main_master', $partials, $data);
-    }
-
-    /**
      * >>>>>>> dc32fe06c01a52d4aeced78300d025bb9b06c978
      * Thomas Vansprengel
      * Toon het overzicht om een individuele taak te beheren aan de hand van een dagindeling
