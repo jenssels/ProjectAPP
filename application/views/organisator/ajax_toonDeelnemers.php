@@ -1,11 +1,9 @@
 <?php
-if($deelnemers != null){
-   foreach($deelnemers as $deelnemer){
-    echo $deelnemer->naam . ' ' . $deelnemer->voornaam . ' - ' . $deelnemer->email . '</br>';
-}
-}
-else{
-    echo "Geen deelnemers";
-}
+        echo '<table class="table table-sm">';
+        foreach($deelnemers as $deelnemer){
+            echo '<tr><td>' . $deelnemer->naam . ' ' . $deelnemer->voornaam . '</td><td>' . $deelnemer->email . '</td></tr>';
+        }
+        echo '</table>';
+
 
 ?>

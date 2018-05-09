@@ -3,14 +3,34 @@
         /**
          * Jens Sels - Formaat en taal toevoegen aan datepickers
          */
-        $(".date").datepicker({
-            format: 'dd/mm/yyyy',
-            language: 'nl-BE'
-        });
+        
+        // Default settings van datepicker aanpassen
+        var datumNu = new Date(); 
+        $.fn.datepicker.defaults.format = 'dd/mm/yyyy';
+        $.fn.datepicker.defaults.language = 'nl-BE';
+        $.fn.datepicker.defaults.autoclose = true;
+        
+        function CheckDate(){
+          var datum = $('#datum').datepicker("getDate");
+          var inschrijfDatum = $('#inschrijfdeadline').datepicker("getDate");
+          if (datum < inschrijfDatum){
+              $('#inschrijfdeadline').datepicker('update', datum);
+          }
+        };
+        
+        $(function(){
+            $('#datum, #inschrijfdeadline').datepicker({
+                startDate: datumNu
+            }).on('changeDate', function(){
+                CheckDate();
+            });
 
+        });
         $(function () {
             $('[data-toggle="popover"]').popover();
-        })
+        });
+        
+        
     });
 
 
@@ -84,8 +104,7 @@ $tooltipDeadlineInhoud = "Dit is de datum waarop de inschrijvingen zullen sluite
             'id' => 'beschrijving',
             'value' => $feest->beschrijving,
             'class' => 'form-control',
-            'placeholder' => 'Beschrijving',
-            'required' => 'required'));
+            'placeholder' => 'Beschrijving'));
         ?>
         <div class='help-block with-errors'>
 
@@ -103,7 +122,7 @@ $tooltipDeadlineInhoud = "Dit is de datum waarop de inschrijvingen zullen sluite
         ?>
     </div>
     <div class="col-md-9">
-        <div class="input-group date" data-provide="datepicker">
+        <div class="input-group date">
             <?php
             echo form_input(array('name' => 'datum',
                 'id' => 'datum',
@@ -113,7 +132,6 @@ $tooltipDeadlineInhoud = "Dit is de datum waarop de inschrijvingen zullen sluite
                 'required' => 'required'));
             ?>
             <div class="input-group-addon">
-                <span class="glyphicon glyphicon-calander"></span>
             </div>
 
         </div>
@@ -133,7 +151,7 @@ $tooltipDeadlineInhoud = "Dit is de datum waarop de inschrijvingen zullen sluite
         ?>
     </div>
     <div class="col-md-9">
-        <div class="input-group date" data-provide="datepicker">
+        <div class="input-group date">
             <?php
             echo form_input(array('name' => 'inschrijfdeadline',
                 'id' => 'inschrijfdeadline',
@@ -143,7 +161,6 @@ $tooltipDeadlineInhoud = "Dit is de datum waarop de inschrijvingen zullen sluite
                 'required' => 'required'));
             ?>
             <div class="input-group-addon">
-                <span class="glyphicon glyphicon-calander"></span>
             </div>
             <div class='help-block with-errors'>
 

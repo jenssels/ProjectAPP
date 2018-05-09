@@ -31,6 +31,7 @@
             $('#verwijderen').attr('href', _href + id);
             $('#modalBevestig').modal('show');
             e.preventDefault();
+
         });
     });
 </script>
@@ -55,9 +56,9 @@
                 $feestDatum = $feest->datum;
                 echo "<tr>";
                 if ($feestDatum > $vandaag) {
+
                     echo "<td>" . $feest->naam .  "</td>"
                         . "<td>" . zetOmNaarDDMMYYYY($feest->datum) . "</td>"
-
                         . "<td class='text-center'> <a href=#! class='overzicht' data-id='" . $feest->id . "'><i class='fas fa-list-ul grow'></i></a></td>"
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestInschrijvingen/' . $feest->id, '<i class="fas fa-list-ul grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestUploadForm/' . $feest->id, '<i class="fas fa-user-plus grow"></i>') . "</td>"
@@ -65,6 +66,7 @@
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestAanmakenForm/' . $feest->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('#!', '<i class="far fa-trash-alt grow"></i>', 'class="verwijderPersoneelsfeest" data-id="' . $feest->id . '"') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/mailSturen/' . $feest->id, '<i class="far fa-envelope grow"></i>') . "</td>";
+
                 } else {
                     echo "<td>" . $feest->naam .  "</td>"
                         . "<td>" . zetOmNaarDDMMYYYY($feest->datum) . "</td>"
@@ -78,7 +80,6 @@
                         . "<td class='text-center'>" . anchor('Organisator/mailSturen/' . $feest->id, '<i class="far fa-envelope grow"></i>') . "</td>";
                 }
                 
-
                 echo "</tr>"; 
             }
         ?>

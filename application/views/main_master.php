@@ -10,6 +10,7 @@ and open the template in the editor.
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title><?php echo $titel; ?></title>
+        <?php echo '<link rel="shortcut icon" href="' . base_url("assets/img/favicon") . '"/>' ?>
 
         <!-- Load bootstrap css -->
 

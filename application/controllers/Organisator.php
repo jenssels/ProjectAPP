@@ -445,7 +445,7 @@ class Organisator extends CI_Controller
             $deelnemers = $this->taakdeelname_model->getAllWithDeelnemersWhereShift($id);;
         }
         $data["deelnemers"] = $deelnemers;
-        $this->load->view('ajax_toonDeelnemers', $data);
+        $this->load->view('organisator/ajax_toonDeelnemers', $data);
     }
 
     /**
