@@ -71,25 +71,30 @@
     <?php
     //Stef Goor - Toon alle foto's van het huidige album
     $teller = 0;
-    echo '<div class="row">';
-    foreach ($fotos as $foto) {
-        if ($teller == 3){
-            echo '</div>';
-            echo '<div class="row">';
-            $teller = 0;
-        }
-        echo '<div class="card col-sm-4">';
-        echo toonAfbeelding($foto->naam, 'class="card-img-top"');
+    if($fotos != null){
+        echo '<div class="row">';
+        foreach ($fotos as $foto) {
+            if ($teller == 3){
+                echo '</div>';
+                echo '<div class="row">';
+                $teller = 0;
+            }
+            echo '<div class="card col-sm-4">';
+            echo toonAfbeelding($foto->naam, 'class="card-img-top"');
         
-        // Jorne Lambrechts - als er bewerkt mag worden, verwijder link tonen
-        if ($bewerken) {
-            echo '<button type="button" class="btn verwijderen" data-id="' . $foto->id . '" data-toggle="modal" data-target="#bevestigVerwijderen"><i class="fas fa-times"></i></button>';
-        }
+            // Jorne Lambrechts - als er bewerkt mag worden, verwijder link tonen
+            if ($bewerken) {
+                echo '<button type="button" class="btn verwijderen" data-id="' . $foto->id . '" data-toggle="modal" data-target="#bevestigVerwijderen"><i class="fas fa-times"></i></button>';
+            }
    
         echo '</div>';
         $teller++;
     }
     echo '</div>';
+    } else {
+        echo "<p>Er zijn nog geen foto's toegevoegd aan dit album!</p>";
+    }
+    
     echo anchor('organisator/overzichtAlbums', 'Terug naar overzicht albums', array('role' => 'button' , 'class' => 'btn btn-primary'));
     ?>
     

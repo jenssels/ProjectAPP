@@ -944,6 +944,7 @@ class Organisator extends CI_Controller {
      */
     public function registreerAlbum() {
         $knop = $this->input->post('knop');
+        $this->load->model('album_model');
 
         if ($knop == 'Annuleren') {
             redirect('organisator/overzichtAlbums');
@@ -952,14 +953,43 @@ class Organisator extends CI_Controller {
 
             $album->naam = $this->input->post('naam');
             $album->personeelsfeestId = $this->input->post('personeelsfeest');
+            
+            if (!$this->bestaandAlbum($album)) {
+                $albumId = $this->album_model->insert($album);
+                $this->session->set_userdata('albumId', $albumId);
 
-            $this->load->model('album_model');
-            $albumId = $this->album_model->insert($album);
-            $this->session->set_userdata('albumId', $albumId);
-
-            redirect('organisator/toevoegenFotos');
+                redirect('organisator/toevoegenFotos');
+            } else {
+                redirect('organisator/albumBestaat');
+            }                      
         }
     }
+    
+    function bestaandAlbum($album){
+        $this->load->model('album_model');
+        $albums = $this->album_model->getAll();
+        $bestaat = FALSE;
+        
+        foreach($albums as $bestaand){
+            if ($bestaand->naam == $album->naam && $bestaand->personeelsfeestId == $album->personeelfsfeestId) {
+                $bestaat = TRUE;
+            }
+        }
+        
+        return $bestaat;
+    }
+    
+    function albumBestaat(){
+        $data['titel'] = 'Album bestaat!';
+        $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
+        $data['foutmelding'] = 'Dit album bestaat al!';
+        
+        $partials = array('hoofding' => 'hoofding',
+            'inhoud' => 'errors/error',
+            'voetnoot' => 'voetnoot');
+        $this->template->load('main_master', $partials, $data);
+    }
+    
 
     public function toevoegenFotos() {
         $data['titel'] = 'Foto\'s toevoegen';
