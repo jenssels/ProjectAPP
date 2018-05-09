@@ -121,7 +121,7 @@ class Taak_model extends CI_Model {
         $this->load->model('locatie_model');
             foreach ($taken as $taak) {
                 $taak->dagindeling = $this->dagindeling_model->getByTaak($taak->dagindelingId);
-                $taak->locatie = $this->locatie_model->getByTaak($taak->dagindelingId);
+                $taak->locatie = $this->locatie_model->getById($taak->locatieId);
             }
         return $taken;
         }

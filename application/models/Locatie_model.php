@@ -60,7 +60,10 @@ class Locatie_model extends CI_Model {
         $this->db->where('id', $locatie->id);
         $this->db->update('locatie', $locatie);
         }
-        
+                    /**
+     * Thomas Vansprengel - Locatie halen aan de hand van taak
+     * @param $id locatieid
+     */
     function getByTaak($id) {
         $this->db->where('id', $id);
         $query = $this->db->get('locatie');
