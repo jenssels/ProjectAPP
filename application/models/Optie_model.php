@@ -63,13 +63,14 @@ class Optie_model extends CI_Model {
      * @return Alle opties van een dagindeling
      */
     function getAllWithDeelnamesWhereDagindeling($dagindelingId){
-        $this->load->model('Optiedeelname_model');
+
+        $this->load->model('optiedeelname_model');
         $this->db->where('dagindelingid', $dagindelingId);
         $query = $this->db->get('optie');
         $opties = $query->result();
         
         foreach($opties as $optie){
-            $optie->deelnemers = $this->Optiedeelname_model->getCountWhereOptie($optie->id);
+            $optie->deelnemers = $this->optiedeelname_model->getCountWhereOptie($optie->id);
         }
         return $opties;   
     }
@@ -80,12 +81,12 @@ class Optie_model extends CI_Model {
      * @param $optieId Id van een optie
      */
     function delete($optieId) {
-        $this->load->model('Optiedeelname_model');
+        $this->load->model('optiedeelname_model');
 
-        $optieDeelnames = $this->Optiedeelname_model->getAllWhereOptie($optieId);
+        $optieDeelnames = $this->optiedeelname_model->getAllWhereOptie($optieId);
         // Alle keuzes van opties doorlopen en ze verwijderen
         foreach ($optieDeelnames as $optieDeelname) {
-            $this->Optiedeelname_model->delete($optieDeelname->id);
+            $this->optiedeelname_model->delete($optieDeelname->id);
         }
         $this->db->where('id', $optieId);
         $this->db->delete('optie');

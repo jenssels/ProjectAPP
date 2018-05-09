@@ -152,7 +152,7 @@ class Persoon_model extends CI_Model {
         $optieDeelnames = $this->optiedeelname_model->getAllWherePersoon($persoonId);
         // Alle keuzes van opties doorlopen en ze verwijderen
         foreach ($optieDeelnames as $optieDeelname) {
-            $this->Optiedeelname_model->delete($optieDeelname->id);
+            $this->optiedeelname_model->delete($optieDeelname->id);
         }
 
         $taakDeelnames = $this->TaakDeelname_model->getAllWherePersoon($persoonId);
@@ -269,5 +269,23 @@ class Persoon_model extends CI_Model {
             }
         }
         return $message;
+    }
+
+    /**
+     * Joren Synaeve
+     * Controleert of een persoon al bestaat in de database. Retourneert een true of false.
+     * @param $email
+     * @param $typeID
+     * @return boolean
+     */
+    function persoonBestaat($email, $typeID) {
+        $array = array('email' => $email, 'typeId' => $typeID);
+        $this->db->where($array);
+        $query = $this->db->get('persoon');
+        if ($query->num_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
