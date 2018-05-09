@@ -29,14 +29,14 @@ class Persoon_model extends CI_Model {
      */
     function getInschrijvingenWherePersoneelsFeest($feestId) {
         $this->load->model('TaakDeelname_model');
-        $this->load->model('OptieDeelname_model');
+        $this->load->model('optiedeelname_model');
         $deelnemers = 0;
         $helpers = 0;
         $this->db->where('personeelsfeestId', $feestId);
         $query = $this->db->get('persoon');
         $personen = $query->result();
         foreach ($personen as $persoon) {
-            $optieCount = $this->OptieDeelname_model->getCountWherePersoon($persoon->id);
+            $optieCount = $this->optiedeelname_model->getCountWherePersoon($persoon->id);
             $taakCount = $this->TaakDeelname_model->getCountWherePersoon($persoon->id);
             if ($optieCount > 0) {
                 $deelnemers++;
@@ -55,6 +55,32 @@ class Persoon_model extends CI_Model {
      */
     function getAllWherePersoneelsFeest($feestId) {
         $this->db->where('personeelsfeestId', $feestId);
+        $query = $this->db->get('persoon');
+
+        return $query->result();
+    }
+    
+    /**
+     * Stef Goor - Ophalen van alle personeelsleden van een personeelsfeest
+     * @param $feestId Id van een personeelsfeest
+     * @return Alle personeelsleden van een personeelsfeest
+     */
+    function getAllPersoneelWherePersoneelsFeest($feestId) {
+        $this->db->where('personeelsfeestId', $feestId);
+        $this->db->where('typeId', '3');
+        $query = $this->db->get('persoon');
+
+        return $query->result();
+    }
+    
+    /**
+     * Stef Goor - Ophalen van alle personeelsleden van een personeelsfeest
+     * @param $feestId Id van een personeelsfeest
+     * @return Alle personeelsleden van een personeelsfeest
+     */
+    function getAllVrijwilligersWherePersoneelsFeest($feestId) {
+        $this->db->where('personeelsfeestId', $feestId);
+        $this->db->where('typeId', '2');
         $query = $this->db->get('persoon');
 
         return $query->result();
@@ -120,16 +146,16 @@ class Persoon_model extends CI_Model {
      * @param $persoonId Id van een persoon
      */
     function delete($persoonId) {
-        $this->load->model('OptieDeelname_model');
+        $this->load->model('optiedeelname_model');
         $this->load->model('TaakDeelname_model');
 
-        $optieDeelnames = $this->OptieDeelname_model->getAllWherePersoon($persoonId);
+        $optieDeelnames = $this->optiedeelname_model->getAllWherePersoon($persoonId);
         // Alle keuzes van opties doorlopen en ze verwijderen
         foreach ($optieDeelnames as $optieDeelname) {
-            $this->OptieDeelname_model->delete($optieDeelname->id);
+            $this->optiedeelname_model->delete($optieDeelname->id);
         }
 
-        $taakDeelnames = $this->TaakDeelname_model->getAllWherePersoon();
+        $taakDeelnames = $this->TaakDeelname_model->getAllWherePersoon($persoonId);
         // Alle keuzes van taken doorlopen en ze verwijderen
         foreach ($taakDeelnames as $taakDeelname) {
             $this->TaakDeelname_model->delete($taakDeelname->id);
@@ -146,20 +172,6 @@ class Persoon_model extends CI_Model {
     function getAllPersoneelsLedenWherePersoneelsFeest($feestId) {
         $this->db->where('personeelsfeestId', $feestId);
         $this->db->where('typeId', '3');
-        $query = $this->db->get('persoon');
-
-        return $query->result();
-    }
-
-    /**
-     *  Jens Sels - Ophalen van alle gebruikers van geselecteerde personeelsfeest
-     * @param $feestId Id van personeelsfeest
-     * @return Alle vrijwilligers van het personeelsfeest 
-     */
-    function getAllVrijwilligersWherePersoneelsFeest($feestId) {
-
-        $this->db->where('personeelsfeestId', $feestId);
-        $this->db->where('typeId', '2');
         $query = $this->db->get('persoon');
 
         return $query->result();
@@ -232,7 +244,6 @@ class Persoon_model extends CI_Model {
     function getAllWhereTypeId($id) {
         $this->db->where('typeId', $id);
         $query = $this->db->get('persoon');
-
         return $query->result();
     }
 
@@ -258,5 +269,23 @@ class Persoon_model extends CI_Model {
             }
         }
         return $message;
+    }
+
+    /**
+     * Joren Synaeve
+     * Controleert of een persoon al bestaat in de database. Retourneert een true of false.
+     * @param $email
+     * @param $typeID
+     * @return boolean
+     */
+    function persoonBestaat($email, $typeID) {
+        $array = array('email' => $email, 'typeId' => $typeID);
+        $this->db->where($array);
+        $query = $this->db->get('persoon');
+        if ($query->num_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

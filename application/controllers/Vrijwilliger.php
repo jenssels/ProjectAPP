@@ -40,7 +40,7 @@ class Vrijwilliger extends CI_Controller {
         $data['deelnames'] = $this->TaakDeelname_model->getAllWhereId($id);
 
         $partials = array("hoofding" => "hoofding",
-            "inhoud" => "vrijwilligerOverzicht",
+            "inhoud" => "vrijwilliger/vrijwilligerOverzicht",
             "voetnoot" => "voetnoot");
         $data['emailGebruiker'] = 'jorensynaeve@hotmail.com';
         $data['titel'] = 'Taakindeling invullen';

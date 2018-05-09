@@ -35,9 +35,15 @@
           // modal wordt automatisch opgeroepen door data-toggle in knop
         });
 
-        $('#knopVerwijder').click(function() {
-          verwijderAlbum(albumId); 
-          //location.reload();
+        $('#knopVerwijder').click(function(e) {
+           //if (confirm("Ben je zeker dat je dit album wilt verwijderen")){
+           verwijderAlbum(albumId); 
+           /*}
+           else {
+               e.preventDefault();
+           }
+          
+          //location.reload();*/
         });
 
     });
@@ -55,27 +61,33 @@
 <div>
     <?php
     //Stef Goor - Toon alle albums met hun foto
-    echo '<div class="row">';
-    foreach ($albums as $album) {
-        echo '<div class="col-sm">';
-        echo '<div class="card" style="width: 18rem;">';
-        //Als er geen fotos in het album zitten wordt er geen foto getoond
-        if($album->eersteFoto != NULL){
-            echo toonAfbeelding($album->eersteFoto, 'class="card-img-top"');
+    if ($albums != null) {
+        echo '<div class="row">';
+        foreach ($albums as $album) {
+            echo '<div class="col-sm">';
+            echo '<div class="card" style="width: 18rem;">';
+            //Als er geen fotos in het album zitten wordt er geen foto getoond
+            if($album->eersteFoto != NULL){
+                echo toonAfbeelding($album->eersteFoto, 'class="card-img-top"');
+            }
+            echo '<div class="card-body">';
+            echo '<h5 class="card-title">' . $album->naam . '</h5>';
+            echo '<p class="card-text">Bekijk hier alle foto\'s van dit album!</p>';
+            echo anchor('organisator/toonAlbum/' . $album->id, '<button type="button" class="btn btn-primary">Bekijk de foto\'s!</button>');
+            echo '</div>';
+            //Jorne Lambrechts - knoppen om album te bewerken of te verwijderen
+            echo '<div>';
+            echo anchor('organisator/albumBewerken/' . $album->id,'<button type="button" class="btn"><i class="fas fa-edit"></i></button>');
+            echo '<button type="button" class="btn verwijderen" data-id="' . $album->id . '" data-toggle="modal" data-target="#bevestigVerwijderen"><i class="fas fa-times"></i></button>';
+        
+            echo '</div>';
+            echo'</div></div><br>';
         }
-        echo '<div class="card-body">';
-        echo '<h5 class="card-title">' . $album->naam . '</h5>';
-        echo '<p class="card-text">Bekijk hier alle foto\'s van dit album!</p>';
-        echo anchor('organisator/toonAlbum/' . $album->id, '<button type="button" class="btn btn-primary">Bekijk de foto\'s!</button>');
         echo '</div>';
-        //Jorne Lambrechts - knoppen om album te bewerken of te verwijderen
-        echo '<div>';
-        echo anchor('organisator/albumBewerken/' . $album->id,'<button type="button" class="btn"><i class="fas fa-edit"></i></button>');
-        echo '<button type="button" class="btn verwijderen" data-id="' . $album->id . '" data-toggle="modal" data-target="#bevestigVerwijderen"><i class="fas fa-times"></i></button>';
-        echo '</div>';
-        echo'</div></div><br>';
+    } else {
+        echo '<p>Er zijn geen albums om weer te geven';
     }
-    echo '</div>';
+   
     //Jorne Lambrechts - knop om naar het aanmaken van albums te gaan
     echo '<div>'. anchor ('organisator/maakAlbum', 'Album aanmaken', 'class="btn btn-primary"') . '</div>';
     ?>
