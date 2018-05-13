@@ -7,6 +7,12 @@
  */
 ?>
 
+<div class="row">
+    <div class="page-header col-sm-12 pb-2">
+        <h5>Dagindeling van <?php echo strtolower($personeelsfeest->naam); ?></h5>
+    </div>
+</div>
+
 <div>
     <?php echo haalJavascriptOp("validator.js"); ?>
 

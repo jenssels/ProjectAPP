@@ -42,23 +42,13 @@
             var id = $(this).data('id');
             haalOptiesBijDagindelingOp(id);
         });
-
-        $('.voegOptieToeLink').click(function(e) {
-            e.preventDefault();
-            console.log("Test");
-        });
-
-        $('.voegOptieToeLink').on('click', function (e) {
-            e.preventDefault();
-            console.log("Test");
-        });
     });
 
 </script>
 
 <div class="row">
     <div class="page-header col-sm-12 pb-2">
-        <h5>Dagindeling van <?php echo strtolower($personeelsfeest->naam); ?></h5>
+        <h5>Dagindelingen van <?php echo strtolower($personeelsfeest->naam); ?></h5>
     </div>
 </div>
 

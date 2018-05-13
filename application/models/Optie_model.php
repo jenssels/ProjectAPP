@@ -35,7 +35,12 @@ class Optie_model extends CI_Model {
     function getAllWhereDagindeling($dagindelingId) {
         $this->db->where('dagindelingid', $dagindelingId);
         $query = $this->db->get('optie');
-        return $query->result();
+        $opties = $query->result();
+        $this->load->model('locatie_model');
+        foreach ($opties as $optie) {
+            $optie->locatie = $this->locatie_model->getById($optie->locatieId);
+        }
+        return $opties;
     }
 
     /**
