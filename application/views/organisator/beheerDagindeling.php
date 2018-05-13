@@ -61,6 +61,7 @@
                 <th>Voor vrijwilliger</th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tr>
             <?php
             foreach ($dagindelingenBijFeest as $dagindeling) {
@@ -83,6 +84,7 @@
             ?>
             <tr>
                 <td><?php echo anchor('organisator/maakNieuweDagindeling/' . $personeelsfeest->id, 'Dagindeling toevoegen', 'class="btn btn-primary"'); ?></td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>

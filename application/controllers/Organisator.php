@@ -1148,4 +1148,9 @@ class Organisator extends CI_Controller
         redirect('organisator/beheerOrganisatoren');
     }
 
+    public function verwijderOptie($optieID){
+        $this->load->model('optie_model');
+        $this->optie_model->delete($optieID);
+    }
+
 }
