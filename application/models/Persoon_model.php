@@ -288,4 +288,17 @@ class Persoon_model extends CI_Model {
             return false;
         }
     }
+
+    /**
+     * Joren Synaeve
+     * Retourneert een leeg persoon object
+     */
+    function getEmptyPersoon() {
+        $persoon = new stdClass();
+
+        $persoon->id = 0;
+        $persoon->naam = '';
+        $persoon->voornaam = '';
+        $persoon->email = '';
+    }
 }

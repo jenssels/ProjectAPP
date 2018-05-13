@@ -43,8 +43,14 @@
             haalOptiesBijDagindelingOp(id);
         });
 
-        $('#knopVoegOptieToe').on('click', function () {
+        $('.voegOptieToeLink').click(function(e) {
+            e.preventDefault();
+            console.log("Test");
+        });
 
+        $('.voegOptieToeLink').on('click', function (e) {
+            e.preventDefault();
+            console.log("Test");
         });
     });
 
@@ -52,7 +58,7 @@
 
 <div class="row">
     <div class="page-header col-sm-12 pb-2">
-        <h5>Dagindeling van <?php echo $personeelsfeest->naam ?></h5>
+        <h5>Dagindeling van <?php echo strtolower($personeelsfeest->naam); ?></h5>
     </div>
 </div>
 
@@ -86,7 +92,7 @@
             }
             ?>
             <tr>
-                <td><?php echo anchor('organisator/maakNieuweDagindeling/' . $personeelsfeest->id, 'Toevoegen') ?></td>
+                <td><?php echo anchor('organisator/maakNieuweDagindeling/' . $personeelsfeest->id, 'Dagindeling toevoegen', 'class="btn btn-primary"'); ?></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -97,28 +103,6 @@
 
     <div class="col-sm-12" id="resultaat">
 
-    </div>
-</div>
-
-<!-- Dialoogvenster -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
     </div>
 </div>
 
