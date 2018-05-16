@@ -1,4 +1,10 @@
 <?php
+/**
+ * @class Locatie_model
+ * @brief Model-klasse voor locaties
+ *
+ * Model-klasse die alle methodes bevat om de database-tabel locatie te gebruiken
+ */
 
 class Locatie_model extends CI_Model {
 

@@ -1,4 +1,10 @@
 <?php
+/**
+ * @class Optie_model
+ * @brief Model-klasse voor opties
+ *
+ * Model-klasse die alle methodes bevat om de database-tabel optie te gebruiken
+ */
 
 class Optie_model extends CI_Model {
 

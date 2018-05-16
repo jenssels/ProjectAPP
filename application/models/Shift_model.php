@@ -1,4 +1,10 @@
 <?php
+/**
+ * @class Shift_model
+ * @brief Model-klasse voor shiften
+ *
+ * Model-klasse die alle methodes bevat om de database-tabel shiften te gebruiken
+ */
 
 class Shift_model extends CI_Model {
 

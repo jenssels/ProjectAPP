@@ -1,4 +1,10 @@
 <?php
+/**
+ * @class Persoon_model
+ * @brief Model-klasse voor personen
+ *
+ * Model-klasse die alle methodes bevat om de database-tabel persoon te gebruiken
+ */
 
 class Persoon_model extends CI_Model {
 

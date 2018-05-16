@@ -1,4 +1,10 @@
 <?php
+/**
+ * @class Foto_model
+ * @brief Model-klasse voor foto's
+ *
+ * Model-klasse die alle methodes bevat om de database-tabel foto te gebruiken
+ */
 
 class Foto_model extends CI_Model {
 

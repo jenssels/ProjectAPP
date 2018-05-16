@@ -1,4 +1,10 @@
 <?php
+/**
+ * @class Personeelsfeest_model
+ * @brief Model-klasse voor personeelsfeesten
+ *
+ * Model-klasse die alle methodes bevat om de database-tabel personeelsfeest te gebruiken
+ */
 
 class Personeelsfeest_model extends CI_Model {
 

@@ -1,4 +1,10 @@
 <?php
+/**
+ * @class Dagindeling_model
+ * @brief Model-klasse voor dagindelingen
+ *
+ * Model-klasse die alle methodes bevat om de database-tabel dagindeling te gebruiken
+ */
 
 class Dagindeling_model extends CI_Model {
 

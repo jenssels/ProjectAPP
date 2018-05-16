@@ -1,4 +1,10 @@
 <?php
+/**
+ * @class Optiedeelname_model
+ * @brief Model-klasse voor optiedeelnames
+ *
+ * Model-klasse die alle methodes bevat om de database-tabel optiedeelname te gebruiken
+ */
 
 class optiedeelname_model extends CI_Model {
 

@@ -1,4 +1,10 @@
 <?php
+/**
+ * @class Taakdeelname_model
+ * @brief Model-klasse voor taakdeelnames
+ *
+ * Model-klasse die alle methodes bevat om de database-tabel taakdeelname te gebruiken
+ */
 
 class TaakDeelname_model extends CI_Model {
 

@@ -1,4 +1,10 @@
 <?php
+/**
+ * @class Taak_model
+ * @brief Model-klasse voor taken
+ *
+ * Model-klasse die alle methodes bevat om de database-tabel taak te gebruiken
+ */
 
 class Taak_model extends CI_Model {
 

@@ -1,4 +1,10 @@
 <?php
+/**
+ * @class Type_model
+ * @brief Model-klasse voor types
+ *
+ * Model-klasse die alle methodes bevat om de database-tabel type te gebruiken
+ */
 
 class Type_model extends CI_Model {
 
