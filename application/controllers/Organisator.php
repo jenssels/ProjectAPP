@@ -917,7 +917,7 @@ class Organisator extends CI_Controller
         $this->load->model('dagindeling_model');
         $data['dagindeling'] = $this->dagindeling_model->get($dagindelingId);
 
-        $this->load->view('organisator/ajax_selectOptiesBijDagindeling', $data);
+        $this->load->view('organisator/ajax_optiesBijDagindeling', $data);
     }
 
     /**
