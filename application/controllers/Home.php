@@ -1,4 +1,11 @@
 <?php
+/**
+ * @class Home
+ * @brief Controller-klasse voor Home
+ *
+ * Controller klasse met alle methodes die gebruikt worden in Home
+ */
+
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 

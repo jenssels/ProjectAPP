@@ -1,4 +1,10 @@
 <?php
+/**
+ * @class Organisator
+ * @brief Controller-klasse voor Organisator
+ *
+ * Controller klasse met alle methodes die gebruikt worden in Organisator
+ */
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 

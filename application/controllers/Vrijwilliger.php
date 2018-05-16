@@ -1,4 +1,10 @@
 <?php
+/**
+ * @class Vrijwilliger
+ * @brief Controller-klasse voor Vrijwilliger
+ *
+ * Controller klasse met alle methodes die gebruikt worden in Vrijwilliger
+ */
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 

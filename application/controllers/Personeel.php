@@ -1,4 +1,10 @@
 <?php
+/**
+ * @class Personeel
+ * @brief Controller-klasse voor Personeel
+ *
+ * Controller klasse met alle methodes die gebruikt worden in Personeel
+ */
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
