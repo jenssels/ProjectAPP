@@ -170,16 +170,86 @@ class Organisator extends CI_Controller
     {
         $this->load->model('shift_model');
         $data['shiften'] = $this->shift_model->getAllWithTaakWhereTaak($id);
-
+        $data['taakid'] = $id;
+        $data['taak'] = $this->taak_model->getWithDagindeling($id);
+        
         $partials = array("hoofding" => "hoofding",
             "inhoud" => "organisator/taakShiften",
+            "voetnoot" => "voetnoot");
+        $data['titel'] = 'Shiften beheren';
+        $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
+
+        $this->template->load('main_master', $partials, $data);
+                $this->session->set_userdata('referred_from_shift', current_url());
+    }
+    public function shiftToevoegen($id)
+    {
+        $data['taakId'] = $id;
+
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "organisator/shiftToevoegen",
+            "voetnoot" => "voetnoot");
+        $data['emailGebruiker'] = $this->session->userdata('emailgebruiker');
+        $data['titel'] = 'Shift Toevoegen';
+        $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
+
+        $this->template->load('main_master', $partials, $data);
+    }
+    public function voegShiftToe()
+    {
+        $shift = new stdClass();
+        $shift->id = $this->input->post('id');
+        $shift->naam = $this->input->post('naam');
+        $shift->beginuur = $this->input->post('beginuur');
+        $shift->einduur = $this->input->post('einduur');
+        $shift->maxAantal = $this->input->post('maxAantal');
+        $shift->taakId = $this->input->post('taakId');
+
+        $this->load->model('Shift_model');
+        $this->Shift_model->insert($shift);
+
+
+        $referred_from = $this->session->userdata('referred_from_shift');
+        redirect($referred_from, 'refresh');
+    }
+       public function verwijderShift($id)
+    {
+        $this->load->model('shift_model');
+        $this->shift_model->delete($id);
+        $referred_from = $this->session->userdata('referred_from_shift');
+        redirect($referred_from, 'refresh');
+    }
+        public function editShift($id)
+    {
+        $this->load->model('shift_model');
+        $data['shift'] = $this->shift_model->getById($id);
+
+        $partials = array("hoofding" => "hoofding",
+            "inhoud" => "organisator/shiftBewerken",
             "voetnoot" => "voetnoot");
         $data['titel'] = 'Personeelsfeest overzicht';
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';
 
         $this->template->load('main_master', $partials, $data);
     }
+        public function pasShiftAan()
+    {
+        $shift = new stdClass();
+        $shift->id = $this->input->post('id');
+        $shift->naam = $this->input->post('naam');
+        $shift->beginuur = $this->input->post('beginuur');
+        $shift->einduur = $this->input->post('einduur');
+        $shift->maxAantal = $this->input->post('maxAantal');
+ 
+        $this->load->model('shift_model');
+        $this->shift_model->update($shift);
 
+
+        $referred_from = $this->session->userdata('referred_from_shift');
+        redirect($referred_from, 'refresh');
+    }
+    
+    
     /**
      * Thomas Vansprengel
      * Een nieuwe taak maken met lege tekstvakken
@@ -231,7 +301,6 @@ class Organisator extends CI_Controller
      */
     public function edittaak($id)
     {
-
         $this->load->model('Locatie_model');
         $data['locaties'] = $this->Locatie_model->getAll();
 
@@ -251,7 +320,7 @@ class Organisator extends CI_Controller
     }
 
     /**
-     * >>>>>>> dc32fe06c01a52d4aeced78300d025bb9b06c978
+     * 
      * Thomas Vansprengel
      * Toon het overzicht om een individuele taak te beheren aan de hand van een dagindeling
      * @param $dagindelingId Taak aanpassen aan de hand van deze dagindeling
