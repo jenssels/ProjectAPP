@@ -77,7 +77,7 @@
 <div class="row">
     <div class="col-md-12">
         <p>Je bent uitgenodigd om te helpen op het personeelsfeest van dit jaar.</p>
-        <p>Vul te taken aan die jij wilt uitvoeren.</p>
+        <p>Vul de taken aan die jij wilt uitvoeren.</p>
     </div>
     <div class="col-md-12">
         <?php
