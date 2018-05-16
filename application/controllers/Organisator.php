@@ -1175,7 +1175,13 @@ class Organisator extends CI_Controller
         $optie->naam = $this->input->post('inputNaam');
         $optie->beschrijving = $this->input->post('inputBeschrijving');
         $optie->maxAantal = $this->input->post('inputMax');
+        if ($optie->maxAantal == 0) {
+            $optie->maxAantal = null;
+        }
         $optie->minAantal = $this->input->post('inputMin');
+        if ($optie->minAantal == 0) {
+            $optie->minAantal = null;
+        }
         $optie->dagindelingId = $this->input->post('dagindelingID');
         $optie->locatieId = $this->input->post('inputLocatie');
 
