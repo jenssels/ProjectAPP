@@ -601,7 +601,7 @@ class Organisator extends CI_Controller
             } else {
                 $check = $this->insertPersoon($feestId, $voornaam, $naam, $email, $hash);
                 if ($check) {
-                    $data['personeel'] .= '<b>' . $voornaam . ' ' . $naam . '</b> met mail adres <b>' . $email . '</b> is toegevoegd</br>';
+                    $data['personeel'] .= '<b>' . $email . '</b> van <b>'  . $voornaam . ' ' . $naam . '</b> is toegevoegd</br>';
                 }
                 else{
                     $data['personeel'] .= 'Database error voor <b>' . $voornaam . ' ' . $naam . '</b> met mail adres <b>' . $email . '</b></br>';
