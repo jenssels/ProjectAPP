@@ -17,7 +17,11 @@ class Shift_model extends CI_Model {
         parent::__construct();
     }
 
-    
+                /**
+     * Thomas Vansprengel - Ophalen van een shift aan de hand van een id
+     * @param $id id van shift
+     * @return Een shift
+     */
     function getById($id){
         $this->db->where('id', $id);
         $query = $this->db->get('shift');
@@ -47,7 +51,11 @@ class Shift_model extends CI_Model {
         return $shift;
         
     }
-    
+                /**
+     * Thomas Vansprengel - Alle shifts ophalen met een count van deelnemers
+     * @param $taakId id van een taak
+     * @return Alle shiften met de bijhorende telling van deelnemers
+     */
     function getAllWithCount($taakId){
         $this->load->model('taakDeelname_model');
         $this->db->where('taakId', $taakId);
@@ -132,11 +140,19 @@ class Shift_model extends CI_Model {
                 $shift->deelnemers = $this->taakdeelname_model->getCountWhereShift($shift->id);
             }
             return $shiften;
-        }       
+        }      
+                    /**
+     * Thomas Vansprengel - Shift toevoegen
+     * @param $shift Een shiftobject dat je toevoegt
+     */
          function insert($shift) {
             $this->db->insert('shift', $shift);
             return $this->db->insert_id();
         }
+                    /**
+     * Thomas Vansprengel - Shift aanpassen
+     * @param $shift Een shiftobject aanpassen
+     */
         function update($shift)
         {
         $this->db->where('id', $shift->id);
