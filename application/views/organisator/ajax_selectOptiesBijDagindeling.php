@@ -54,13 +54,11 @@ if (count($opties) > 0) {
         echo "<td>" . $maxAantal . "</td>";
         echo "<td>" . $minAantal . "</td>";
         echo "<td>" . $optie->locatie->naam . "</td>";
-        echo "<td>" . anchor('?', '<i class="fas fa-pencil-alt grow"></i>') . "</td>";
         echo "<td>" . anchor('#!', '<i class="far fa-trash-alt grow"></i>', 'class="verwijderOptie" data-id="' . $optie->id . '"') . "</td>";
         echo "</tr>";
     }
     echo "<tr>";
     echo "<td>" . anchor('#!', 'Optie toevoegen', 'class="btn btn-primary voegOptieToeLink"') . "</td>";
-    echo "<td></td>";
     echo "<td></td>";
     echo "<td></td>";
     echo "<td></td>";
