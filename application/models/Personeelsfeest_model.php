@@ -32,8 +32,8 @@ class Personeelsfeest_model extends CI_Model {
      * @return Een Personeelsfeest
      */
     function getWithInschrijvingenWherePersoneelsfeest($id){
-        $this->load->model('Dagindeling_model');
-        $this->load->model('Persoon_model');
+        $this->load->model('dagindeling_model');
+        $this->load->model('persoon_model');
         $this->db->where('id', $id);
         $query = $this->db->get('personeelsfeest');
         $personeelsfeest = $query->row();
@@ -48,8 +48,8 @@ class Personeelsfeest_model extends CI_Model {
      * @return Een personeelsfeest
      */
     function getWithDagindelingenwherePersoneelsfeest($id){
-        $this->load->model('Dagindeling_model');
-        $this->load->model('Persoon_model');
+        $this->load->model('dagindeling_model');
+        $this->load->model('persoon_model');
         $this->db->where('id', $id);
         $query = $this->db->get('personeelsfeest');
         $personeelsfeest = $query->row();
