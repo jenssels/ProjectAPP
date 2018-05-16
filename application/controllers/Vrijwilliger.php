@@ -8,14 +8,19 @@ class Vrijwilliger extends CI_Controller {
      * Laat vrijwilligers taakindeling invullen
      */
     public function index($hashcode) {
-        $this->load->model('shift_model');
+        //$this->load->model('shift_model');
         $this->load->model('locatie_model');
+        $this->load->model('persoon_model');
+        $this->load->model('personeelsfeest_model');
         $this->load->helper('form');
-        $shiften = $this->shift_model->getAllWithTaak();
+        $persoon = $this->persoon_model->getWhereHashcode($hashcode);
+        $data['personeelsfeest'] = $this->personeelsfeest_model->getWithDagindelingenwherePersoneelsfeest($persoon->personeelsfeestId);
+        
+        /*$shiften = $this->shift_model->getAllWithTaak();
         foreach ($shiften as $shift) {
             $shift->taak->locatie = $this->locatie_model->getById($shift->taak->locatieId);
         }
-        $data['shiften'] = $shiften;
+        $data['shiften'] = $shiften;*/
         $data['hashcode'] = $hashcode;
         
         $partials = array("hoofding" => "hoofding",

@@ -17,6 +17,12 @@ class Shift_model extends CI_Model {
         parent::__construct();
     }
 
+    
+    function getById($id){
+        $this->db->where('id', $id);
+        $query = $this->db->get('shift');
+        return $query->row();
+    }   
     /**
      * Jens Sels - Ophalen van alle shifts van een taak
      * @param $taakId Id van een taak
@@ -78,7 +84,7 @@ class Shift_model extends CI_Model {
      * @param $id Id van de taak 
      */
         function getAllWithTaakWhereTaak($id){
-        $this->db->where('id', $id);
+        $this->db->where('taakId', $id);
         $query = $this->db->get('shift');
         $shiften = $query->result();
         
@@ -116,5 +122,13 @@ class Shift_model extends CI_Model {
             }
             return $shiften;
         }       
-        
+         function insert($shift) {
+            $this->db->insert('shift', $shift);
+            return $this->db->insert_id();
+        }
+        function update($shift)
+        {
+        $this->db->where('id', $shift->id);
+        $this->db->update('shift', $shift);
+        }
 }

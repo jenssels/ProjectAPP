@@ -42,6 +42,16 @@ class Personeelsfeest_model extends CI_Model {
         $personeelsfeest->inschrijvingen = $this->Persoon_model->getInschrijvingenWherePersoneelsFeest($personeelsfeest->id);
         return $personeelsfeest;
     }
+    function getWithDagindelingenwherePersoneelsfeest($id){
+        $this->load->model('Dagindeling_model');
+        $this->load->model('Persoon_model');
+        $this->db->where('id', $id);
+        $query = $this->db->get('personeelsfeest');
+        $personeelsfeest = $query->row();
+        $personeelsfeest->dagindelingen = $this->Dagindeling_model->getAllDagIndelingenWithTakenWhereFeest($personeelsfeest->id);
+        return $personeelsfeest;
+    }
+    
     
     /**
     *  Jens Sels - ophalen van een personeelsfeest
