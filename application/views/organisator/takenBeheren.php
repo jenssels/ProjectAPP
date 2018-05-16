@@ -3,7 +3,8 @@
  * 
  * Pagina waar je alle taken in kan beheren
  * 
- */?>
+ */
+?>
 <div class="row">
     <div class="col-md-8">
         <table class="table">
