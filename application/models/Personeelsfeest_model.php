@@ -37,8 +37,8 @@ class Personeelsfeest_model extends CI_Model {
         $this->db->where('id', $id);
         $query = $this->db->get('personeelsfeest');
         $personeelsfeest = $query->row();
-        $personeelsfeest->dagindelingen = $this->Dagindeling_model->getAllDagIndelingenWithOptiesAndTakenWhereFeest($personeelsfeest->id);
-        $personeelsfeest->inschrijvingen = $this->Persoon_model->getInschrijvingenWherePersoneelsFeest($personeelsfeest->id);
+        $personeelsfeest->dagindelingen = $this->dagindeling_model->getAllDagIndelingenWithOptiesAndTakenWhereFeest($personeelsfeest->id);
+        $personeelsfeest->inschrijvingen = $this->persoon_model->getInschrijvingenWherePersoneelsFeest($personeelsfeest->id);
         return $personeelsfeest;
     }
     
@@ -53,7 +53,7 @@ class Personeelsfeest_model extends CI_Model {
         $this->db->where('id', $id);
         $query = $this->db->get('personeelsfeest');
         $personeelsfeest = $query->row();
-        $personeelsfeest->dagindelingen = $this->Dagindeling_model->getAllDagIndelingenWithTakenWhereFeest($personeelsfeest->id);
+        $personeelsfeest->dagindelingen = $this->dagindeling_model->getAllDagIndelingenWithTakenWhereFeest($personeelsfeest->id);
         return $personeelsfeest;
     }
     
