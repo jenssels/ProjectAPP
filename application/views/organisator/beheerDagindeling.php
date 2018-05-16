@@ -140,8 +140,10 @@ if (count($dagindelingenBijFeest) != 0) {
     </div>
     <?php
 } else {
-    echo '<div class="col-md-12"';
+    echo '<div class="row">';
+    echo '<div class="col-md-12">';
     echo anchor('organisator/maakNieuweDagindeling/' . $personeelsfeest->id, 'Dagindeling toevoegen', 'class="btn btn-primary"');
+    echo "</div>";
     echo "</div>";
 }
 ?>
