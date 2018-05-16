@@ -1,8 +1,9 @@
 <?php
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @file overzichtIngevuldeDagindeling.php
+ *
+ * View waarin een personeelslid zijn / haar ingevulde dagindeling kan bekijken
+ * Van hieruit kan hij / zij ook naar een pagina gaan om deze te bewerken of een vrijwilliger uitnodigen
  */
 ?>
 
