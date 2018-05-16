@@ -3,7 +3,7 @@
      * @file vrijwilligerUitnodigenForm.php
      * Jens Sels - Pagina waarmee een personeelslid een vrijwilliger kan uitnodigen
      * - gebruikt bootstrap en eigen css
-     * - ajax functie die vrijwilliger toevoegd in database dan mail verstuurt met uitnodigingslink
+     * - ajax functie die vrijwilliger toevoegd in database dan mail verstuurd met uitnodigingslink
      */
 ?>
 <script>
