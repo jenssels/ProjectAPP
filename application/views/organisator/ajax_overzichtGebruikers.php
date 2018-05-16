@@ -1,3 +1,10 @@
+<?php
+    /**
+     * @file ajax_overzichtGebruikers.php
+     * Jens Sels - Ajax pagina die alle personeelsleden en vrijwilliger toont die uitgenodigd zijn voor een personeelsfeest
+     */
+?>
+
 <div class="col-md-12">
     <h2>Vrijwilligers</h2>
 

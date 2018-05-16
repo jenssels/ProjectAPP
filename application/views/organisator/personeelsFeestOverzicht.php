@@ -1,5 +1,14 @@
+<?php
+    /**
+     * @file personeelsFeestOverzicht.php
+     * Jens Sels - Pagina die een overzicht toont van alle personeelsfeesten. Vanuit deze pagina kan de organisator naar andere functionaliteiten gaan 
+     * - krijgt lijst $personeelsFeesten binnen met personeelsfeest objecten in
+     * - ajax functie die die alle personeelsleden en vrijwilligers toont van een personeelsfeest en deze toont in een modal
+     * - javascript die om bevestiging vraagt als je een personeelsfeest wilt verwijderen
+     */
+?>
 <script>
-    function haalDeelnemersOp (id) {
+    function ajax_haalDeelnemersOp (id) {
         // Jens Sels - Ophalen personeelsleden en vrijwilligers en tonen in modal
         $.ajax({type : "GET",
                 url : site_url + "/Organisator/ajaxHaalDeelnemersOp",
@@ -19,7 +28,7 @@
         $('.overzicht').click(function(){
             console.log('klik');
             var id = $(this).data('id');
-            haalDeelnemersOp(id);
+            ajax_haalDeelnemersOp(id);
         });
 
         <?php
