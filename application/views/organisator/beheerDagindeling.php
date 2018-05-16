@@ -9,7 +9,6 @@
 ?>
 
 <script>
-
     function haalOptiesBijDagindelingOp(dagindelingId) {
         $.ajax({
             type: "GET",
@@ -42,17 +41,13 @@
             var id = $(this).data('id');
             haalOptiesBijDagindelingOp(id);
         });
-
-        $('#knopVoegOptieToe').on('click', function () {
-
-        });
     });
 
 </script>
 
 <div class="row">
     <div class="page-header col-sm-12 pb-2">
-        <h5>Dagindeling van <?php echo $personeelsfeest->naam ?></h5>
+        <h5>Dagindelingen van <?php echo strtolower($personeelsfeest->naam); ?></h5>
     </div>
 </div>
 
@@ -63,6 +58,7 @@
                 <th>Naam</th>
                 <th>Uur</th>
                 <th>Voor vrijwilliger</th>
+                <th></th>
                 <th></th>
                 <th></th>
             </tr>
@@ -86,7 +82,8 @@
             }
             ?>
             <tr>
-                <td><?php echo anchor('organisator/maakNieuweDagindeling/' . $personeelsfeest->id, 'Toevoegen') ?></td>
+                <td><?php echo anchor('organisator/maakNieuweDagindeling/' . $personeelsfeest->id, 'Dagindeling toevoegen', 'class="btn btn-primary"'); ?></td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -96,29 +93,7 @@
     </div>
 
     <div class="col-sm-12" id="resultaat">
-
-    </div>
-</div>
-
-<!-- Dialoogvenster -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
+        <h5>Klik op een dagindeling om de opties te bekijken.</h5>
     </div>
 </div>
 

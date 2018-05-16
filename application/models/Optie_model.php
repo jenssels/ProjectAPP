@@ -35,7 +35,12 @@ class Optie_model extends CI_Model {
     function getAllWhereDagindeling($dagindelingId) {
         $this->db->where('dagindelingid', $dagindelingId);
         $query = $this->db->get('optie');
-        return $query->result();
+        $opties = $query->result();
+        $this->load->model('locatie_model');
+        foreach ($opties as $optie) {
+            $optie->locatie = $this->locatie_model->getById($optie->locatieId);
+        }
+        return $opties;
     }
 
     /**
@@ -90,6 +95,17 @@ class Optie_model extends CI_Model {
         }
         $this->db->where('id', $optieId);
         $this->db->delete('optie');
+    }
+
+    /**
+     * Joren Synaeve
+     * Voegt de optie toe aan de database
+     * @param $optie object
+     * @return het ID van de toegevoegde optie
+     */
+    function insert($optie) {
+        $this->db->insert('optie', $optie);
+        return $this->db->insert_id();
     }
 
 }

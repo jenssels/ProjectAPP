@@ -845,6 +845,9 @@ class Organisator extends CI_Controller
         $this->load->model('dagindeling_model');
         $data['dagindeling'] = $this->dagindeling_model->get($dagindelingId);
 
+        $this->load->model('locatie_model');
+        $data['locaties'] = $this->locatie_model->getAll();
+
         $this->load->view('organisator/ajax_selectOptiesBijDagindeling', $data);
     }
 
@@ -1146,6 +1149,40 @@ class Organisator extends CI_Controller
 
         }
         redirect('organisator/beheerOrganisatoren');
+    }
+
+    /**
+     * Joren Synaeve
+     * Verwijdert een bepaalde optie
+     * @param $optieID
+     */
+    public function verwijderOptie($optieID, $feestID){
+        $this->load->model('optie_model');
+        $this->optie_model->delete($optieID);
+
+        redirect('organisator/beheerDagindeling/' . $feestID);
+    }
+
+    /**
+     * Joren Synaeve
+     * Voegt een optie toe
+     */
+    public function voegOptieToe($feestID){
+        // TODO validatie
+        $optie = new stdClass();
+
+        $optie->id = $this->input->post('inputOptie');
+        $optie->naam = $this->input->post('inputNaam');
+        $optie->beschrijving = $this->input->post('inputBeschrijving');
+        $optie->maxAantal = $this->input->post('inputMax');
+        $optie->minAantal = $this->input->post('inputMin');
+        $optie->dagindelingId = $this->input->post('dagindelingID');
+        $optie->locatieId = $this->input->post('inputLocatie');
+
+        $this->load->model('optie_model');
+        $this->optie_model->insert($optie);
+
+        redirect('organisator/beheerDagindeling/' . $feestID);
     }
 
 }

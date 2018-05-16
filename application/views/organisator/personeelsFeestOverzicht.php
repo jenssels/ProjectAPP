@@ -28,6 +28,8 @@
         ?>
         $('.verwijderPersoneelsfeest').click(function (e) {
             var id = $(this).data('id');
+            var naam = $(this).data('naam');
+            $('#personeelsfeestNaam').html(naam);
             $('#verwijderen').attr('href', _href + id);
             $('#modalBevestig').modal('show');
             e.preventDefault();
@@ -64,7 +66,7 @@
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestUploadForm/' . $feest->id, '<i class="fas fa-user-plus grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/beheerDagindeling/' . $feest->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/personeelsFeestAanmakenForm/' . $feest->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
-                        . "<td class='text-center'>" . anchor('#!', '<i class="far fa-trash-alt grow"></i>', 'class="verwijderPersoneelsfeest" data-id="' . $feest->id . '"') . "</td>"
+                        . "<td class='text-center'>" . anchor('#!', '<i class="far fa-trash-alt grow"></i>', 'class="verwijderPersoneelsfeest" data-id="' . $feest->id . '" data-naam="' . $feest->naam . '"') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/mailSturen/' . $feest->id, '<i class="far fa-envelope grow"></i>') . "</td>";
 
                 } else {
@@ -76,7 +78,7 @@
                         . "<td class='text-center'><i class='fas fa-user-plus alt text-secondary'></i></td>"
                         . "<td class='text-center'><i class='fas fa-pencil-alt text-secondary'></i></td>"
                         . "<td class='text-center'><i class='fas fa-pencil-alt text-secondary'></i></td>"
-                        . "<td class='text-center'>" . anchor('Organisator/personeelsFeestVerwijderen/' . $feest->id, '<i class="far fa-trash-alt grow"></i>') . "</td>"
+                        . "<td class='text-center'>" . anchor('#!', '<i class="far fa-trash-alt grow"></i>', 'class="verwijderPersoneelsfeest" data-id="' . $feest->id . '" data-naam="' . $feest->naam . '"') . "</td>"
                         . "<td class='text-center'>" . anchor('Organisator/mailSturen/' . $feest->id, '<i class="far fa-envelope grow"></i>') . "</td>";
                 }
                 
