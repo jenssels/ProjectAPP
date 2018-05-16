@@ -30,7 +30,8 @@
                         . "<td>" .  $taak->dagindeling->naam . "</td>"
                         . "<td>" .  $taak->locatie->naam . "</td>"
                         . "<td>" . anchor("#!",'<i class="far fa-trash-alt grow"></i>', 'class="verwijderTaak" data-id="' . $taak->id . '"') . "</td>"
-                        . "<td>" . anchor("organisator/edittaak/".$taak->id,'<i class="fas fa-pencil-alt grow"></i>') . "</td></tr>"; 
+                        . "<td>" . anchor("organisator/edittaak/".$taak->id,'<i class="fas fa-pencil-alt grow"></i>') . "</td>"
+                        . "<td>" . anchor("organisator/shiftTaak/".$taak->id,'Shiften beheren') . "</td></tr>"; 
                 
             }
             
