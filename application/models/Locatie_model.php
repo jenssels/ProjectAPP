@@ -34,7 +34,7 @@ class Locatie_model extends CI_Model {
         $this->db->insert('locatie', $locatie);
         return $this->db->insert_id();
     }
-            /**
+     /**
      * Thomas Vansprengel - Haal alle locaties op
      * @return Alle locaties
      */
@@ -42,7 +42,7 @@ class Locatie_model extends CI_Model {
         $query = $this->db->get('locatie');
         return $query->result();
     }
-            /**
+    /**
      * Thomas Vansprengel - Locatie verwijderen
      * @param $id Id van een locatie
      */

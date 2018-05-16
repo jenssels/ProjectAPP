@@ -87,6 +87,23 @@ class Dagindeling_model extends CI_Model {
         }
         return $dagindelingen;
     }
+    
+        /**
+     * Thomas Vansprengel - Ophalen van alle dagindelingen met taken aan de hand van een personeelsfeest
+     * @param $feestId id van een personeelsfeest
+     * @return Alle dagindelingen van een personeelsfeest
+     */
+    function getAllDagIndelingenWithTakenWhereFeest($feestId){
+        $this->db->where('personeelsfeestid', $feestId);
+        $query = $this->db->get('dagindeling');
+        $dagindelingen =  $query->result();
+        $this->load->model('Optie_model');
+        $this->load->model('Taak_model');
+        foreach($dagindelingen as $dagindeling){
+           $dagindeling->taken = $this->Taak_model->getAllWithShiftenAndLocatiesWhereDagindeling($dagindeling->id);
+        }
+        return $dagindelingen;
+    }
 
     /**
      * Joren Synaeve - Voegt een nieuwe dagindeling toe aan de database
@@ -107,12 +124,22 @@ class Dagindeling_model extends CI_Model {
         $this->db->update('dagindeling', $dagindeling);
     }
 
+            /**
+     * Thomas Vansprengel - Ophalen van een dagindeling aan de hand van een id
+     * @param $id id dagindeling
+     * @return Een dagindeling aan de hand van zijn id
+     */
     function getByTaak($id) {
         $this->db->where('id', $id);
         $query = $this->db->get('dagindeling');
         return $query->row();
     }
 
+            /**
+     * Thomas Vansprengel - Ophalen van alle dagindelingen aan de hand van een personeelsfeest met opties
+     * @param $feestId id van een personeelsfeest
+     * @return Alle dagindelingen van een personeelsfeest met opties
+     */
     function getAllDagindelingenWherePersoneelsfeestWithOpties($feestId) {
         $this->db->where('personeelsfeestid', $feestId);
         $query = $this->db->get('dagindeling');

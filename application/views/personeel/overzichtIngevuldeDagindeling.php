@@ -23,5 +23,7 @@
             } 
         }
     }
+    
+    echo anchor('personeel/vrijwilligerUitnodigenForm', 'Nodig een vrijwilliger uit', array('role' => 'button', 'class' => 'btn btn-primary'));
     ?>
 </div>

@@ -772,6 +772,9 @@ class Organisator extends CI_Controller
         $this->load->model('dagindeling_model');
         $data['dagindelingenBijFeest'] = $this->dagindeling_model->getAllWherePersoneelsfeest($personeelsfeestId);
 
+        $this->load->model('locatie_model');
+        $data['locaties'] = $this->locatie_model->getAll();
+
         $partials = array('hoofding' => 'hoofding',
             'inhoud' => 'organisator/beheerDagindeling',
             'voetnoot' => 'voetnoot');
@@ -914,10 +917,7 @@ class Organisator extends CI_Controller
         $this->load->model('dagindeling_model');
         $data['dagindeling'] = $this->dagindeling_model->get($dagindelingId);
 
-        $this->load->model('locatie_model');
-        $data['locaties'] = $this->locatie_model->getAll();
-
-        $this->load->view('organisator/ajax_selectOptiesBijDagindeling', $data);
+        $this->load->view('organisator/ajax_optiesBijDagindeling', $data);
     }
 
     /**
@@ -1236,28 +1236,25 @@ class Organisator extends CI_Controller
      * Joren Synaeve
      * Voegt een optie toe
      */
-    public function voegOptieToe($feestID){
+    public function ajax_voegOptieToe(){
         // TODO validatie
         $optie = new stdClass();
 
-        $optie->id = $this->input->post('inputOptie');
-        $optie->naam = $this->input->post('inputNaam');
-        $optie->beschrijving = $this->input->post('inputBeschrijving');
-        $optie->maxAantal = $this->input->post('inputMax');
+        $optie->naam = $this->input->get('naam');
+        $optie->beschrijving = $this->input->get('beschrijving');
+        $optie->maxAantal = $this->input->get('maxAantal');
         if ($optie->maxAantal == 0) {
             $optie->maxAantal = null;
         }
-        $optie->minAantal = $this->input->post('inputMin');
+        $optie->minAantal = $this->input->get('minAantal');
         if ($optie->minAantal == 0) {
             $optie->minAantal = null;
         }
-        $optie->dagindelingId = $this->input->post('dagindelingID');
-        $optie->locatieId = $this->input->post('inputLocatie');
+        $optie->dagindelingId = $this->input->get('dagindelingID');
+        $optie->locatieId = $this->input->get('locatieID');
 
         $this->load->model('optie_model');
         $this->optie_model->insert($optie);
-
-        redirect('organisator/beheerDagindeling/' . $feestID);
     }
 
 }

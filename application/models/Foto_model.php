@@ -68,7 +68,10 @@ class Foto_model extends CI_Model {
         $this->db->insert('foto', $foto);
         return $this->db->insert_id();
     }
-    
+                /**
+     * Jorne Lambrechts
+     * Foto verwijderen
+     */
     function delete($fotoId){    
         $this->db->where('id', $fotoId);
         $this->db->delete('foto');

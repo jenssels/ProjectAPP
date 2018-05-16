@@ -187,6 +187,11 @@ class Persoon_model extends CI_Model {
         return $this->db->insert_id();
     }
 
+                /**
+     * Organisator inloggen
+     * @param $email email van gebruiker $wachtwoord wachtwoord van gebruiker $typeid het type gebruiker
+     * @return Organisator als organisator is.
+     */
     function getOrganisator($email, $wachtwoord, $typeId) {
         //ophalen van de organisator
         $this->db->where('email', $email);

@@ -43,6 +43,22 @@ class Taak_model extends CI_Model {
         return $taken;
     }
     
+                /**
+     * Thomas Vansprengel - Ophalen van alle taken met bijhorende shiften en locaties aan de hand van een dagindeling
+     * @param $dagindelingid Id van een dagindeling
+     * @return Alle taken met bijhorende shiften en locaties
+     */
+    function getAllWithShiftenAndLocatiesWhereDagindeling($dagindelingId){
+        $this->load->model('Shift_model');
+        $this->db->where('dagindelingid', $dagindelingId);
+        $query = $this->db->get('taak');
+        $taken = $query->result();
+        foreach($taken as $taak){
+            $taak->shiften = $this->Shift_model->getAllWithCount($taak->id);
+            $taak->locatie = $this->locatie_model->getByTaak($taak->locatieId);
+        }
+        return $taken;
+    }
     /**
      * Jens Sels - Verwijder taak en al zijn shifts 
      * @param $taakId Id van een taak
@@ -58,11 +74,18 @@ class Taak_model extends CI_Model {
         $this->db->delete('taak');
         
     }
-    
+                /**
+     * Thomas Vansprengel - Taak toevoegen aan database
+     * @param $taak Taakobject om toe te voegen
+     */
         function insert($taak) {
             $this->db->insert('taak', $taak);
             return $this->db->insert_id();
         }
+                    /**
+     * Thomas Vansprengel - Taak aanpassen in database
+     * @param $taak Taakobject om toe te voegen
+     */
         function update($taak)
         {
         $this->db->where('id', $taak->id);
@@ -83,7 +106,6 @@ class Taak_model extends CI_Model {
         * @return Een rij met taak en shift
         */
         function getByShift($id){
-        // Thomas Vansprengel
         $this->db->where('id', $id);
         $query = $this->db->get('taak');
         return $query->row();

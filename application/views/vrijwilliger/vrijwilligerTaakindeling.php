@@ -95,14 +95,19 @@
             </tr>    
             <?php
             $teller = 0;
-            foreach ($shiften as $shift) {
-                $teller++;
-                echo "<tr><td>" . $shift->taak->naam . "</td><td>" . $shift->naam . "</td>"
-                . "<td>" . substr($shift->beginuur, 0, 5) . "u - " . substr($shift->einduur, 0, 5) . "u</td>"
-                . "<td>" . $shift->taak->locatie->naam . "</td>"
-                . "<td>" . $shift->deelnemers . '/' . $shift->maxAantal . "</td>"
-                . "<td>" . form_checkbox(array('name' => 'shift[]', 'class' => 'check', 'value' => $shift->id, 'id' => 'shift' . $shift->id, 'data-count' => $shift->deelnemers, 'data-max' => $shift->maxAantal, 'data-id' => $shift->id)) . "</td>"
-                . "<td><div class='volzet'></div></td></tr>";
+            
+            foreach ($personeelsfeest->dagindelingen as $dagindeling) {
+                foreach ($dagindeling->taken as $taak) {
+                    foreach ($taak->shiften as $shift) {
+                        $teller++;
+                        echo "<tr><td>" . $taak->naam . "</td><td>" . $shift->naam . "</td>"
+                        . "<td>" . substr($shift->beginuur, 0, 5) . "u - " . substr($shift->einduur, 0, 5) . "u</td>"
+                        . "<td>" . $taak->locatie->naam. "</td>"
+                        . "<td>" . $shift->deelnemers . '/' . $shift->maxAantal . "</td>"
+                        . "<td>" . form_checkbox(array('name' => 'shift[]', 'class' => 'check', 'value' => $shift->id, 'id' => 'shift' . $shift->id, 'data-count' => $shift->deelnemers, 'data-max' => $shift->maxAantal, 'data-id' => $shift->id)) . "</td>"
+                        . "<td><div class='volzet'></div></td></tr>";
+                    }
+                }
             }
             ?>
         </table>        
