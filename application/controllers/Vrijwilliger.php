@@ -84,7 +84,9 @@ class Vrijwilliger extends CI_Controller {
         
 
     }
-    
+                    /**
+     * Thomas Vansprengel - Functie om huidige pagina op te slagen om later er terug naar te keren
+     */
         public function terugNaarIndex() {
         $referred_from = $this->session->userdata('referred_from');
         redirect($referred_from, 'refresh');
@@ -111,7 +113,9 @@ class Vrijwilliger extends CI_Controller {
             'voetnoot' => 'voetnoot');
         $this->template->load('main_master', $partials, $data);
     }
-    
+                    /**
+     * Thomas Vansprengel - Vrijwilliger inschrijven in taakdeelname
+     */
     public function bevestigTaakindeling(){
         $hashcode = $this->input->post('hashcode');
         $shiften = $this->input->post('shift');
@@ -130,7 +134,9 @@ class Vrijwilliger extends CI_Controller {
         }
         redirect('vrijwilliger/vrijwilligerBevestig');
     }
-    
+                    /**
+     * Thomas Vansprengel - Bevestigingspagina tonen als vrijwilliger is ingeschreven
+     */
         public function vrijwilligerBevestig() {
         $data['titel'] = 'Bevestigd';
         $data['paginaverantwoordelijke'] = 'Thomas Vansprengel';

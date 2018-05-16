@@ -182,6 +182,10 @@ class Organisator extends CI_Controller
         $this->template->load('main_master', $partials, $data);
                 $this->session->set_userdata('referred_from_shift', current_url());
     }
+                /**
+     * Thomas Vansprengel - Pagina tonen om shift toe te voegen
+     * @param $id Id van een taak waarvan je de shift gaat toevoegen
+     */
     public function shiftToevoegen($id)
     {
         $data['taakId'] = $id;
@@ -195,6 +199,9 @@ class Organisator extends CI_Controller
 
         $this->template->load('main_master', $partials, $data);
     }
+                    /**
+     * Thomas Vansprengel - Functie om ingegeven shift toe te voegen aan database
+     */
     public function voegShiftToe()
     {
         $shift = new stdClass();
@@ -212,6 +219,10 @@ class Organisator extends CI_Controller
         $referred_from = $this->session->userdata('referred_from_shift');
         redirect($referred_from, 'refresh');
     }
+                /**
+     * Thomas Vansprengel - Functie om shift te verwijderen
+     * @param $id Id van te verwijderen shift
+     */
        public function verwijderShift($id)
     {
         $this->load->model('shift_model');
@@ -219,6 +230,10 @@ class Organisator extends CI_Controller
         $referred_from = $this->session->userdata('referred_from_shift');
         redirect($referred_from, 'refresh');
     }
+                    /**
+     * Thomas Vansprengel - Pagina tonen om shift aan te passen
+     * @param $id Id van een shift die je gaat aanpassen
+     */
         public function editShift($id)
     {
         $this->load->model('shift_model');
@@ -232,6 +247,9 @@ class Organisator extends CI_Controller
 
         $this->template->load('main_master', $partials, $data);
     }
+                    /**
+     * Thomas Vansprengel - Functie om gegeven info aan te passen aan de database van een shift
+     */
         public function pasShiftAan()
     {
         $shift = new stdClass();
@@ -740,7 +758,9 @@ class Organisator extends CI_Controller
         $this->template->load('main_master', $partials, $data);
     }
 
-    //Foutmelding als aanmelden fout loopt
+                /**
+     * Jorne Lambrechts - Foutmelding als aanmelden niet lukt
+     */
     public function foutAanmelden($foutmelding)
     {
         $data['titel'] = 'Aanmeld fout!';
@@ -1029,7 +1049,9 @@ class Organisator extends CI_Controller
             'voetnoot' => 'voetnoot');
         $this->template->load('main_master', $partials, $data);
     }
-
+                /**
+     * Jorne Lambrechts - Nieuw album aanmaken
+     */
     public function maakAlbum()
     {
         $data['titel'] = 'Album aanmaken';
@@ -1072,7 +1094,9 @@ class Organisator extends CI_Controller
             }                      
         }
     }
-    
+                    /**
+     *Jorne Lambrechts - Kijken of een album bestaat
+     */
     function bestaandAlbum($album){
         $this->load->model('album_model');
         $albums = $this->album_model->getAll();
@@ -1086,7 +1110,9 @@ class Organisator extends CI_Controller
         
         return $bestaat;
     }
-    
+                    /**
+     * Jorne Lambrechts - Errorpagina als album bestaat
+     */
     function albumBestaat(){
         $data['titel'] = 'Album bestaat!';
         $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
@@ -1098,7 +1124,9 @@ class Organisator extends CI_Controller
         $this->template->load('main_master', $partials, $data);
     }
     
-
+                /**
+     * Jorne Lambrechts - Pagina om foto's toe te voegen
+     */
     public function toevoegenFotos()
     {
         $data['titel'] = 'Foto\'s toevoegen';
@@ -1190,7 +1218,9 @@ class Organisator extends CI_Controller
             'voetnoot' => 'voetnoot');
         $this->template->load('main_master', $partials, $data);
     }
-
+                /**
+     * Jorne Lambrechts - Foto verwijderen 
+     */
     public function verwijderAjaxFoto()
     {
         $fotoId = $this->input->get('fotoId');
