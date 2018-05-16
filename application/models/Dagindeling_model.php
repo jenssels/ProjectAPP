@@ -43,6 +43,7 @@ class Dagindeling_model extends CI_Model {
      */
     function getAllWherePersoneelsfeest($feestId) {
         $this->db->where('personeelsfeestId', $feestId);
+        $this->db->order_by('beginuur', 'asc');
         $query = $this->db->get('dagindeling');
         return $query->result();
     }
