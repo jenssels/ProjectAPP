@@ -3,7 +3,8 @@
  * 
  * Pagina waar je alle taken in kan beheren
  * 
- */?>
+ */
+?>
 <script>
     $(document).ready(function () {
         <?php

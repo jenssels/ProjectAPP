@@ -6,10 +6,6 @@
  */
 ?>
 
-<div class="page-header">
-    <h1>Overzicht fotos</h1>
-</div>
-
 <div>
     <?php
         echo '<p>Op deze pagina vindt u alle afbeeldingen van het album: ';
