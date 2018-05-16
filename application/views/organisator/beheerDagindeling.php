@@ -87,54 +87,66 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <table class="table">
-            <tr>
-                <th>Naam</th>
-                <th>Uur</th>
-                <th>Voor vrijwilliger</th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-            <?php
-            foreach ($dagindelingenBijFeest as $dagindeling) {
-                if ($dagindeling->voorVrijwilliger == 0) {
-                    $voorVrijwilliger = 'Nee';
-                } else {
-                    $voorVrijwilliger = 'Ja';
+<?php
+if (count($dagindelingenBijFeest) != 0) {
+    ?>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <tr>
+                    <th>Naam</th>
+                    <th>Uur</th>
+                    <th>Voor vrijwilliger</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <?php
+                foreach ($dagindelingenBijFeest as $dagindeling) {
+                    if ($dagindeling->voorVrijwilliger == 0) {
+                        $voorVrijwilliger = 'Nee';
+                    } else {
+                        $voorVrijwilliger = 'Ja';
+                    }
+
+                    $beginuur = substr($dagindeling->beginuur, 0, 5);
+                    $einduur = substr($dagindeling->einduur, 0, 5);
+
+                    echo "<tr><td>" . divanchor('', $dagindeling->naam, array('data-id' => $dagindeling->id, 'class' => 'dagindelingLink')) . "</td>"
+                        . "<td>" . $beginuur . "u - " . $einduur . "u</td>"
+                        . "<td>" . $voorVrijwilliger . "</td>"
+                        . "<td>" . anchor('organisator/taakBeheren/' . $dagindeling->id, 'Beheer taken') . "</td>"
+                        . "<td>" . anchor('organisator/wijzigDagindeling/' . $personeelsfeest->id . '/' . $dagindeling->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
+                        . "<td>" . anchor('#!', '<i class="far fa-trash-alt grow"></i>', 'class="verwijderDagindeling" data-id="' . $dagindeling->id . '"') . "</td></tr>";
                 }
+                ?>
+                <tr>
+                    <td><?php echo anchor('organisator/maakNieuweDagindeling/' . $personeelsfeest->id, 'Dagindeling toevoegen', 'class="btn btn-primary"'); ?></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
 
-                $beginuur = substr($dagindeling->beginuur, 0, 5);
-                $einduur = substr($dagindeling->einduur, 0, 5);
+        <div class="col-sm-12" id="resultaat">
+            <h5>Klik op een dagindeling om de opties te bekijken.</h5>
+        </div>
+        <div class="col-sm-12">
+            <?php echo anchor('#!', 'Optie toevoegen', 'class="btn btn-primary voegOptieToeLink"'); ?>
+        </div>
+    </div>
+    <?php
+} else {
+    echo '<div class="col-md-12"';
+    echo anchor('organisator/maakNieuweDagindeling/' . $personeelsfeest->id, 'Dagindeling toevoegen', 'class="btn btn-primary"');
+    echo "</div>";
+}
+?>
 
-                echo "<tr><td>" . divanchor('', $dagindeling->naam, array('data-id' => $dagindeling->id, 'class' => 'dagindelingLink')) . "</td>"
-                    . "<td>" . $beginuur . "u - " . $einduur . "u</td>"
-                    . "<td>" . $voorVrijwilliger . "</td>"
-                    . "<td>" . anchor('organisator/taakBeheren/' . $dagindeling->id, 'Beheer taken') . "</td>"
-                    . "<td>" . anchor('organisator/wijzigDagindeling/' . $personeelsfeest->id . '/' . $dagindeling->id, '<i class="fas fa-pencil-alt grow"></i>') . "</td>"
-                    . "<td>" . anchor('#!', '<i class="far fa-trash-alt grow"></i>', 'class="verwijderDagindeling" data-id="' . $dagindeling->id . '"') . "</td></tr>";
-            }
-            ?>
-            <tr>
-                <td><?php echo anchor('organisator/maakNieuweDagindeling/' . $personeelsfeest->id, 'Dagindeling toevoegen', 'class="btn btn-primary"'); ?></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
-    </div>
 
-    <div class="col-sm-12" id="resultaat">
-        <h5>Klik op een dagindeling om de opties te bekijken.</h5>
-    </div>
-    <div class="col-sm-12">
-        <?php echo anchor('#!', 'Optie toevoegen', 'class="btn btn-primary voegOptieToeLink"'); ?>
-    </div>
-</div>
 
 <!-- Bevestigdialoogvenster -->
 <div class="modal fade" id="modalBevestig" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
