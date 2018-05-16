@@ -1,3 +1,12 @@
+<?php
+    /**
+     * @file personeelsFeestInschrijvingen.php
+     * Jens Sels - Pagina die totaal inschrijvingen toont van een personeelsfeest en alle taken en opties
+     * - krijgt een $personeelsfeest object binnen
+     * - ajax functie die de deelnemers gaat opvragen en tonen in een modal voor een optie of shift
+     * - gebruikt bootstrap tabs en eigen cssS
+     */
+?>
 <script>
     $(document).ready(function () {
         function ajaxToonDeelnemers(id, type) {
