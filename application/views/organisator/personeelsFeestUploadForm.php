@@ -41,7 +41,7 @@
                 processData: false,
                 success: function (result) {
                     $('#uploadMessage').html(result);
-                },
+                }
             });
             return false;
         });
