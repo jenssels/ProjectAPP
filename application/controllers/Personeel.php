@@ -237,7 +237,8 @@ class Personeel extends CI_Controller {
         
     }
     /**
-     * Jens Sels - openen van pagina zodat personeelslid een vrijwilliger kan uitnodigen
+     * Jens Sels
+     * openen van pagina zodat personeelslid een vrijwilliger kan uitnodigen
      */
     public function vrijwilligerUitnodigenForm(){
         $data['titel'] = 'Vrijwilliger uitnodigen';
@@ -250,7 +251,8 @@ class Personeel extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
     /**
-     * Jens Sels - ajax die vrijwilliger gaat uitnodigen
+     * Jens Sels
+     * ajax die vrijwilliger gaat uitnodigen
      */
     public function ajaxNodigVrijwilligerUit(){
         $persoon = new stdClass();

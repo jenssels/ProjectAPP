@@ -1,3 +1,12 @@
+<?php
+    /**
+     * @file personeelsFeestAanmaken
+     * Jens Sels - Pagina waarmee organisatoren personeelsfeesten kunnen aanmaken of bewerken
+     * - krijgt een leeg (aanmaken) of vol (bewerken) $feest object binnen
+     * - javascript om datepickers te initialiseren en om ervoor te zorgen dat je geen datums in het verleden kan selecteren en dat de deadline niet later kan vallen als de datum dat het personeelsfeest plaatsvindt
+     * - gebruikt bootstrap en eigen css
+     */
+?>
 <script>
     $(document).ready(function () {
         /**

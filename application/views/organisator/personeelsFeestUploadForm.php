@@ -1,3 +1,12 @@
+<?php
+    /**
+     * @file personeelsFeestUploaForm.php
+     * Jens Sels - Pagina waarmee je personeelsleden kan toevoegen aan een personeelsfeest
+     * - 1 ajax functie waarmee je een personeelslid kan toevoegen via een formulier en een andere ajax functie waarmee je een .xls bestand kan uploaden om meerdere personeelsleden toe te voegen
+     * - gebruikt bootstrap en eigen css
+     * - krijgt een personeelsfeest Id binnen
+     */
+?>
 <script>
     $(document).ready(function () {
         function addPersoon(voornaam, naam, email) {

@@ -1,6 +1,6 @@
 <nav id="hoofding" class="navbar navbar-default navbar-fixed-top text-white bg-TMOrange">
     <div class="container">
-        <h1><?php echo anchor('home/index', 'Personeelsfeest') ?></h1>
+        <h1>Personeelsfeest</h1>
         <span class='navbar-text'>
             <?php
             if ($this->session->userdata('emailgebruiker')) {
