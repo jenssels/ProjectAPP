@@ -22,6 +22,10 @@ class Home extends CI_Controller {
     public function __construct() {
         parent::__construct();
     }
+    
+                /**
+     * Joren Synaeve - Homepagina
+     */
     public function index() {
         $data['titel'] = 'Home';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
@@ -83,7 +87,9 @@ class Home extends CI_Controller {
         }
     }
     
-    //Foutmelding als aanmelden fout loopt
+                /**
+     * Jorne Lambrechts - Foutmelding als aanmelden niet lukt
+     */
     public function foutAanmelden(){
         $data['titel'] = 'Aanmeld fout!';
         $data['paginaverantwoordelijke'] = 'Jorne Lambrechts';
@@ -95,8 +101,10 @@ class Home extends CI_Controller {
         $this->template->load('main_master', $partials, $data);
     }
     
+                /**
+     * Joren Synaeve - Errorpagina als persoon niet is aangemeld
+     */
     public function isNietAangemeld() {
-        // Standaardvariabelen
         $data['titel'] = 'Geen toegang!';
         $data['paginaverantwoordelijke'] = 'Joren Synaeve';
         $data['emailGebruiker'] = '';
