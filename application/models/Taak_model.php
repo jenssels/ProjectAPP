@@ -43,6 +43,17 @@ class Taak_model extends CI_Model {
         return $taken;
     }
     
+    
+    function getAllWithShiftenWhereDagindeling($dagindelingId){
+        $this->load->model('Shift_model');
+        $this->db->where('dagindelingid', $dagindelingId);
+        $query = $this->db->get('taak');
+        $taken = $query->result();
+        foreach($taken as $taak){
+            $taak->shiften = $this->Shift_model->getAllWhereTaak($taak->id);
+        }
+        return $taken;
+    }
     /**
      * Jens Sels - Verwijder taak en al zijn shifts 
      * @param $taakId Id van een taak

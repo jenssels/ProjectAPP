@@ -87,6 +87,18 @@ class Dagindeling_model extends CI_Model {
         }
         return $dagindelingen;
     }
+    
+    function getAllDagIndelingenWithTakenWhereFeest($feestId){
+        $this->db->where('personeelsfeestid', $feestId);
+        $query = $this->db->get('dagindeling');
+        $dagindelingen =  $query->result();
+        $this->load->model('Optie_model');
+        $this->load->model('Taak_model');
+        foreach($dagindelingen as $dagindeling){
+           $dagindeling->taken = $this->Taak_model->getAllWithShiftenWhereDagindeling($dagindeling->id);
+        }
+        return $dagindelingen;
+    }
 
     /**
      * Joren Synaeve - Voegt een nieuwe dagindeling toe aan de database
