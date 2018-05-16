@@ -48,6 +48,17 @@ class Shift_model extends CI_Model {
         
     }
     
+    function getAllWithCount($taakId){
+        $this->load->model('taakDeelname_model');
+        $this->db->where('taakId', $taakId);
+        $query = $this->db->get('shift');
+        $shiften = $query->result();
+        foreach ($shiften as $shift){
+            $shift->deelnemers = $this->taakDeelname_model->getCountWhereShift($shift->id);
+        }
+        return $shiften;
+    }
+    
     /**
      * Jens Sels - Ophalen van alle shiften van een taak en hoeveel personen eraan deelnemen
      * @param $taakId Id van een taak

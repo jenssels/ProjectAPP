@@ -44,13 +44,14 @@ class Taak_model extends CI_Model {
     }
     
     
-    function getAllWithShiftenWhereDagindeling($dagindelingId){
+    function getAllWithShiftenAndLocatiesWhereDagindeling($dagindelingId){
         $this->load->model('Shift_model');
         $this->db->where('dagindelingid', $dagindelingId);
         $query = $this->db->get('taak');
         $taken = $query->result();
         foreach($taken as $taak){
-            $taak->shiften = $this->Shift_model->getAllWhereTaak($taak->id);
+            $taak->shiften = $this->Shift_model->getAllWithCount($taak->id);
+            $taak->locatie = $this->locatie_model->getByTaak($taak->locatieId);
         }
         return $taken;
     }

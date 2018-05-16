@@ -95,7 +95,7 @@ class Dagindeling_model extends CI_Model {
         $this->load->model('Optie_model');
         $this->load->model('Taak_model');
         foreach($dagindelingen as $dagindeling){
-           $dagindeling->taken = $this->Taak_model->getAllWithShiftenWhereDagindeling($dagindeling->id);
+           $dagindeling->taken = $this->Taak_model->getAllWithShiftenAndLocatiesWhereDagindeling($dagindeling->id);
         }
         return $dagindelingen;
     }

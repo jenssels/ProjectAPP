@@ -23,8 +23,10 @@ class Album_model extends CI_Model {
     {
         parent::__construct();
     }
-    
-    // Stef Goor - ophalen van alle albums
+            /**
+     * Stef Goor - ophalen van alle albums
+     * @return Een alle albums
+     */
     function getAll(){
         $query = $this->db->get('album');
         return $query->result();
