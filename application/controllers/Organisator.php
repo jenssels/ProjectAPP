@@ -426,7 +426,7 @@ class Organisator extends CI_Controller
                 $data['personeel'] = 'Al aanwezig in de database - ' . $voornaam . ' ' . $naam . '</br>';
             }
         }
-        $this->load->view('ajax_uploadStatus', $data);
+        $this->load->view('organisator/ajax_uploadStatus', $data);
     }
 
     /**
