@@ -597,11 +597,11 @@ class Organisator extends CI_Controller
             $naam = $personeel[$i]["Naam"];
             $email = strval($personeel[$i]["Email"]);
             if (in_array($email, $mails)) {
-                $data['personeel'] .= 'Mail adres <b>' . $email . '</b> van <b>' . $voornaam . ' ' . $naam . '</b> is al aanwezig in de database</br>';
+                $data['personeel'] .= '<b>' . $email . '</b> van <b>' . $voornaam . ' ' . $naam . '</b> is al aanwezig</br>';
             } else {
                 $check = $this->insertPersoon($feestId, $voornaam, $naam, $email, $hash);
                 if ($check) {
-                    $data['personeel'] .= '<b>' . $voornaam . ' ' . $naam . '</b> met mail adres <b>' . $email . '</b></br>';
+                    $data['personeel'] .= '<b>' . $email . '</b> van <b>'  . $voornaam . ' ' . $naam . '</b> is toegevoegd</br>';
                 }
                 else{
                     $data['personeel'] .= 'Database error voor <b>' . $voornaam . ' ' . $naam . '</b> met mail adres <b>' . $email . '</b></br>';
