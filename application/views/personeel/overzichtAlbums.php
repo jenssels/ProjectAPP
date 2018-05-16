@@ -6,10 +6,6 @@
  */
 ?>
 
-<div class="page-header">
-    <h1>Overzicht albums</h1>
-</div>
-
 <div>
     <p>Op deze pagina vindt u het overzicht van fotoalbums van de vorige personeelsfeesten. Zo kan u alvast eens de sfeer opsnuiven van de vorige jaren.</p>
 </div>
@@ -32,6 +28,9 @@
         echo '</div></div></div><br>';
     }
     echo '</div>';
+    
+    $hashcode = $this->session->userdata('gebruikerHashcode'); 
+    echo anchor('personeel/controleerDagindelingIsIngevuld/' . $hashcode, 'Terug', array('role' => 'button', 'class' => 'btn btn-primary'));
     ?>
 </div>
 
