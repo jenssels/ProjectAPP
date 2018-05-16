@@ -1,6 +1,6 @@
 <?php
 /**
- * @file inloggen.php
+ * @file aanmelden.php
  * 
  * View waarin een organisator kan inloggen 
  *  - Gebruikt Bootstrap-formulier

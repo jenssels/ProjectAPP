@@ -1,23 +1,10 @@
 <?php /**
- * @file taakToevoegen.php
+ * @file shiftToevoegen.php
  *
- * Pagina waar je een taak kan toevoegen
+ * Pagina waar je een shift kan toevoegen
  *
  */ ?> <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<?php
-/*$locatieOpties = "";
-foreach ($locaties as $locatie) {
-    $locatieOpties[$locatie->id] = $locatie->naam;
-}
-
-$dagindelingOpties = "";
-foreach ($dagindelingen as $dagindeling) {
-    $dagindelingOpties[$dagindeling->id] = ($dagindeling->naam . ' ' . $dagindeling->beginuur . ' ' . $dagindeling->einduur);
-}
-*/
-
-?>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><?php echo $titel; ?></title>

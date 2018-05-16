@@ -1,7 +1,7 @@
 <?php/**
- * @file vrijwilligerOverzicht.php
+ * @file vrijwilligerBevestig.php
  * 
- * Een overzicht van alle vrijwilligers
+ * Bevestigingspagina als vrijwilliger is ingeschreven
  * 
  */?>
 <div class="row">

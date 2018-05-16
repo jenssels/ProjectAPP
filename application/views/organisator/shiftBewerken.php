@@ -1,7 +1,7 @@
 <?php/**
- * @file taakBewerken.php
+ * @file shiftBewerken.php
  * 
- * Pagina waar je een huidige taak kan bewerken
+ * Pagina waar je een huidige shift kunt bewerken
  * 
  */?> <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
