@@ -1,3 +1,12 @@
+<?php
+/**
+ * @file hoofding.php
+ *
+ * View waarin de hoofding wordt gemaakt
+ * - gebruikt bootstrap nav
+ */
+?>
+
 <nav id="hoofding" class="navbar navbar-default navbar-fixed-top text-white bg-TMOrange">
     <div class="container">
         <h1>Personeelsfeest</h1>

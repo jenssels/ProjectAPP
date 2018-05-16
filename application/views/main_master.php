@@ -1,3 +1,10 @@
+<?php
+/**
+ * @file main_master.php
+ * View waarin alle deelviews worden geladen
+ * Wordt opgevuld met data via methodes en functies
+ */
+?>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.

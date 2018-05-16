@@ -1,3 +1,11 @@
+<?php
+/**
+ * @file voetnoot.php
+ *
+ * View waarin de voetnoot wordt gemaakt
+ * - gebruikt bootstrap footer
+ */
+?>
 <footer class="footer text-center bg-TMBlue">
     <div class="container">
         <div class="footer-copyright">
