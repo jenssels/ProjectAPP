@@ -9,7 +9,6 @@
 ?>
 
 <script>
-
     function haalOptiesBijDagindelingOp(dagindelingId) {
         $.ajax({
             type: "GET",
@@ -94,7 +93,7 @@
     </div>
 
     <div class="col-sm-12" id="resultaat">
-
+        <h5>Klik op een dagindeling om de opties te bekijken.</h5>
     </div>
 </div>
 

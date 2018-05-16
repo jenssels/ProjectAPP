@@ -97,4 +97,15 @@ class Optie_model extends CI_Model {
         $this->db->delete('optie');
     }
 
+    /**
+     * Joren Synaeve
+     * Voegt de optie toe aan de database
+     * @param $optie object
+     * @return het ID van de toegevoegde optie
+     */
+    function insert($optie) {
+        $this->db->insert('optie', $optie);
+        return $this->db->insert_id();
+    }
+
 }
