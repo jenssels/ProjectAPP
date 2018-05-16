@@ -53,7 +53,7 @@ class Personeelsfeest_model extends CI_Model {
         $this->db->where('id', $id);
         $query = $this->db->get('personeelsfeest');
         $personeelsfeest = $query->row();
-        $personeelsfeest->dagindelingen = $this->dagindeling_model->getAllDagIndelingenWithTakenWhereFeest($personeelsfeest->id);
+        $personeelsfeest->dagindelingen = $this->dagindeling_model->getAllDagIndelingenWithTakenWhereFeest($id);
         return $personeelsfeest;
     }
     
